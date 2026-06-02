@@ -39,7 +39,7 @@ export default function Footer() {
                     <Image
                       src="/assets/imgs/template/logo/Bharat_Logo.png"
                       width={143}
-                      height={150}
+                      height={100}
                       alt="logo"
                     />
                   </Link>

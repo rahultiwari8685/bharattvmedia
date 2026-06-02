@@ -95,6 +95,12 @@ export default function Section1({ classList }: any) {
     >
       <div className="container">
         <div className="row mt-2 g-4">
+          {/* VIDEO COLUMN RIGHT SIDE */}
+          {videoNews.slice(0, 1).map((card, idx) => (
+            <div className="col-lg-6" key={idx}>
+              <ArticleCard11 card={card} idx={idx} />
+            </div>
+          ))}
           {/* TEXT COLUMN 1 */}
           <div className="col-lg-3">
             <div className="row g-4">
@@ -116,13 +122,6 @@ export default function Section1({ classList }: any) {
               ))}
             </div>
           </div>
-
-          {/* VIDEO COLUMN RIGHT SIDE */}
-          {videoNews.slice(0, 1).map((card, idx) => (
-            <div className="col-lg-6" key={idx}>
-              <ArticleCard11 card={card} idx={idx} />
-            </div>
-          ))}
         </div>
       </div>
     </section>
