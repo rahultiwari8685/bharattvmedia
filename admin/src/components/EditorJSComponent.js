@@ -8,7 +8,7 @@ import ImageTool from '@editorjs/image'
 import Embed from '@editorjs/embed'
 import Paragraph from '@editorjs/paragraph'
 import Marker from '@editorjs/marker'
-import Underline from '@editorjs/underline'
+// import Underline from '@editorjs/underline'
 
 const EditorJSComponent = ({ data, onChange }) => {
   const editorRef = useRef(null)
@@ -49,7 +49,7 @@ const EditorJSComponent = ({ data, onChange }) => {
             shortcut: 'CMD+SHIFT+M',
           },
 
-          underline: Underline,
+          // underline: Underline,
 
           quote: {
             class: Quote,
