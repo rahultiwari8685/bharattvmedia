@@ -16,8 +16,8 @@ const geist = Geist({
 });
 
 export const metadata: Metadata = {
-  title: "Top Headlines News",
-  description: "Top Headlines Nes",
+  title: "Bharat TV Media ",
+  description: "Bharat TV Media",
 };
 
 export default function RootLayout({

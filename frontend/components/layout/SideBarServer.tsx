@@ -72,7 +72,7 @@ export default function SideBarServer() {
             className="sidebar-brand fw-bold fs-3 dark-mode-invert"
           >
             <Image
-              src="/assets/imgs/template/logo/top-dark.png"
+              src="/assets/imgs/template/logo/Bharat_Logo.png"
               width={143}
               height={18}
               alt="logo"
@@ -198,8 +198,7 @@ export default function SideBarServer() {
 
         <div className="text-center">
           <p className="fs-7">
-            2026 Copyright @{" "}
-            <span className="text-dark">Top Headlines News.</span>{" "}
+            2026 Copyright @ <span className="text-dark">Bharat TV Media.</span>{" "}
             <br className="d-none d-lg-block" />
             <span> All Rights Reserved </span>
           </p>
