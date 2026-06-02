@@ -37,7 +37,7 @@ export default function Footer() {
                 <div className="d-flex gap-2">
                   <Link className="dark-mode-invert" href="/">
                     <Image
-                      src="/assets/imgs/template/logo/TH_Logo.png"
+                      src="/assets/imgs/template/logo/TH_Logo1.png"
                       width={143}
                       height={150}
                       alt="logo"
