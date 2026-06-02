@@ -105,7 +105,7 @@ const Login = () => {
               <CCardBody>
                 {/* Logo */}
                 <div className="text-center mb-4">
-                  <h1 style={styles.brand}>Top Headlines</h1>
+                  <h1 style={styles.brand}>Bharat Tv Media</h1>
                   <div style={styles.divider}></div>
                   <p style={styles.subtitle}>News Admin Login</p>
                 </div>
