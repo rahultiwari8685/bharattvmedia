@@ -9,7 +9,7 @@ export default function Loading() {
           <div className="loader-container">
             <div className="loader-icon">
               <Image
-                src="/assets/imgs/template/logo/TH_Logo.png"
+                src="/assets/imgs/template/logo/Bharat_Logo.png"
                 alt="Preloader"
                 width={500}
                 height={100}
