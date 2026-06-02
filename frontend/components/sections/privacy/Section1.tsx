@@ -5,7 +5,7 @@ export default function Section1() {
         <h1 className="mb-6 text-4xl font-bold">गोपनीयता नीति</h1>
 
         <p className="mb-6 leading-relaxed text-gray-700">
-          Top Headlines News आपके व्यक्तिगत डेटा और गोपनीयता का सम्मान करता है।
+          Bharat TV Media आपके व्यक्तिगत डेटा और गोपनीयता का सम्मान करता है।
         </p>
 
         <div className="space-y-6 leading-relaxed text-gray-700">

@@ -210,8 +210,8 @@ export default function Footer() {
                 <div className="bottom-footer2 d-flex flex-wrap justify-content-lg-between justify-content-center align-items-center gap-lg-5 gap-3">
                   <p className="text-500 m-0">
                     2026 Copyright @{" "}
-                    <span className="text-dark">Top Headlines</span>. All Rights
-                    Reserved
+                    <span className="text-dark">Bharat TV Media</span>. All
+                    Rights Reserved
                   </p>
                   <div className="d-flex flex-wrap justify-content-center align-items-center gap-lg-5 gap-4">
                     <a

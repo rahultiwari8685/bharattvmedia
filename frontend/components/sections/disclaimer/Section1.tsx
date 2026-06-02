@@ -6,8 +6,8 @@ export default function Section1() {
 
         <div className="space-y-6 leading-relaxed text-gray-700">
           <p>
-            Top Headlines News पर उपलब्ध जानकारी केवल सामान्य सूचना उद्देश्य के
-            लिए प्रदान की जाती है।
+            Bharat TV Media पर उपलब्ध जानकारी केवल सामान्य सूचना उद्देश्य के लिए
+            प्रदान की जाती है।
           </p>
 
           <div>
