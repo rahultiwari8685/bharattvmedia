@@ -37,6 +37,52 @@ export default function Section3Interactive() {
 
   const boxSwiperPaddingRef = useRef<HTMLDivElement>(null);
 
+  // useEffect(() => {
+  //   setLoading(true);
+
+  //   fetch(setting.api + "/api/news/getAllNews")
+  //     .then((res) => res.json())
+  //     .then((u) => {
+  //       if (u.status !== false) {
+  //         const newsData = u.data || [];
+
+  //         setAllNews(newsData);
+
+  //         const uniqueCategories: CategoryType[] = [];
+
+  //         newsData.forEach((item: any, index: number) => {
+  //           item.categories?.forEach((cat: any) => {
+  //             const exists = uniqueCategories.find((c) => c.slug === cat.name);
+
+  //             if (!exists) {
+  //               uniqueCategories.push({
+  //                 id: `tab${index}-${cat._id || cat.name}`,
+  //                 label: cat.name,
+  //                 slug: cat.name,
+  //               });
+  //             }
+  //           });
+  //         });
+
+  //         setCategories(uniqueCategories);
+
+  //         if (uniqueCategories.length > 0) {
+  //           setActiveTab(uniqueCategories[0].slug);
+  //         }
+  //       } else {
+  //         setAllNews([]);
+  //         setCategories([]);
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       console.log("API Error:", err);
+
+  //       setAllNews([]);
+  //       setCategories([]);
+  //     })
+  //     .finally(() => setLoading(false));
+  // }, []);
+
   useEffect(() => {
     setLoading(true);
 
@@ -44,7 +90,14 @@ export default function Section3Interactive() {
       .then((res) => res.json())
       .then((u) => {
         if (u.status !== false) {
-          const newsData = u.data || [];
+          // Only Text News
+          const newsData = (u.data || []).filter(
+            (item: any) =>
+              item.video_type === "2" ||
+              item.video_type === 2 ||
+              item.videoType === "2" ||
+              item.videoType === 2,
+          );
 
           setAllNews(newsData);
 
