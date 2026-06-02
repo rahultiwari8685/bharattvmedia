@@ -35,7 +35,7 @@ export default function Header2Server() {
               className="dark-mode-invert"
               src="/assets/imgs/template/logo/Bharat_Logo.png"
               width={143}
-              height={100}
+              height={70}
               alt="logo"
             />
           </Link>
