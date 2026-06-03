@@ -21,7 +21,6 @@ import {
   CDropdownItem,
 } from '@coreui/react'
 import secureLocalStorage from 'react-secure-storage'
-// import EditorJSComponent from '../../../../../../igistrategy/admin/src/components/EditorJSComponent'
 import EditorJSComponent from '../../../components/EditorJSComponent'
 import { useNavigate } from 'react-router-dom'
 const schema = yup.object().shape({
@@ -61,6 +60,7 @@ const News = () => {
       youtubeUrl: '',
       videoFile: null,
       thumbnail: null,
+      scheduledAt: '',
     },
   })
 
@@ -122,7 +122,7 @@ const News = () => {
             videoType: formDataValues.videoType,
 
             // ❌ prevent translate spam
-            content: {},
+            content: content,
 
             type: 2,
             author,
@@ -148,7 +148,7 @@ const News = () => {
       } catch (error) {
         console.error('Auto save failed', error)
       }
-    }, 25000)
+    }, 10000)
 
     return () => clearTimeout(timeout)
   }, [formDataValues, content])
@@ -207,8 +207,6 @@ const News = () => {
     return null
   }
 
-  // const loginInfo = JSON.parse(secureLocalStorage.getItem('logininfo'))
-
   let loginInfo = null
 
   try {
@@ -228,12 +226,20 @@ const News = () => {
 
     setLoading(true)
 
+    if (data.type === '3' && !data.scheduledAt) {
+      alert('Please select schedule date & time')
+      setLoading(false)
+      return
+    }
+
     const formData = new FormData()
     formData.append('title', data.title)
     formData.append('sub_title', data.subtitle)
     formData.append('video_type', data.videoType)
     formData.append('type', data.type)
     formData.append('author', author)
+
+    formData.append('scheduledAt', data.scheduledAt || '')
 
     formData.append('categories', JSON.stringify(data.categories))
 
@@ -279,7 +285,7 @@ const News = () => {
 
         secureLocalStorage.removeItem('newsDraft')
         localStorage.removeItem('newsDraft')
-        alert('News Published!')
+        alert(data.type === '3' ? 'News Scheduled Successfully!' : 'News Published!')
 
         reset({
           title: '',
@@ -403,7 +409,7 @@ const News = () => {
                   {errors.type && <small className="text-danger">{errors.type.message}</small>}
                 </CCol> */}
 
-                <CCol md={12}>
+                <CCol md={6}>
                   <CFormSelect
                     label="News Type"
                     {...register('videoType')}
@@ -417,6 +423,14 @@ const News = () => {
                   {errors.videoType && (
                     <small className="text-danger">{errors.videoType.message}</small>
                   )}
+                </CCol>
+
+                <CCol md={6} className="mt-3">
+                  <CFormInput
+                    type="datetime-local"
+                    label="Schedule Publish"
+                    {...register('scheduledAt')}
+                  />
                 </CCol>
               </CRow>
 
@@ -466,7 +480,7 @@ const News = () => {
               {draftSaved && <p className="text-success small mt-3">Draft auto-saved</p>}
 
               <div className="d-flex justify-content-end mt-4">
-                <CButton
+                {/* <CButton
                   color="primary"
                   type="button"
                   disabled={loading}
@@ -476,7 +490,42 @@ const News = () => {
                   }}
                 >
                   {loading ? 'Saving...' : 'Publish'}
-                </CButton>
+                </CButton> */}
+
+                <div className="d-flex gap-2 justify-content-end">
+                  <CButton
+                    color="warning"
+                    type="button"
+                    onClick={() => {
+                      setValue('type', '2')
+                      handleSubmit(saveNews)()
+                    }}
+                  >
+                    Save Draft
+                  </CButton>
+
+                  <CButton
+                    color="info"
+                    type="button"
+                    onClick={() => {
+                      setValue('type', '3')
+                      handleSubmit(saveNews)()
+                    }}
+                  >
+                    Schedule
+                  </CButton>
+
+                  <CButton
+                    color="primary"
+                    type="button"
+                    onClick={() => {
+                      setValue('type', '1')
+                      handleSubmit(saveNews)()
+                    }}
+                  >
+                    Publish Now
+                  </CButton>
+                </div>
               </div>
             </CForm>
           </CCardBody>

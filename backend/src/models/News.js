@@ -17,10 +17,26 @@ const newsSchema = new mongoose.Schema(
 
     content: { type: Object, default: {} },
 
+    // type: {
+    //   type: Number,
+    //   enum: [1, 2],
+    //   default: 2,
+    // },
+
     type: {
       type: Number,
-      enum: [1, 2],
+      enum: [1, 2, 3],
       default: 2,
+    },
+
+    scheduledAt: {
+      type: Date,
+      default: null,
+    },
+
+    isScheduled: {
+      type: Boolean,
+      default: false,
     },
 
     youtubeUrl: { type: String, default: "" },

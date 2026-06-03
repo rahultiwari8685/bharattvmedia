@@ -3,8 +3,15 @@ import News from "../models/News.js";
 
 export const createNews = async (req, res) => {
   try {
-    const { title, sub_title, video_type, youtube_url, content, type } =
-      req.body;
+    const {
+      title,
+      sub_title,
+      video_type,
+      youtube_url,
+      content,
+      type,
+      scheduledAt,
+    } = req.body;
 
     let categories = [];
 
@@ -37,6 +44,8 @@ export const createNews = async (req, res) => {
 
       content: content || "",
       type: Number(type),
+      scheduledAt: scheduledAt || null,
+      isScheduled: Number(type) === 3,
 
       thumbnail: req.file?.filename || "",
     });
@@ -181,8 +190,16 @@ export const getNewsById = async (req, res) => {
 
 export const updateNews = async (req, res) => {
   try {
-    const { id, title, sub_title, video_type, youtube_url, content, type } =
-      req.body;
+    const {
+      id,
+      title,
+      sub_title,
+      video_type,
+      youtube_url,
+      content,
+      type,
+      scheduledAt,
+    } = req.body;
 
     // ✅ SAFE PARSE
     let categories = [];
@@ -219,6 +236,8 @@ export const updateNews = async (req, res) => {
 
       // ✅ update content
       content: content || "",
+      scheduledAt: req.body.scheduledAt || null,
+      isScheduled: Number(type) === 3,
 
       // ✅ publish draft
       type: Number(type),
