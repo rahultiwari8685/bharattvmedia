@@ -80,7 +80,7 @@ const PublishedNews = () => {
     const res = await fetch(setting.api + '/api/categories/getAllCategory')
     const data = await res.json()
 
-    if (data.status) {
+    if (data.success) {
       setCategoryList(data.data)
     }
   }
