@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { cilUser, cilLockLocked, cilEye, cilEyeSlash } from '@coreui/icons'
+import { cilUser, cilLockLocked, cilEye, cilLowVision } from '@coreui/icons'
 import {
   CContainer,
   CRow,
@@ -154,7 +154,7 @@ const Login = () => {
                       style={{ cursor: 'pointer' }}
                       onClick={() => setShowPassword(!showPassword)}
                     >
-                      <CIcon icon={showPassword ? cilEyeSlash : cilEye} />
+                      <CIcon icon={showPassword ? cilLowVision : cilEye} />
                     </CInputGroupText>
                   </CInputGroup>
                   {errors.password && <p style={styles.error}>{errors.password.message}</p>}
