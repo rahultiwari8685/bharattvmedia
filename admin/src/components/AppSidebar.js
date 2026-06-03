@@ -69,7 +69,7 @@ const AppSidebar = () => {
           <span
             className="text-white"
             style={{
-              fontSize: '1.2rem',
+              fontSize: '1.5rem',
               fontWeight: 700,
               letterSpacing: '1px',
               fontFamily: 'Segoe UI, sans-serif',

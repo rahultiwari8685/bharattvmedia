@@ -191,7 +191,7 @@ const DraftNews = () => {
               <CTableHeaderCell scope="col">Title</CTableHeaderCell>
               <CTableHeaderCell scope="col">Category</CTableHeaderCell>
               <CTableHeaderCell scope="col">Author</CTableHeaderCell>
-              <CTableHeaderCell scope="col">Date</CTableHeaderCell>
+              <CTableHeaderCell scope="col">Date & Time</CTableHeaderCell>
               <CTableHeaderCell scope="col">Action</CTableHeaderCell>
             </CTableRow>
           </CTableHead>
@@ -213,7 +213,15 @@ const DraftNews = () => {
                   <CTableDataCell> {news.author?.name || 'N/A'}</CTableDataCell>
 
                   <CTableDataCell>
-                    {news.createdAt ? new Date(news.createdAt).toLocaleDateString() : 'N/A'}
+                    {new Date(news.updatedAt || news.createdAt).toLocaleString('en-IN', {
+                      timeZone: 'Asia/Kolkata',
+                      day: '2-digit',
+                      month: 'short',
+                      year: 'numeric',
+                      hour: '2-digit',
+                      minute: '2-digit',
+                      hour12: true,
+                    })}
                   </CTableDataCell>
 
                   <CTableDataCell>

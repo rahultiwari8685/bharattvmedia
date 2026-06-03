@@ -342,7 +342,6 @@ export const autoSaveNews = async (req, res) => {
   try {
     const { title, subtitle, categories, videoType, content, type } = req.body;
 
-    // ❌ Skip translate for auto draft
     if (Number(type) === 2) {
       console.log("Draft auto-save: translation skipped");
     }
@@ -373,10 +372,11 @@ export const autoSaveNews = async (req, res) => {
       draft.content =
         typeof content === "string" ? content : JSON.stringify(content);
 
-      // Clear old media
-      draft.thumbnail = "";
-      draft.youtubeUrl = "";
+      if (req.file) {
+        draft.thumbnail = req.file.filename;
+      }
 
+      // Keep existing thumbnail & youtube url
       await draft.save();
     } else {
       draft = await News.create({

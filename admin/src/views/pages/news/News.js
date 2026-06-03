@@ -99,40 +99,94 @@ const News = () => {
     }
   }, [formDataValues.videoFile])
 
+  // useEffect(() => {
+  //   // Save only Draft
+  //   if (formDataValues.type !== '2') return
+
+  //   // Don't save empty form
+  //   if (!formDataValues.title && !formDataValues.subtitle) {
+  //     return
+  //   }
+
+  //   const timeout = setTimeout(async () => {
+  //     try {
+  //       const res = await fetch(`${setting.api}/api/news/auto-save`, {
+  //         method: 'POST',
+  //         headers: {
+  //           'Content-Type': 'application/json',
+  //         },
+  //         body: JSON.stringify({
+  //           title: formDataValues.title,
+  //           subtitle: formDataValues.subtitle,
+  //           categories: formDataValues.categories,
+  //           videoType: formDataValues.videoType,
+
+  //           // ❌ prevent translate spam
+  //           content: content,
+
+  //           type: 2,
+  //           author,
+  //         }),
+  //       })
+
+  //       const result = await res.json()
+
+  //       if (result.status) {
+  //         // ✅ store auto draft
+  //         if (result.data?._id) {
+  //           setEditingNews(result.data)
+  //         }
+
+  //         setDraftSaved(true)
+
+  //         setTimeout(() => {
+  //           setDraftSaved(false)
+  //         }, 2000)
+
+  //         console.log('Draft auto-saved')
+  //       }
+  //     } catch (error) {
+  //       console.error('Auto save failed', error)
+  //     }
+  //   }, 10000)
+
+  //   return () => clearTimeout(timeout)
+  // }, [formDataValues, content])
+
   useEffect(() => {
-    // Save only Draft
     if (formDataValues.type !== '2') return
 
-    // Don't save empty form
     if (!formDataValues.title && !formDataValues.subtitle) {
       return
     }
 
     const timeout = setTimeout(async () => {
       try {
+        const formData = new FormData()
+
+        formData.append('title', formDataValues.title || '')
+        formData.append('subtitle', formDataValues.subtitle || '')
+        formData.append('videoType', formDataValues.videoType || '')
+        formData.append('type', '2')
+        formData.append('author', author)
+
+        formData.append('categories', JSON.stringify(formDataValues.categories || []))
+
+        formData.append('content', typeof content === 'string' ? content : JSON.stringify(content))
+
+        // ✅ Auto-save thumbnail
+        if (formDataValues.thumbnail?.[0]) {
+          formData.append('thumbnail', formDataValues.thumbnail[0])
+        }
+
         const res = await fetch(`${setting.api}/api/news/auto-save`, {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            title: formDataValues.title,
-            subtitle: formDataValues.subtitle,
-            categories: formDataValues.categories,
-            videoType: formDataValues.videoType,
-
-            // ❌ prevent translate spam
-            content: content,
-
-            type: 2,
-            author,
-          }),
+          body: formData,
         })
 
         const result = await res.json()
 
         if (result.status) {
-          // ✅ store auto draft
           if (result.data?._id) {
             setEditingNews(result.data)
           }
@@ -312,7 +366,7 @@ const News = () => {
 
   return (
     <div className="d-flex flex-column flex-lg-row gap-4">
-      <CCol lg={7}>
+      <CCol lg={8}>
         <CCard className="shadow border-0 rounded-4">
           <CCardHeader className="bg-dark text-white fw-bold px-4 py-3 shadow-sm">
             <h5 className="mb-0">Create News</h5>
@@ -532,7 +586,7 @@ const News = () => {
         </CCard>
       </CCol>
 
-      <CCol lg={5}>
+      <CCol lg={4}>
         <CCard className="shadow border-0 rounded-4 text-dark">
           <CCardHeader className="bg-dark text-white fw-bold px-4 py-3 shadow-sm">
             <h5 className="mb-0">Live Preview</h5>

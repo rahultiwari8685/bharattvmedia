@@ -31,5 +31,5 @@ router.delete("/deleteNews/:id", deleteNews);
 
 router.get("/getAllNewsByAuthorId/:authorId", getAllNewsByAuthorId);
 
-router.post("/auto-save", autoSaveNews);
+router.post("/auto-save", upload.single("thumbnail"), autoSaveNews);
 export default router;

@@ -251,7 +251,7 @@ const UpdateNews = () => {
 
   return (
     <div className="d-flex flex-column flex-lg-row gap-4">
-      <CCol lg={7}>
+      <CCol lg={8}>
         <CCard className="shadow border-0 rounded-4">
           <CCardHeader className="bg-dark text-white fw-bold px-4 py-3 shadow-sm">
             <h5 className="mb-0">Update News</h5>
@@ -453,7 +453,7 @@ const UpdateNews = () => {
         </CCard>
       </CCol>
 
-      <CCol lg={5}>
+      <CCol lg={4}>
         <CCard className="shadow border-0 rounded-4 text-dark">
           <CCardHeader className="bg-dark text-white fw-bold px-4 py-3 shadow-sm">
             <h5 className="mb-0">Live Preview</h5>
