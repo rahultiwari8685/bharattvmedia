@@ -19,7 +19,7 @@ import { useNavigate } from 'react-router-dom'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
 import CIcon from '@coreui/icons-react'
-import { cilUser, cilLockLocked } from '@coreui/icons'
+
 import setting from '../../../setting.json'
 import secureLocalStorage from 'react-secure-storage'
 
