@@ -1,27 +1,25 @@
 import cron from "node-cron";
 import News from "../models/News.js";
 
+console.log("✅ publishScheduledNews.js loaded");
+
 cron.schedule("* * * * *", async () => {
-  try {
-    const now = new Date();
+  console.log("✅ CRON RUNNING");
 
-    const result = await News.updateMany(
-      {
-        type: 3,
-        scheduledAt: { $lte: now },
-      },
-      {
-        $set: {
-          type: 1,
-          isScheduled: false,
-        },
-      },
-    );
+  const now = new Date();
 
-    if (result.modifiedCount > 0) {
-      console.log(`${result.modifiedCount} scheduled news published`);
-    }
-  } catch (error) {
-    console.error("Schedule publish error:", error);
-  }
+  const result = await News.updateMany(
+    {
+      type: 3,
+      scheduledAt: { $lte: now },
+    },
+    {
+      $set: {
+        type: 1,
+        isScheduled: false,
+      },
+    },
+  );
+
+  console.log("Published:", result.modifiedCount);
 });

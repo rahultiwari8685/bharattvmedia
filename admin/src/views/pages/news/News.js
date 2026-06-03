@@ -425,7 +425,7 @@ const News = () => {
                   )}
                 </CCol>
 
-                <CCol md={6} className="mt-3">
+                <CCol md={6}>
                   <CFormInput
                     type="datetime-local"
                     label="Schedule Publish"
