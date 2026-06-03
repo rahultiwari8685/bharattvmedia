@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react'
+import { cilUser, cilLockLocked, cilEye, cilEyeSlash } from '@coreui/icons'
+
 import {
   CContainer,
   CRow,
@@ -32,6 +34,7 @@ const schema = yup.object().shape({
 const Login = () => {
   const navigate = useNavigate()
   const [loading, setLoading] = useState(false)
+  const [showPassword, setShowPassword] = useState(false)
 
   const {
     register,
@@ -124,7 +127,7 @@ const Login = () => {
                   </CInputGroup>
                   {errors.email && <p style={styles.error}>{errors.email.message}</p>}
 
-                  <CInputGroup className="mb-3">
+                  {/* <CInputGroup className="mb-3">
                     <CInputGroupText style={styles.iconBox}>
                       <CIcon icon={cilLockLocked} />
                     </CInputGroupText>
@@ -134,6 +137,26 @@ const Login = () => {
                       style={styles.input}
                       {...register('password')}
                     />
+                  </CInputGroup> */}
+
+                  <CInputGroup className="mb-3">
+                    <CInputGroupText style={styles.iconBox}>
+                      <CIcon icon={cilLockLocked} />
+                    </CInputGroupText>
+
+                    <CFormInput
+                      type={showPassword ? 'text' : 'password'}
+                      placeholder="Password"
+                      style={styles.input}
+                      {...register('password')}
+                    />
+
+                    <CInputGroupText
+                      style={{ cursor: 'pointer' }}
+                      onClick={() => setShowPassword(!showPassword)}
+                    >
+                      <CIcon icon={showPassword ? cilEyeSlash : cilEye} />
+                    </CInputGroupText>
                   </CInputGroup>
                   {errors.password && <p style={styles.error}>{errors.password.message}</p>}
 
