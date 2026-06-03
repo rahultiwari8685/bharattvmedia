@@ -23,17 +23,23 @@ export const createNews = async (req, res) => {
 
     categories = categories.map((id) => new mongoose.Types.ObjectId(id));
 
+    // Convert schedule date
+    let scheduledDate = null;
+
+    if (scheduledAt) {
+      scheduledDate = new Date(new Date(scheduledAt).getTime() - 19800000);
+    }
+
     const existingNews = await News.findOne({
       title: title.trim(),
       author: req.body.author,
-      type: 1, // ✅ only published news
+      type: 1,
     });
 
     const createdNews = await News.create({
       title,
       subtitle: sub_title,
 
-      // author: req.author,
       author: req.body.author,
 
       categories,
@@ -43,8 +49,11 @@ export const createNews = async (req, res) => {
       youtubeUrl: youtube_url || "",
 
       content: content || "",
+
       type: Number(type),
-      scheduledAt: scheduledAt || null,
+
+      scheduledAt: scheduledDate,
+
       isScheduled: Number(type) === 3,
 
       thumbnail: req.file?.filename || "",
@@ -236,7 +245,9 @@ export const updateNews = async (req, res) => {
 
       // ✅ update content
       content: content || "",
-      scheduledAt: req.body.scheduledAt || null,
+      scheduledAt: req.body.scheduledAt
+        ? new Date(new Date(req.body.scheduledAt).getTime() - 19800000)
+        : null,
       isScheduled: Number(type) === 3,
 
       // ✅ publish draft
