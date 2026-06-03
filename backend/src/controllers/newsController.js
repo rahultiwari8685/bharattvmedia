@@ -349,7 +349,7 @@ export const autoSaveNews = async (req, res) => {
     let parsedCategories = [];
 
     try {
-      parsedCategories = categories || [];
+      parsedCategories = JSON.parse(categories || "[]");
     } catch (err) {
       parsedCategories = [];
     }
@@ -383,7 +383,7 @@ export const autoSaveNews = async (req, res) => {
         title,
         subtitle,
         categories: parsedCategories,
-        videoType: videoType,
+        videoType,
 
         content:
           typeof content === "string" ? content : JSON.stringify(content),
@@ -391,8 +391,7 @@ export const autoSaveNews = async (req, res) => {
         type: 2,
         author: req.body.author,
 
-        // Empty media for auto draft
-        thumbnail: "",
+        thumbnail: req.file?.filename || "",
         youtubeUrl: "",
       });
     }
