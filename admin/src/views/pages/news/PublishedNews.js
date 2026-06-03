@@ -32,6 +32,13 @@ const PublishedNews = () => {
   const [currentPage, setCurrentPage] = useState(1)
   const itemsPerPage = 30
 
+  const [fromDate, setFromDate] = useState('')
+  const [toDate, setToDate] = useState('')
+  const [selectedCategory, setSelectedCategory] = useState('')
+  const [selectedAuthor, setSelectedAuthor] = useState('')
+
+  const [categoryList, setCategoryList] = useState([])
+
   const userRole = JSON.parse(secureLocalStorage.getItem('logininfo')).role
 
   console.log('User role from storage:', userRole)
@@ -67,6 +74,19 @@ const PublishedNews = () => {
 
   useEffect(() => {
     fetchNews()
+  }, [])
+
+  const fetchCategories = async () => {
+    const res = await fetch(setting.api + '/api/categories/getAllCategory')
+    const data = await res.json()
+
+    if (data.status) {
+      setCategoryList(data.data)
+    }
+  }
+
+  useEffect(() => {
+    fetchCategories()
   }, [])
 
   const allUserList = async () => {
@@ -135,9 +155,22 @@ const PublishedNews = () => {
     }
   }
 
-  const filteredNews = newsList.filter((news) =>
-    news.title.toLowerCase().includes(searchText.toLowerCase()),
-  )
+  const filteredNews = newsList.filter((news) => {
+    const titleMatch = news.title?.toLowerCase().includes(searchText.toLowerCase())
+
+    const authorMatch = !selectedAuthor || news.author?._id === selectedAuthor
+
+    const categoryMatch =
+      !selectedCategory || news.categories?.some((cat) => cat._id === selectedCategory)
+
+    const newsDate = new Date(news.createdAt)
+
+    const fromMatch = !fromDate || newsDate >= new Date(fromDate)
+
+    const toMatch = !toDate || newsDate <= new Date(new Date(toDate).setHours(23, 59, 59))
+
+    return titleMatch && authorMatch && categoryMatch && fromMatch && toMatch
+  })
 
   const totalPages = Math.ceil(filteredNews.length / itemsPerPage)
 
@@ -159,23 +192,57 @@ const PublishedNews = () => {
       <CCardBody>
         <CForm className="mb-4">
           <CRow className="g-3">
-            {/* <CCol md={3}>
-              <CFormLabel htmlFor="fromDate">From Date</CFormLabel>
-              <CFormInput type="date" id="fromDate" />
-            </CCol>
             <CCol md={3}>
-              <CFormLabel htmlFor="toDate">To Date</CFormLabel>
-              <CFormInput type="date" id="toDate" />
-            </CCol> */}
-            {/* <CCol md={12}>
               <CFormInput
-                type="text"
-                id="searchText"
+                type="date"
+                value={fromDate}
+                onChange={(e) => setFromDate(e.target.value)}
+              />
+            </CCol>
+
+            <CCol md={3}>
+              <CFormInput type="date" value={toDate} onChange={(e) => setToDate(e.target.value)} />
+            </CCol>
+
+            <CCol md={3}>
+              <select
+                className="form-select"
+                value={selectedCategory}
+                onChange={(e) => setSelectedCategory(e.target.value)}
+              >
+                <option value="">All Categories</option>
+
+                {categoryList.map((cat) => (
+                  <option key={cat._id} value={cat._id}>
+                    {cat.name}
+                  </option>
+                ))}
+              </select>
+            </CCol>
+
+            <CCol md={3}>
+              <select
+                className="form-select"
+                value={selectedAuthor}
+                onChange={(e) => setSelectedAuthor(e.target.value)}
+              >
+                <option value="">All Authors</option>
+
+                {userList.map((user) => (
+                  <option key={user._id} value={user._id}>
+                    {user.name}
+                  </option>
+                ))}
+              </select>
+            </CCol>
+
+            <CCol md={12}>
+              <CFormInput
                 placeholder="Search by Title"
-                value={searchText} // bind state
+                value={searchText}
                 onChange={(e) => setSearchText(e.target.value)}
               />
-            </CCol> */}
+            </CCol>
           </CRow>
         </CForm>
 
@@ -186,7 +253,7 @@ const PublishedNews = () => {
               <CTableHeaderCell scope="col">Title</CTableHeaderCell>
               <CTableHeaderCell scope="col">Category</CTableHeaderCell>
               <CTableHeaderCell scope="col">Author</CTableHeaderCell>
-              <CTableHeaderCell scope="col">Date</CTableHeaderCell>
+              <CTableHeaderCell scope="col">Date & Time</CTableHeaderCell>
               <CTableHeaderCell scope="col">Action</CTableHeaderCell>
             </CTableRow>
           </CTableHead>
@@ -222,7 +289,15 @@ const PublishedNews = () => {
                   <CTableDataCell> {news.author?.name || 'N/A'}</CTableDataCell>
 
                   <CTableDataCell>
-                    {news.createdAt ? new Date(news.createdAt).toLocaleDateString() : 'N/A'}
+                    {new Date(news.updatedAt || news.createdAt).toLocaleString('en-IN', {
+                      timeZone: 'Asia/Kolkata',
+                      day: '2-digit',
+                      month: 'short',
+                      year: 'numeric',
+                      hour: '2-digit',
+                      minute: '2-digit',
+                      hour12: true,
+                    })}
                   </CTableDataCell>
 
                   <CTableDataCell>
