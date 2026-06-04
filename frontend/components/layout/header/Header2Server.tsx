@@ -26,8 +26,12 @@ export default function Header2Server() {
           </div>
         </div> */}
 
-        <nav className="navbar style-2">
-          <Link className="navbar-brand fw-bold fs-3" href="/">
+        <nav className="navbar style-2 d-flex align-items-center justify-content-between">
+          <Link
+            className="navbar-brand fw-bold fs-3 me-4"
+            href="/"
+            style={{ flexShrink: 0 }}
+          >
             <Image
               className="dark-mode-invert"
               src="/assets/imgs/template/logo/Bharat_Logo.png"
