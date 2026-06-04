@@ -26,11 +26,11 @@ export default function Header2Server() {
           </div>
         </div> */}
 
-        <nav className="navbar style-2 d-flex align-items-center justify-content-between">
+        <nav className="navbar style-2">
           <Link
             className="navbar-brand fw-bold fs-3 me-4"
             href="/"
-            style={{ flexShrink: 0 }}
+            // style={{ flexShrink: 0 }}
           >
             <Image
               className="dark-mode-invert"
@@ -40,7 +40,10 @@ export default function Header2Server() {
               alt="logo"
             />
           </Link>
-          <div className="navbar-collapse d-none d-lg-block" id="navbarNav">
+          <div
+            className="navbar-collapse d-none d-lg-flex justify-content-center flex-grow-1"
+            id="navbarNav"
+          >
             <MainMenu2 />
           </div>
 
