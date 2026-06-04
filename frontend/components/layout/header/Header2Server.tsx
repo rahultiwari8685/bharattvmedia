@@ -27,9 +27,6 @@ export default function Header2Server() {
         </div> */}
 
         <nav className="navbar style-2">
-          <div className="navbar-collapse d-none d-lg-block" id="navbarNav">
-            <MainMenu2 />
-          </div>
           <Link className="navbar-brand fw-bold fs-3" href="/">
             <Image
               className="dark-mode-invert"
@@ -39,6 +36,10 @@ export default function Header2Server() {
               alt="logo"
             />
           </Link>
+          <div className="navbar-collapse d-none d-lg-block" id="navbarNav">
+            <MainMenu2 />
+          </div>
+
           <div className="d-flex align-items-center ms-auto gap-4">
             {/* <div className="pe-4 d-none d-lg-block">
                             <a href="/page-login" className="text-decoration-underline">
