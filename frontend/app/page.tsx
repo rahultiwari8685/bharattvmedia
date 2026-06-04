@@ -11,7 +11,7 @@ import Section8 from "@/components/sections/home-2/Section8";
 export default function Home_2() {
   return (
     <>
-      <Layout headerStyle={2} footerStyle={2}>
+      <Layout headerStyle={1} footerStyle={2}>
         <Section1 />
         <Section2 />
         <Section3 />
