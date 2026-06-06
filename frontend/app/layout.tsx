@@ -25,10 +25,10 @@ export const metadata: Metadata = {
   description: "Bharat TV Media",
 
   openGraph: {
-    title: "Top Headlines News",
-    description: "Top Headlines News",
-    url: "https://topheadlinesnews.com",
-    siteName: "Top Headlines News",
+    title: "Bharat TV Media",
+    description: "Bharat TV Media",
+    url: "https://bharattvmedia.com",
+    siteName: "Bharat TV Media",
     images: [
       {
         url: "https://bharattvmedia.com/assets/imgs/template/logo/Bharat_Logo.png",
