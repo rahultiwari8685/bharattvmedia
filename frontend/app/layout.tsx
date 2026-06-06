@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     siteName: "Top Headlines News",
     images: [
       {
-        url: "https://topheadlinesnews.com/assets/imgs/template/logo/Bharat_Logo.png",
+        url: "https://bharattvmedia.com/assets/imgs/template/logo/Bharat_Logo.png",
         width: 1200,
         height: 630,
         alt: "Top Headlines News",
