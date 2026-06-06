@@ -74,7 +74,7 @@ export default function SideBarServer() {
             <Image
               src="/assets/imgs/template/logo/Bharat_Logo.png"
               width={143}
-              height={18}
+              height={80}
               alt="logo"
             />
           </Link>

@@ -15,9 +15,38 @@ const geist = Geist({
   display: "swap",
 });
 
+// export const metadata: Metadata = {
+//   title: "Bharat TV Media",
+//   description: "Bharat TV Media",
+// };
+
 export const metadata: Metadata = {
-  title: "Bharat TV Media ",
+  title: "Bharat TV Media",
   description: "Bharat TV Media",
+
+  openGraph: {
+    title: "Top Headlines News",
+    description: "Top Headlines News",
+    url: "https://topheadlinesnews.com",
+    siteName: "Top Headlines News",
+    images: [
+      {
+        url: "https://topheadlinesnews.com/assets/imgs/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Top Headlines News",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title: "Top Headlines News",
+    description: "Top Headlines News",
+    images: ["https://topheadlinesnews.com/assets/imgs/og-image.jpg"],
+  },
 };
 
 export default function RootLayout({
