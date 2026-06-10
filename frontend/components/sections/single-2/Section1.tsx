@@ -1,4 +1,38 @@
-"use client";
+import Section1 from "./Section1";
+
+export async function generateMetadata({ searchParams }) {
+  const slug = searchParams.slug;
+
+  const res = await fetch(`${setting.api}/api/news/slug/${slug}`, {
+    cache: "no-store",
+  });
+
+  const result = await res.json();
+  const news = result.data;
+
+  const image = news?.thumbnail
+    ? `${setting.api}/uploads/images/${news.thumbnail}`
+    : "https://bharattvmedia.com/assets/imgs/logo.png";
+
+  return {
+    title: news?.title || "Bharat TV Media",
+    description: news?.subtitle || "",
+
+    openGraph: {
+      title: news?.title,
+      description: news?.subtitle,
+      images: [image],
+      type: "article",
+    },
+
+    twitter: {
+      card: "summary_large_image",
+      title: news?.title,
+      description: news?.subtitle,
+      images: [image],
+    },
+  };
+}
 
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
