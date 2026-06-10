@@ -28,7 +28,9 @@ export default function Header2Server() {
 
         <nav className="navbar style-2">
           <div className="navbar-collapse d-none d-lg-block" id="navbarNav">
-            <MainMenu2 />
+            <ul className="navbar-nav">
+              <MainMenu2 />
+            </ul>
           </div>
           <Link className="navbar-brand fw-bold fs-3" href="/">
             <Image
