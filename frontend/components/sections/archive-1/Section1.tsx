@@ -48,8 +48,8 @@ export default async function Section1({ searchParams }: Section1Props) {
 
   try {
     const url = categoryId
-      ? `https://api.topheadlinesnews.com/api/news/category/${categoryId}?page=${currentPage}&limit=${itemsPerPage}`
-      : `https://api.topheadlinesnews.com/api/news?page=${currentPage}&limit=${itemsPerPage}`;
+      ? `https://api.bharattvmedia.com/api/news/category/${categoryId}?page=${currentPage}&limit=${itemsPerPage}`
+      : `https://api.bharattvmedia.com/api/news?page=${currentPage}&limit=${itemsPerPage}`;
 
     const res = await fetch(url, { cache: "no-store" });
     const data = await res.json();
