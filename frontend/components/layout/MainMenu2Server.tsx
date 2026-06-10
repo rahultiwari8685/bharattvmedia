@@ -18,97 +18,126 @@ export default function MainMenu2Server() {
   const [categories, setCategories] = useState<Category[]>([]);
 
   useEffect(() => {
-    fetch(`${setting.api}/api/categories/getAllCategory`)
-      .then((res) => res.json())
-      .then((data) => {
+    const fetchCategories = async () => {
+      try {
+        const res = await fetch(`${setting.api}/api/categories/getAllCategory`);
+        const data = await res.json();
+
         if (data.success) {
           setCategories(data.data);
         }
-      })
-      .catch((err) => console.log(err));
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchCategories();
   }, []);
 
   // Parent Categories
-  const parents = categories.filter(
+  const parentCategories = categories.filter(
     (cat) => !cat.parentCategory && String(cat.showInMenu) === "1",
   );
 
   return (
-    <nav className="main-menu">
-      <ul
-        style={{
-          display: "flex",
-          gap: "20px",
-          listStyle: "none",
-          margin: 0,
-          padding: 0,
-        }}
-      >
-        <li>
-          <Link href="/">Home</Link>
-        </li>
+    <>
+      <nav className="main-menu">
+        <ul className="menu-list">
+          <li>
+            <Link href="/">Home</Link>
+          </li>
 
-        {parents.map((parent) => {
-          const children = categories.filter(
-            (cat) =>
-              cat.parentCategory?._id === parent._id &&
-              String(cat.showInMenu) === "1",
-          );
+          {parentCategories.map((parent) => {
+            const children = categories.filter(
+              (cat) =>
+                cat.parentCategory?._id === parent._id &&
+                String(cat.showInMenu) === "1",
+            );
 
-          return (
-            <li
-              key={parent._id}
-              style={{
-                position: "relative",
-              }}
-              className="menu-item"
-            >
-              <Link href={`/archive-1?category=${parent._id}`}>
-                {parent.name}
-              </Link>
+            return (
+              <li
+                key={parent._id}
+                className={`menu-item ${
+                  children.length > 0 ? "has-dropdown" : ""
+                }`}
+              >
+                <Link href={`/archive-1?category=${parent._id}`}>
+                  {parent.name}
+                  {children.length > 0 && <span className="arrow">▼</span>}
+                </Link>
 
-              {children.length > 0 && (
-                <ul
-                  className="submenu"
-                  style={{
-                    position: "absolute",
-                    top: "100%",
-                    left: 0,
-                    background: "#fff",
-                    minWidth: "200px",
-                    listStyle: "none",
-                    padding: "10px 0",
-                    margin: 0,
-                    display: "none",
-                    boxShadow: "0 2px 10px rgba(0,0,0,0.1)",
-                    zIndex: 999,
-                  }}
-                >
-                  {children.map((child) => (
-                    <li key={child._id}>
-                      <Link
-                        href={`/archive-1?category=${child._id}`}
-                        style={{
-                          display: "block",
-                          padding: "8px 15px",
-                        }}
-                      >
-                        {child.name}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </li>
-          );
-        })}
-      </ul>
+                {children.length > 0 && (
+                  <ul className="submenu">
+                    {children.map((child) => (
+                      <li key={child._id}>
+                        <Link href={`/archive-1?category=${child._id}`}>
+                          {child.name}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </li>
+            );
+          })}
+        </ul>
+      </nav>
 
       <style jsx>{`
+        .menu-list {
+          display: flex;
+          gap: 24px;
+          list-style: none;
+          margin: 0;
+          padding: 0;
+          align-items: center;
+        }
+
+        .menu-item {
+          position: relative;
+        }
+
+        .menu-item > a {
+          text-decoration: none;
+          color: #000;
+        }
+
+        .arrow {
+          margin-left: 5px;
+          font-size: 10px;
+        }
+
+        .submenu {
+          display: none;
+          position: absolute;
+          top: 100%;
+          left: 0;
+          min-width: 220px;
+          background: #fff;
+          list-style: none;
+          margin: 0;
+          padding: 8px 0;
+          border: 1px solid #eee;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+          z-index: 9999;
+        }
+
+        .submenu li a {
+          display: block;
+          padding: 10px 15px;
+          color: #000;
+          text-decoration: none;
+          white-space: nowrap;
+        }
+
+        .submenu li a:hover {
+          background: #f5f5f5;
+        }
+
         .menu-item:hover .submenu {
           display: block;
         }
       `}</style>
-    </nav>
+    </>
   );
 }
