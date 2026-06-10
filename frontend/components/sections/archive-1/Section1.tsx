@@ -56,7 +56,9 @@ export default async function Section1({ searchParams }: Section1Props) {
 
     // news = data.data || [];
 
-    news = (data.data || []).filter((item: NewsItem) => item.videoType === "2");
+    news = (data.data || []).filter(
+      (item: any) => Number(item.videoType) === 2,
+    );
     totalPages = data.totalPages || 1;
   } catch (error) {
     console.error("Fetch Error:", error);
