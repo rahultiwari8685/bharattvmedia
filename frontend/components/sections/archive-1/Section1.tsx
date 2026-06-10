@@ -13,7 +13,7 @@ type NewsItem = {
   subtitle?: string;
   slug: string;
   thumbnail: string;
-  video_type?: string;
+  videoType?: string;
   categories?: { _id: string; name: string }[];
 };
 
@@ -56,9 +56,7 @@ export default async function Section1({ searchParams }: Section1Props) {
 
     // news = data.data || [];
 
-    news = (data.data || []).filter(
-      (item: NewsItem) => item.video_type === "2",
-    );
+    news = (data.data || []).filter((item: NewsItem) => item.videoType === "2");
     totalPages = data.totalPages || 1;
   } catch (error) {
     console.error("Fetch Error:", error);
