@@ -1,4 +1,4 @@
-// "use client";
+"use client";
 
 import { useEffect, useState } from "react";
 
@@ -18,52 +18,6 @@ type RelatedArticleType = {
   bgBadge: string;
   title: string;
 };
-
-type PageProps = {
-  searchParams: {
-    slug?: string;
-  };
-};
-
-export async function generateMetadata({ searchParams }: PageProps) {
-  const slug = searchParams.slug;
-
-  try {
-    const res = await fetch(`${setting.api}/api/news/slug/${slug}`, {
-      cache: "no-store",
-    });
-
-    const result = await res.json();
-    const news = result.data;
-
-    const image = news?.thumbnail
-      ? `${setting.api}/uploads/images/${news.thumbnail}`
-      : "https://bharattvmedia.com/assets/imgs/template/logo/Bharat_Logo.png";
-
-    return {
-      title: news?.title,
-      description: news?.subtitle,
-
-      openGraph: {
-        title: news?.title,
-        description: news?.subtitle,
-        images: [image],
-        type: "article",
-      },
-
-      twitter: {
-        card: "summary_large_image",
-        title: news?.title,
-        description: news?.subtitle,
-        images: [image],
-      },
-    };
-  } catch {
-    return {
-      title: "Bharat TV Media",
-    };
-  }
-}
 
 export default function Single_2() {
   const [relatedArticles, setRelatedArticles] = useState<RelatedArticleType[]>(
