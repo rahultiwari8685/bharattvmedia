@@ -263,6 +263,7 @@ const PublishedNews = () => {
               return (
                 <CTableRow key={news.id}>
                   <CTableDataCell>{actualIndex + 1}</CTableDataCell>
+
                   <CTableDataCell>
                     <a
                       href={`https://bharattvmedia.com/single-2?slug=${news.slug}`}
