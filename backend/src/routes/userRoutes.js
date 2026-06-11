@@ -6,6 +6,7 @@ import {
   deleteUser,
   changePassword,
   getUserDetailsById,
+  getUserById,
 } from "../controllers/userController.js";
 import upload from "../middlewares/upload.js";
 
