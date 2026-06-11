@@ -8,7 +8,7 @@ import { GoogleAnalytics } from "@next/third-parties/google";
 
 import type { Metadata } from "next";
 import { Geist } from "next/font/google";
-
+import "remixicon/fonts/remixicon.css";
 const geist = Geist({
   weight: ["400", "500", "600", "700"],
   subsets: ["latin"],
@@ -58,10 +58,10 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${geist.className}`}>
         {children}
-        <link
+        {/* <link
           href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css"
           rel="stylesheet"
-        />
+        /> */}
         <GoogleAnalytics gaId="G-SJZHFX4HZ4" />
       </body>
     </html>
