@@ -58,7 +58,10 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${geist.className}`}>
         {children}
-
+        <link
+          href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css"
+          rel="stylesheet"
+        />
         <GoogleAnalytics gaId="G-SJZHFX4HZ4" />
       </body>
     </html>

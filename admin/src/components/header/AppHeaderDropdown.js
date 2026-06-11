@@ -42,14 +42,6 @@ const AppHeaderDropdown = () => {
     }
   }
 
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     if (!logininfo || !logininfo.role) {
-  //       navigate('/login')
-  //     }
-  //   }, 2000)
-  // }, [logininfo, navigate])
-
   const handleChangePassword = () => {
     navigate('/changePassword')
   }
@@ -113,7 +105,7 @@ const AppHeaderDropdown = () => {
         </CDropdownItem> */}
         <CDropdownItem disabled>
           <CIcon icon={cilUser} className="me-2" />
-          {logininfo?.name}
+          {logininfo?.user?.name}
         </CDropdownItem>
 
         <CDropdownDivider />

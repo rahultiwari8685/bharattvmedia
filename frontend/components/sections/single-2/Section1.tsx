@@ -66,6 +66,8 @@ export default function Section1() {
 
   const videoId = getYouTubeId(news.youtubeUrl);
 
+  const currentUrl = typeof window !== "undefined" ? window.location.href : "";
+
   return (
     <section className="sec-1-single-2 pb-70 overflow-hidden mt-10">
       <div className="container">
@@ -83,7 +85,7 @@ export default function Section1() {
 
             <p>{new Date(news.createdAt).toDateString()}</p>
 
-            <p>👁 {news.views || 0} Views</p>
+            {/* <p>👁 {news.views || 0} Views</p> */}
 
             <div className="d-flex align-items-center gap-2">
               <img
@@ -101,56 +103,93 @@ export default function Section1() {
                 </span>
               </Link>
 
-              <div className="flex items-center gap-3">
+              <div className="d-flex align-items-center gap-2 ms-3">
                 {/* WhatsApp */}
                 <a
                   href={`https://wa.me/?text=${encodeURIComponent(
-                    `${news.title} ${
-                      typeof window !== "undefined" ? window.location.href : ""
-                    }`,
+                    `${news.title}\n${currentUrl}`,
                   )}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex h-9 w-9 items-center justify-center rounded-full border border-gray-300 bg-white text-green-500 transition hover:bg-green-500 hover:text-white"
+                  className="btn btn-success btn-sm"
                 >
-                  <i className="ri-whatsapp-line text-lg"></i>
+                  <i className="ri-whatsapp-line"></i>
                 </a>
 
                 {/* Facebook */}
                 <a
-                  href={`https://www.facebook.com/sharer/sharer.php?u=${
-                    typeof window !== "undefined" ? window.location.href : ""
-                  }`}
+                  href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+                    currentUrl,
+                  )}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex h-9 w-9 items-center justify-center rounded-full border border-gray-300 bg-white text-blue-600 transition hover:bg-blue-600 hover:text-white"
+                  className="btn btn-primary btn-sm"
                 >
-                  <i className="ri-facebook-fill text-lg"></i>
+                  <i className="ri-facebook-fill"></i>
                 </a>
 
-                {/* Twitter/X */}
+                {/* Twitter / X */}
                 <a
                   href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
                     news.title,
-                  )}&url=${
-                    typeof window !== "undefined" ? window.location.href : ""
-                  }`}
+                  )}&url=${encodeURIComponent(currentUrl)}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex h-9 w-9 items-center justify-center rounded-full border border-gray-300 bg-white text-black transition hover:bg-black hover:text-white"
+                  className="btn btn-dark btn-sm"
                 >
-                  <i className="ri-twitter-x-line text-lg"></i>
+                  <i className="ri-twitter-x-line"></i>
                 </a>
 
-                {/* Instagram */}
+                {/* Telegram */}
                 <a
-                  href="https://www.instagram.com/"
+                  href={`https://t.me/share/url?url=${encodeURIComponent(
+                    currentUrl,
+                  )}&text=${encodeURIComponent(news.title)}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex h-9 w-9 items-center justify-center rounded-full border border-gray-300 bg-white text-pink-500 transition hover:bg-pink-500 hover:text-white"
+                  className="btn btn-info btn-sm"
                 >
-                  <i className="ri-instagram-line text-lg"></i>
+                  <i className="ri-telegram-line"></i>
                 </a>
+
+                {/* LinkedIn */}
+                <a
+                  href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(
+                    currentUrl,
+                  )}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-secondary btn-sm"
+                >
+                  <i className="ri-linkedin-fill"></i>
+                </a>
+
+                {/* Copy Link */}
+                <button
+                  className="btn btn-warning btn-sm"
+                  onClick={() => {
+                    navigator.clipboard.writeText(currentUrl);
+                    alert("Link copied successfully");
+                  }}
+                >
+                  <i className="ri-file-copy-line"></i>
+                </button>
+
+                {/* Native Share Mobile */}
+                <button
+                  className="btn btn-danger btn-sm"
+                  onClick={async () => {
+                    if (navigator.share) {
+                      await navigator.share({
+                        title: news.title,
+                        text: news.subtitle,
+                        url: currentUrl,
+                      });
+                    }
+                  }}
+                >
+                  <i className="ri-share-forward-line"></i>
+                </button>
               </div>
             </div>
           </div>
