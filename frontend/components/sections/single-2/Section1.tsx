@@ -82,7 +82,6 @@ export default function Section1() {
             <h2>{news.title}</h2>
 
             <p>{new Date(news.createdAt).toDateString()}</p>
-            <p>{new Date(news.createdAt).toDateString()}</p>
 
             <p>👁 {news.views || 0} Views</p>
 
