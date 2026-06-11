@@ -111,7 +111,7 @@ export default function Section1() {
                   )}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn btn-success btn-sm"
+                  className="btn btn-dark btn-sm"
                 >
                   <i className="ri-whatsapp-line"></i>
                 </a>
@@ -123,7 +123,7 @@ export default function Section1() {
                   )}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn btn-primary btn-sm"
+                  className="btn btn-dark btn-sm"
                 >
                   <i className="ri-facebook-fill"></i>
                 </a>
@@ -147,7 +147,7 @@ export default function Section1() {
                   )}&text=${encodeURIComponent(news.title)}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn btn-info btn-sm"
+                  className="btn btn-dark btn-sm"
                 >
                   <i className="ri-telegram-line"></i>
                 </a>
@@ -159,7 +159,7 @@ export default function Section1() {
                   )}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn btn-secondary btn-sm"
+                  className="btn btn-dark btn-sm"
                 >
                   <i className="ri-linkedin-fill"></i>
                 </a>
