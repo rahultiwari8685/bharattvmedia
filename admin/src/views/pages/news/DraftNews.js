@@ -129,14 +129,15 @@ const DraftNews = () => {
       fetchNews()
 
       if (data.status === true) {
-        console.log('Deleted successfully')
+        toast.success('Draft deleted successfully')
 
         // optional: remove from UI
         setNewsList((prev) => prev.filter((item) => item._id !== id))
         fetchNews()
       }
+      toast.error(data.message || 'Delete failed')
     } catch (error) {
-      console.error('Delete Error:', error)
+      toast.error('Something went wrong')
     }
   }
 

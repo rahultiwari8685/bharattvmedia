@@ -19,5 +19,6 @@ router.get("/getAllUser", getAllUsers);
 
 router.post("/deleteUser/:_id", deleteUser);
 router.get("/getUserDetailsById/:id", getUserDetailsById);
+router.get("/getUserById/:id", getUserById);
 
 export default router;

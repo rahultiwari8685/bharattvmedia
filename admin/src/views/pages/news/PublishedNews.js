@@ -23,6 +23,7 @@ import CIcon from '@coreui/icons-react'
 import setting from '../../../setting.json'
 import secureLocalStorage from 'react-secure-storage'
 import { useNavigate } from 'react-router-dom'
+import toast from 'react-hot-toast'
 
 const PublishedNews = () => {
   const [newsList, setNewsList] = useState([])
@@ -145,13 +146,14 @@ const PublishedNews = () => {
       fetchNews()
 
       if (data.status === true) {
-        console.log('Deleted successfully')
-
         setNewsList((prev) => prev.filter((item) => item._id !== id))
-        fetchNews()
+
+        toast.success('News deleted successfully')
+      } else {
+        toast.error(data.message || 'Delete failed')
       }
     } catch (error) {
-      console.error('Delete Error:', error)
+      toast.error('Something went wrong')
     }
   }
 

@@ -7,14 +7,11 @@ const PublishedNews = React.lazy(() => import('./views/pages/news/PublishedNews'
 const DraftNews = React.lazy(() => import('./views/pages/news/DraftNews'))
 const DeletedNews = React.lazy(() => import('./views/pages/news/DeletedNews'))
 const ChangePassword = React.lazy(() => import('./views/pages/changePassword/ChangePassword'))
-
+const ScheduleNews = React.lazy(() => import('./views/pages/news/ScheduleNews'))
 
 const Users = React.lazy(() => import('./views/pages/users/Users'))
 const Category = React.lazy(() => import('./views/pages/category/Category'))
 // import UpdateNews from "./pages/News/UpdateNews";
-
-
-
 
 const routes = [
   { path: '/', exact: true, name: 'Home' },
@@ -25,11 +22,10 @@ const routes = [
   { path: '/PublishedNews', name: 'Published News', element: PublishedNews },
   { path: '/DraftNews', name: 'Draft News', element: DraftNews },
   { path: '/DeletedNews', name: 'Deleted News', element: DeletedNews },
-
+  { path: '/ScheduleNews', name: 'Scheduled News', element: ScheduleNews },
 
   { path: '/ChangePassword', name: 'Change Password', element: ChangePassword },
   { path: '/Users', name: 'Users', element: Users },
   { path: '/Category', name: 'Category', element: Category },
-
 ]
 export default routes

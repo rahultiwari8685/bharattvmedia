@@ -145,7 +145,8 @@ const UpdateNews = () => {
       const result = await res.json()
 
       if (!result.status) {
-        alert('News not found')
+               toast.error('News not found')
+
         return
       }
 
@@ -227,8 +228,7 @@ const UpdateNews = () => {
       console.log('News API response:', result)
 
       if (result.status === true) {
-        alert('News updated!')
-
+        toast.success('News Updated Successfully!')
         reset({
           title: '',
           slug: '',
@@ -242,10 +242,12 @@ const UpdateNews = () => {
         setEditingNews(null)
         navigate('/PublishedNews')
       } else {
-        alert(result.message || 'Failed to save news')
+        // alert(result.message || 'Failed to save news')
+        toast.error(result.message || 'Failed to update news')
       }
     } catch (error) {
-      console.error('Error saving news:', error)
+           toast.error(error.message || 'Something went wrong')
+
     }
   }
 

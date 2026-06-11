@@ -23,6 +23,8 @@ import {
 import secureLocalStorage from 'react-secure-storage'
 import EditorJSComponent from '../../../components/EditorJSComponent'
 import { useNavigate } from 'react-router-dom'
+import toast from 'react-hot-toast'
+
 const schema = yup.object().shape({
   title: yup.string().required('Title is required'),
   subtitle: yup.string().required('Subtitle is required'),
@@ -281,7 +283,7 @@ const News = () => {
     setLoading(true)
 
     if (data.type === '3' && !data.scheduledAt) {
-      alert('Please select schedule date & time')
+      toast.error('Please select schedule date & time')
       setLoading(false)
       return
     }
@@ -339,7 +341,13 @@ const News = () => {
 
         secureLocalStorage.removeItem('newsDraft')
         localStorage.removeItem('newsDraft')
-        alert(data.type === '3' ? 'News Scheduled Successfully!' : 'News Published!')
+        toast.success(
+          data.type === '3'
+            ? 'News Scheduled Successfully!'
+            : data.type === '2'
+              ? 'Draft Saved Successfully!'
+              : 'News Published Successfully!',
+        )
 
         reset({
           title: '',
@@ -355,10 +363,10 @@ const News = () => {
         setEditingNews(null)
         navigate('/PublishedNews')
       } else {
-        alert(result.message || 'Failed to save news')
+        toast.error(result.message || 'Failed to save news')
       }
     } catch (error) {
-      console.error('Error saving news:', error)
+      toast.error(error.message || 'Something went wrong while saving news')
     } finally {
       setLoading(false)
     }

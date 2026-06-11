@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux'
 
 import { CSpinner, useColorModes } from '@coreui/react'
 import './scss/style.scss'
+import { Toaster } from 'react-hot-toast'
 
 // We use those styles to show code examples, you should remove them in your application.
 import './scss/examples.scss'
@@ -37,6 +38,28 @@ const App = () => {
 
   return (
     <BrowserRouter>
+      <Toaster
+        position="top-right"
+        toastOptions={{
+          duration: 3000,
+          style: {
+            borderRadius: '8px',
+            fontSize: '14px',
+          },
+          success: {
+            style: {
+              background: '#22c55e',
+              color: '#fff',
+            },
+          },
+          error: {
+            style: {
+              background: '#ef4444',
+              color: '#fff',
+            },
+          },
+        }}
+      />
       <Suspense
         fallback={
           <div className="pt-3 text-center">
