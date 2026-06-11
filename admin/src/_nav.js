@@ -17,6 +17,7 @@ import {
   cilPencil,
   cilTrash,
   cilChart,
+  cilCalendar,
   cilUser,
   cilTags,
 } from '@coreui/icons'
