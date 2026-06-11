@@ -411,3 +411,22 @@ export const autoSaveNews = async (req, res) => {
     });
   }
 };
+
+export const increaseView = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    await News.findByIdAndUpdate(id, {
+      $inc: { views: 1 },
+    });
+
+    return res.json({
+      status: true,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      status: false,
+      message: error.message,
+    });
+  }
+};

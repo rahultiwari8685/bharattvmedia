@@ -33,6 +33,10 @@ const newsSchema = new mongoose.Schema(
       type: Date,
       default: null,
     },
+    views: {
+      type: Number,
+      default: 0,
+    },
 
     isScheduled: {
       type: Boolean,

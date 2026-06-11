@@ -254,6 +254,7 @@ const PublishedNews = () => {
               <CTableHeaderCell scope="col">Category</CTableHeaderCell>
               <CTableHeaderCell scope="col">Author</CTableHeaderCell>
               <CTableHeaderCell scope="col">Date & Time</CTableHeaderCell>
+              <CTableHeaderCell>Views</CTableHeaderCell>
               <CTableHeaderCell scope="col">Action</CTableHeaderCell>
             </CTableRow>
           </CTableHead>
@@ -300,6 +301,8 @@ const PublishedNews = () => {
                       hour12: true,
                     })}
                   </CTableDataCell>
+
+                  <CTableDataCell>{news.views || 0}</CTableDataCell>
 
                   <CTableDataCell>
                     <CButton

@@ -25,13 +25,30 @@ export default function Section1() {
 
     fetch(`${setting.api}/api/news/slug/${slug}`)
       .then((res) => res.json())
+
       .then((res) => {
         if (res.status) {
           setNews(res.data);
+
+          // Count view only once per browser
+          const viewedKey = `news_view_${res.data._id}`;
+
+          if (!localStorage.getItem(viewedKey)) {
+            fetch(`${setting.api}/api/news/view/${res.data._id}`, {
+              method: "POST",
+            })
+              .then(() => {
+                localStorage.setItem(viewedKey, "1");
+              })
+              .catch((err) => {
+                console.error("View count error:", err);
+              });
+          }
         } else {
           setNews(null);
         }
       })
+
       .catch((err) => {
         console.error("API Error:", err);
         setNews(null);
@@ -65,6 +82,9 @@ export default function Section1() {
             <h2>{news.title}</h2>
 
             <p>{new Date(news.createdAt).toDateString()}</p>
+            <p>{new Date(news.createdAt).toDateString()}</p>
+
+            <p>👁 {news.views || 0} Views</p>
 
             <div className="d-flex align-items-center gap-2">
               <img
