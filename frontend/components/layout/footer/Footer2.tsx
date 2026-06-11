@@ -51,11 +51,7 @@ export default function Footer() {
                   that matters.
                 </p>
                 <div className="d-inline-flex group-social-icons">
-                  <a
-                    href="https://www.facebook.com/khabartrendlive/"
-                    className="icon-shape icon-46"
-                    target="_blank"
-                  >
+                  <a href="/" className="icon-shape icon-46" target="_blank">
                     <svg
                       className="dark-mode-invert"
                       xmlns="http://www.w3.org/2000/svg"
@@ -70,11 +66,7 @@ export default function Footer() {
                       />
                     </svg>
                   </a>
-                  <a
-                    href="https://x.com/SanjeevKapasiy4"
-                    className="icon-shape icon-46"
-                    target="_blank"
-                  >
+                  <a href="/" className="icon-shape icon-46" target="_blank">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width={16}
@@ -86,11 +78,7 @@ export default function Footer() {
                       <path d="M12.6.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867-5.07-4.425 5.07H.316l5.733-6.57L0 .75h5.063l3.495 4.633L12.601.75Zm-.86 13.028h1.36L4.323 2.145H2.865z" />
                     </svg>
                   </a>
-                  <a
-                    href="https://www.youtube.com/@khabartrendslive"
-                    className="icon-shape icon-46"
-                    target="_blank"
-                  >
+                  <a href="/" className="icon-shape icon-46" target="_blank">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="16"
@@ -101,11 +89,7 @@ export default function Footer() {
                       <path d="M8.051 1.999h-.102C3.969 1.999 2 2.13 2 2.13s-1.969.131-1.969 1.969v7.802c0 1.838 1.969 1.969 1.969 1.969s1.969.13 5.949.13h.102c3.98 0 5.949-.13 5.949-.13s1.969-.131 1.969-1.969V4.099c0-1.838-1.969-1.969-1.969-1.969s-1.969-.131-5.949-.131zM6 11.5v-7l5 3.5-5 3.5z" />
                     </svg>
                   </a>
-                  <a
-                    href="https://www.instagram.com/khabartrendrslive/"
-                    className="icon-shape icon-46"
-                    target="_blank"
-                  >
+                  <a href="/" className="icon-shape icon-46" target="_blank">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="16"
