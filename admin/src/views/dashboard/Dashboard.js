@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { CCard, CCardBody, CCol, CRow, CProgress, CProgressBar } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
-import { cilPeople, cilUser, cilUserX, cilMoney } from '@coreui/icons'
+import { cilPeople, cilUser, cilUserX, cilMoney, cilCalendar } from '@coreui/icons'
 import setting from '../../setting.json'
 import secureLocalStorage from 'react-secure-storage'
 
