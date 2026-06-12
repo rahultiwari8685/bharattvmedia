@@ -228,7 +228,9 @@ const Category = () => {
               <CTableRow>
                 <CTableHeaderCell>#</CTableHeaderCell>
                 <CTableHeaderCell>Name</CTableHeaderCell>
-                <CTableHeaderCell>Parent</CTableHeaderCell>
+                <CTableHeaderCell>Parent Category</CTableHeaderCell>
+                <CTableHeaderCell>Show in Menu</CTableHeaderCell>
+                <CTableHeaderCell>Position</CTableHeaderCell>
                 <CTableHeaderCell>Actions</CTableHeaderCell>
               </CTableRow>
             </CTableHead>
@@ -242,6 +244,8 @@ const Category = () => {
                     <CTableDataCell>{cat?.name}</CTableDataCell>
 
                     <CTableDataCell>{cat.parentCategory?.name || '-'}</CTableDataCell>
+                    <CTableDataCell>{cat.showInMenu ? 'Yes' : 'No'}</CTableDataCell>
+                    <CTableDataCell>{cat.position || '-'}</CTableDataCell>
 
                     <CTableDataCell>
                       <CButton
