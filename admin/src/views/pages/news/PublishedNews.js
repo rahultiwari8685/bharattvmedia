@@ -293,7 +293,7 @@ const PublishedNews = () => {
                   <CTableDataCell> {news.author?.name || 'N/A'}</CTableDataCell>
 
                   <CTableDataCell>
-                    {new Date(news.updatedAt || news.createdAt).toLocaleString('en-IN', {
+                    {new Date(news.createdAt).toLocaleString('en-IN', {
                       timeZone: 'Asia/Kolkata',
                       day: '2-digit',
                       month: 'short',
