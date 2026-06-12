@@ -2,7 +2,8 @@ import Category from "../models/Category.js";
 
 export const createCategory = async (req, res) => {
   try {
-    let { name, parentCategory, showInMenu, meta_title, meta_desc } = req.body;
+    let { name, parentCategory, position, showInMenu, meta_title, meta_desc } =
+      req.body;
 
     if (!name) {
       return res.status(400).json({
@@ -20,7 +21,8 @@ export const createCategory = async (req, res) => {
       parentCategory,
       meta_title,
       meta_desc,
-      showInMenu,
+      showInMenu: showInMenu === "1",
+      position: Number(position) || 0,
     });
 
     res.status(201).json({
@@ -37,7 +39,7 @@ export const getAllCategories = async (req, res) => {
   try {
     const categories = await Category.find()
       .populate("parentCategory", "name slug")
-      .sort({ createdAt: -1 });
+      .sort({ position: 1, createdAt: -1 });
 
     res.status(200).json({
       success: true,
@@ -51,9 +53,15 @@ export const getAllCategories = async (req, res) => {
 
 export const updateCategory = async (req, res) => {
   try {
-    const { id, name, parentCategory, showInMenu } = req.body;
-
-    const bannerImage = req.file ? req.file.filename : "";
+    const {
+      id,
+      name,
+      parentCategory,
+      showInMenu,
+      position,
+      meta_title,
+      meta_desc,
+    } = req.body;
 
     if (!id) {
       return res
@@ -63,8 +71,10 @@ export const updateCategory = async (req, res) => {
 
     const updateData = {
       parentCategory: parentCategory || null,
-      showInMenu,
-      bannerImage,
+      showInMenu: showInMenu === "1",
+      position: Number(position) || 0,
+      meta_title,
+      meta_desc,
     };
 
     if (name) {
@@ -116,5 +126,26 @@ export const deleteCategory = async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
+  }
+};
+
+export const getMenuCategories = async (req, res) => {
+  try {
+    const categories = await Category.find({
+      showInMenu: true,
+    })
+      .populate("parentCategory", "name")
+      .sort({ position: 1 })
+      .select("name slug position parentCategory showInMenu");
+
+    res.status(200).json({
+      success: true,
+      data: categories,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
   }
 };

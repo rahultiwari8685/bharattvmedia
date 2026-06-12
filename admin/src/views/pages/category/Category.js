@@ -29,6 +29,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import secureLocalStorage from 'react-secure-storage'
 import { cilPen, cilPencil, cilTrash } from '@coreui/icons'
 import CIcon from '@coreui/icons-react'
+import toast from 'react-hot-toast'
 
 const schema = yup.object().shape({
   name: yup.string().required('Name is required'),
@@ -86,6 +87,7 @@ const Category = () => {
       meta_title: data.meta_title,
       meta_desc: data.meta_desc,
       showInMenu: data.nav,
+      position: Number(data.position || 0),
     }
 
     let endpoint = '/api/categories/saveCategory'
@@ -108,15 +110,26 @@ const Category = () => {
       const result = await res.json()
 
       if (result.status === true) {
-        reset()
+        toast.success(
+          editingCategory ? 'Category Updated Successfully' : 'Category Created Successfully',
+        )
+        reset({
+          name: '',
+          parentCategory: '0',
+          meta_title: '',
+          meta_desc: '',
+          showInMenu: '',
+        })
         getAllCategory()
         setEditingCategory(null)
         setVisible(false)
       } else {
-        alert(result.message || 'Failed to save category')
+        toast.error(result.message || 'Failed to save category')
       }
     } catch (err) {
-      console.error('Error saving category:', err)
+      toast.error('Something went wrong')
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -143,6 +156,8 @@ const Category = () => {
 
   const deleteCategory = async (id) => {
     try {
+      setDeleteLoading(id)
+
       const token = JSON.parse(secureLocalStorage.getItem('logininfo'))?.token
 
       const response = await fetch(`${setting.api}/api/categories/deleteCategory`, {
@@ -156,14 +171,18 @@ const Category = () => {
 
       const result = await response.json()
 
-      if (!response.ok) {
-        console.error('Delete failed:', result)
+      if (result.status) {
+        toast.success('Category Deleted Successfully')
+
+        setCategoryList((prev) => prev.filter((item) => item._id !== id))
       } else {
-        console.log('Category deleted:', result)
-        getAllCategory()
+        toast.error(result.message || 'Delete failed')
       }
     } catch (err) {
-      console.error('Error deleting category:', err)
+      console.error(err)
+      toast.error('Something went wrong')
+    } finally {
+      setDeleteLoading(null)
     }
   }
 
@@ -347,7 +366,7 @@ const Category = () => {
             </CRow>
 
             <CRow className="mb-3">
-              <CCol md={12}>
+              <CCol md={6}>
                 <CFormSelect
                   label="Show in Menu"
                   {...register('nav', { required: 'Menu is required' })}
@@ -357,6 +376,17 @@ const Category = () => {
                   <option value="0">No</option>
                 </CFormSelect>
                 {errors.nav && <small className="text-danger">{errors.nav.message}</small>}
+              </CCol>
+              <CCol md={6}>
+                <CFormInput
+                  type="number"
+                  label="Menu Position"
+                  placeholder="Enter Position"
+                  {...register('position')}
+                />
+                {errors.position && (
+                  <small className="text-danger">{errors.position.message}</small>
+                )}
               </CCol>
             </CRow>
 

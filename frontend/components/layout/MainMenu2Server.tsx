@@ -7,7 +7,8 @@ import setting from "../../setting.json";
 type Category = {
   _id: string;
   name: string;
-  showInMenu?: string | number;
+  position: number;
+  showInMenu: boolean;
   parentCategory?: {
     _id: string;
     name: string;
@@ -20,12 +21,16 @@ export default function MainMenu2Server() {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const res = await fetch(`${setting.api}/api/categories/getAllCategory`);
+        const res = await fetch(`${setting.api}/api/categories/menu`);
 
         const data = await res.json();
 
         if (data.success) {
-          setCategories(data.data);
+          const sortedCategories = data.data.sort(
+            (a: Category, b: Category) => (a.position || 0) - (b.position || 0),
+          );
+
+          setCategories(sortedCategories);
         }
       } catch (error) {
         console.error(error);
@@ -35,9 +40,9 @@ export default function MainMenu2Server() {
     fetchCategories();
   }, []);
 
-  const parentCategories = categories.filter(
-    (cat) => !cat.parentCategory && String(cat.showInMenu) === "1",
-  );
+  const parentCategories = categories
+    .filter((cat) => !cat.parentCategory)
+    .sort((a, b) => (a.position || 0) - (b.position || 0));
 
   return (
     <>
@@ -48,11 +53,9 @@ export default function MainMenu2Server() {
       </li>
 
       {parentCategories.map((parent) => {
-        const children = categories.filter(
-          (cat) =>
-            cat.parentCategory?._id === parent._id &&
-            String(cat.showInMenu) === "1",
-        );
+        const children = categories
+          .filter((cat) => cat.parentCategory?._id === parent._id)
+          .sort((a, b) => (a.position || 0) - (b.position || 0));
 
         // Parent With Submenu
         if (children.length > 0) {

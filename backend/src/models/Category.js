@@ -18,6 +18,10 @@ const categorySchema = new mongoose.Schema(
       type: String,
       default: "0",
     },
+    position: {
+      type: Number,
+      default: 0,
+    },
 
     meta_title: {
       type: String,
