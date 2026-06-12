@@ -52,7 +52,7 @@ export default function MainMenu2Server() {
         </Link>
       </li>
 
-      {parentCategories.slice(0, 3).map((parent) => {
+      {parentCategories.slice(0, 4).map((parent) => {
         const children = categories
           .filter((cat) => cat.parentCategory?._id === parent._id)
           .sort((a, b) => (a.position || 0) - (b.position || 0));
