@@ -42,7 +42,7 @@ const Category = () => {
   const [category, setCategoryList] = useState([])
   const [editingCategory, setEditingCategory] = useState(null)
   const [visible, setVisible] = useState(false)
-
+  const [loading, setLoading] = useState(false)
   const [currentPage, setCurrentPage] = useState(1)
   const itemsPerPage = 10
 
@@ -81,6 +81,7 @@ const Category = () => {
   }, [])
 
   const saveCategory = async (data) => {
+    setLoading(true)
     const db = {
       name: data.name,
       parentCategory: data.parent,
@@ -109,16 +110,17 @@ const Category = () => {
 
       const result = await res.json()
 
-      if (result.status === true) {
+      if (result.success) {
         toast.success(
           editingCategory ? 'Category Updated Successfully' : 'Category Created Successfully',
         )
         reset({
           name: '',
-          parentCategory: '0',
+          parent: '0',
           meta_title: '',
           meta_desc: '',
-          showInMenu: '',
+          nav: '0',
+          position: 0,
         })
         getAllCategory()
         setEditingCategory(null)
@@ -138,11 +140,11 @@ const Category = () => {
     setVisible(true)
 
     setValue('name', cat.name)
-    setValue('parent', cat.parentCategory._id)
-    // setValue('slug', cat.slug)
-    setValue('meta_title', cat.meta_title)
-    setValue('meta_desc', cat.meta_desc)
-    setValue('nav', cat.showInMenu)
+    setValue('parent', cat.parentCategory?._id || '0')
+    setValue('meta_title', cat.meta_title || '')
+    setValue('meta_desc', cat.meta_desc || '')
+    setValue('nav', cat.showInMenu ? '1' : '0')
+    setValue('position', cat.position || 0)
   }
 
   function handleDelete(id) {
@@ -156,8 +158,7 @@ const Category = () => {
 
   const deleteCategory = async (id) => {
     try {
-      setDeleteLoading(id)
-
+      setLoading(true)
       const token = JSON.parse(secureLocalStorage.getItem('logininfo'))?.token
 
       const response = await fetch(`${setting.api}/api/categories/deleteCategory`, {
@@ -182,7 +183,7 @@ const Category = () => {
       console.error(err)
       toast.error('Something went wrong')
     } finally {
-      setDeleteLoading(null)
+      setLoading(false)
     }
   }
 
