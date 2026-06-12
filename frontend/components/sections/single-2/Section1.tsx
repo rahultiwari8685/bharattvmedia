@@ -25,30 +25,13 @@ export default function Section1() {
 
     fetch(`${setting.api}/api/news/slug/${slug}`)
       .then((res) => res.json())
-
       .then((res) => {
         if (res.status) {
           setNews(res.data);
-
-          // Count view only once per browser
-          const viewedKey = `news_view_${res.data._id}`;
-
-          if (!localStorage.getItem(viewedKey)) {
-            fetch(`${setting.api}/api/news/view/${res.data._id}`, {
-              method: "POST",
-            })
-              .then(() => {
-                localStorage.setItem(viewedKey, "1");
-              })
-              .catch((err) => {
-                console.error("View count error:", err);
-              });
-          }
         } else {
           setNews(null);
         }
       })
-
       .catch((err) => {
         console.error("API Error:", err);
         setNews(null);
@@ -85,15 +68,20 @@ export default function Section1() {
 
             <p>{new Date(news.createdAt).toDateString()}</p>
 
-            {/* <p>👁 {news.views || 0} Views</p> */}
-
             <div className="d-flex align-items-center gap-2">
               <img
-                src="/assets/imgs/template/author/author-1.png"
+                src={
+                  news.author?.profileImage
+                    ? `${setting.api}/uploads/images/${news.author.profileImage}`
+                    : "/assets/imgs/template/author/author-1.png"
+                }
                 width={40}
                 height={40}
-                style={{ borderRadius: "50%" }}
-                alt="author"
+                style={{
+                  borderRadius: "50%",
+                  objectFit: "cover",
+                }}
+                alt={news.author?.name || "author"}
               />
               {/* <span>{news.author || "Admin"}</span> */}
 
@@ -166,7 +154,7 @@ export default function Section1() {
 
                 {/* Copy Link */}
                 <button
-                  className="btn btn-warning btn-sm"
+                  className="btn btn-dark btn-sm"
                   onClick={() => {
                     navigator.clipboard.writeText(currentUrl);
                     alert("Link copied successfully");
@@ -177,7 +165,7 @@ export default function Section1() {
 
                 {/* Native Share Mobile */}
                 <button
-                  className="btn btn-danger btn-sm"
+                  className="btn btn-dark btn-sm"
                   onClick={async () => {
                     if (navigator.share) {
                       await navigator.share({
