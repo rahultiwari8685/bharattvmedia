@@ -70,8 +70,6 @@ export default function Single_2() {
   }, []);
 
   return (
-    <>
-      return (
       <>
         <Section1 />
 
@@ -80,6 +78,5 @@ export default function Single_2() {
         <div className="bg-50 py-5">...</div>
       </>
       );
-    </>
   );
 }
