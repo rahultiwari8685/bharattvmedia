@@ -42,7 +42,7 @@ export async function generateMetadata({
         : `${setting.api}/uploads/images/${news.thumbnail}`
       : "https://bharattvmedia.com/assets/imgs/template/logo/Bharat_Logo.png";
 
-    const url = `https://bharattvmedia.com/single-2?slug=${slug}`;
+    const url = `https://bharattvmedia.com/news/${slug}`;
 
     return {
       title: news.title,

@@ -71,7 +71,7 @@ export default async function Section1({ searchParams }: Section1Props) {
       : "/assets/imgs/other/img-other-4.png",
 
     description: item.subtitle || "",
-    linkPost: `/single-2?slug=${item.slug}`,
+    linkPost: `/news/${item.slug}`,
 
     badge1: item.categories?.[0]?.name || "News",
     badge2: "",
