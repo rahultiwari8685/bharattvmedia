@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 
-import Layout from "@/components/layout/Layout";
 import Section1 from "@/components/sections/single-2/Section1";
 import Ads_sm from "@/components/elements/ads_sm";
 import ArticleCard5 from "@/components/cards/ArticleCard5";
@@ -72,35 +71,15 @@ export default function Single_2() {
 
   return (
     <>
-      <Layout headerStyle={2} footerStyle={2}>
+      return (
+      <>
         <Section1 />
 
-        <section className="related-post sec-padding bg-white">
-          <div className="container">
-            <div className="row g-4">
-              <div className="col-12">
-                <h5 className="mb-0">Related Articles</h5>
-              </div>
+        <section className="related-post sec-padding bg-white">...</section>
 
-              {relatedArticles.map((card, idx) => (
-                <div className="col-6 col-md-4 col-lg-3" key={idx}>
-                  <ArticleCard5 card={card} idx={idx} />
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <div className="bg-50 py-5">
-          <div className="container">
-            <div className="row">
-              <div className="col-lg-8 col-12 mx-lg-auto">
-                <Ads_sm />
-              </div>
-            </div>
-          </div>
-        </div>
-      </Layout>
+        <div className="bg-50 py-5">...</div>
+      </>
+      );
     </>
   );
 }
