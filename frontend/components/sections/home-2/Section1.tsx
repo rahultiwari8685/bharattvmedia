@@ -30,7 +30,7 @@ export default function Section1({ classList }: any) {
             const videoId = getYouTubeId(item.youtubeUrl);
 
             return {
-              linkPost: `/single-2?slug=${item.slug}`,
+              linkPost: `/news/${item.slug}`,
               linkBadge: "#",
               // linkAuthor: "#",
               linkAuthor: `/page-author/${item.author?._id}`,

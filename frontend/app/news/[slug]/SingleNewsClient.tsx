@@ -46,7 +46,7 @@ export default function Single_2() {
 
               linkBadge: "#",
 
-              linkPost: `/single-2?slug=${item.slug}`,
+              linkPost: `/news/${item.slug}`,
               linkAuthor: `/page-author/${item.author?._id}`,
 
               badge: item.categories?.[0]?.name || "News",
