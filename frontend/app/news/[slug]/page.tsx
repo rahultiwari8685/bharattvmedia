@@ -4,15 +4,15 @@ import SingleNewsClient from "./SingleNewsClient";
 import setting from "@/setting.json";
 
 type PageProps = {
-  searchParams: {
-    slug?: string;
+  params: {
+    slug: string;
   };
 };
 
 export async function generateMetadata({
-  searchParams,
+  params,
 }: PageProps): Promise<Metadata> {
-  const slug = searchParams.slug;
+  const slug = params.slug;
 
   if (!slug) {
     return {
