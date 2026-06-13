@@ -46,13 +46,10 @@ export default function Section1({ authorId, searchParams }: Props) {
 
   // Format Data
   const formattedArticles = newsList.map((item: any, idx: number) => ({
-    // Article Link
     linkPost: `/single-2?slug=${item.slug}`,
 
-    // Author Link
     linkAuthor: `/page-author/${item.author?._id}`,
 
-    // Badge Link
     linkBadge: "#",
 
     // Comment Link

@@ -56,18 +56,8 @@ export default function Section1() {
       <div className="container">
         <div className="row py-4">
           <div className="col-lg-6 pe-lg-5">
-            {/* <nav>
-              <ul className="breadcrumb d-flex gap-2">
-                <li>
-                  <Link href="/">Home</Link>
-                </li>
-              </ul>
-            </nav> */}
-
-            <h2>{news.title}</h2>
-
+            x<h2>{news.title}</h2>
             <p>{new Date(news.createdAt).toDateString()}</p>
-
             <div className="d-flex align-items-center gap-2">
               <img
                 src={

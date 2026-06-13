@@ -26,7 +26,6 @@ export default function Page_Author() {
 
   const [loading, setLoading] = useState(true);
 
-  // Fetch Author
   useEffect(() => {
     if (!id) return;
 
@@ -51,7 +50,6 @@ export default function Page_Author() {
       });
   }, [id]);
 
-  // Loading
   if (loading) {
     return (
       <Layout headerStyle={2} footerStyle={2}>
@@ -69,7 +67,6 @@ export default function Page_Author() {
         <div className="row">
           <div className="col-lg-6 col-md-8 mx-auto">
             <div className="card shadow border-0 rounded-4 p-4">
-              {/* Author Image */}
               <div className="card-img mb-4 text-center">
                 <img
                   className="rounded-circle avatar-154"
