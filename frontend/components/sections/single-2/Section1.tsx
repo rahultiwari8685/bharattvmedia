@@ -20,23 +20,28 @@ export default function Section1({ slug }: Props) {
   };
 
   useEffect(() => {
-    if (!slug) return;
+    console.log("Slug received:", slug);
+
+    if (!slug) {
+      console.log("Slug is empty");
+      setLoading(false);
+      return;
+    }
 
     setLoading(true);
 
     fetch(`${setting.api}/api/news/slug/${slug}`)
       .then((res) => res.json())
       .then((res) => {
+        console.log(res);
+
         if (res.status) {
           setNews(res.data);
         } else {
           setNews(null);
         }
       })
-      .catch((err) => {
-        console.error("API Error:", err);
-        setNews(null);
-      })
+      .catch(console.error)
       .finally(() => setLoading(false));
   }, [slug]);
 
@@ -57,7 +62,7 @@ export default function Section1({ slug }: Props) {
       <div className="container">
         <div className="row py-4">
           <div className="col-lg-6 pe-lg-5">
-            x<h2>{news.title}</h2>
+            <h2>{news.title}</h2>
             <p>{new Date(news.createdAt).toDateString()}</p>
             <div className="d-flex align-items-center gap-2">
               <img

@@ -4,15 +4,15 @@ import SingleNewsClient from "./SingleNewsClient";
 import setting from "@/setting.json";
 
 type PageProps = {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 };
 
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
-  const slug = params.slug;
+  const { slug } = await params;
 
   if (!slug) {
     return {
@@ -79,10 +79,12 @@ export async function generateMetadata({
   }
 }
 
-export default function Page({ params }: PageProps) {
+export default async function Page({ params }: PageProps) {
+  const { slug } = await params;
+
   return (
     <Layout headerStyle={2} footerStyle={2}>
-      <SingleNewsClient slug={params.slug} />
+      <SingleNewsClient slug={slug} />
     </Layout>
   );
 }
