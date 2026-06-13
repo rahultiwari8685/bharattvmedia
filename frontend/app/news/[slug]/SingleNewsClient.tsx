@@ -18,7 +18,11 @@ type RelatedArticleType = {
   title: string;
 };
 
-export default function Single_2() {
+type Props = {
+  slug: string;
+};
+
+export default function Single_2({ slug }: Props) {
   const [relatedArticles, setRelatedArticles] = useState<RelatedArticleType[]>(
     [],
   );
@@ -71,7 +75,7 @@ export default function Single_2() {
 
   return (
     <>
-      <Section1 />
+      <Section1 slug={slug} />
 
       <section className="related-post sec-padding bg-white">...</section>
 

@@ -79,10 +79,10 @@ export async function generateMetadata({
   }
 }
 
-export default function Page() {
+export default function Page({ params }: PageProps) {
   return (
     <Layout headerStyle={2} footerStyle={2}>
-      <SingleNewsClient />
+      <SingleNewsClient slug={params.slug} />
     </Layout>
   );
 }

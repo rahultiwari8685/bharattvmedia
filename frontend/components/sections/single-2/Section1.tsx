@@ -1,14 +1,15 @@
 "use client";
 
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+
 import { useEffect, useState } from "react";
 import setting from "../../../setting.json";
 
-export default function Section1() {
-  const searchParams = useSearchParams();
-  const slug = searchParams.get("slug");
+type Props = {
+  slug: string;
+};
 
+export default function Section1({ slug }: Props) {
   const [news, setNews] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
