@@ -269,7 +269,7 @@ const PublishedNews = () => {
 
                   <CTableDataCell>
                     <a
-                      href={`https://bharattvmedia.com/single-2?slug=${news.slug}`}
+                     href={`https://bharattvmedia.com/news/${news.slug}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       style={{

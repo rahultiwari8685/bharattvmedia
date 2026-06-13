@@ -41,7 +41,7 @@ export default function SideBarServer() {
             // ? `${setting.api}/uploads/images/${item.thumbnail}`
             // : "/assets/imgs/other/img-other-4.png",
 
-            link: `/single-2?slug=${item.slug}`,
+            link: `/news/${item.slug}`,
 
             title: item.title || "No Title",
 

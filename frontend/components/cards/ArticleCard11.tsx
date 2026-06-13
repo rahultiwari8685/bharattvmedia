@@ -30,7 +30,7 @@ export default function ArticleCard11({ card, idx }: Props) {
     <>
       <div className="article card-11" key={idx}>
         <div className="card-img-top thumbnail">
-          <Link href={`/single-2?slug=${card.slug || ""}`}>
+          <Link href={`/news/${card.slug || ""}`}>
             {card.hasVideo ? (
               <iframe
                 className="rounded-4 w-100"
