@@ -70,13 +70,12 @@ export default function Single_2() {
   }, []);
 
   return (
-      <>
-        <Section1 />
+    <>
+      <Section1 />
 
-        <section className="related-post sec-padding bg-white">...</section>
+      <section className="related-post sec-padding bg-white">...</section>
 
-        <div className="bg-50 py-5">...</div>
-      </>
-      );
+      <div className="bg-50 py-5">...</div>
+    </>
   );
 }
