@@ -363,7 +363,7 @@ const News = () => {
                   />
                   {errors.slug && <small className="text-danger">{errors.slug.message}</small>}
                 </CCol> */}
-                <CCol md={12}>
+                <CCol md={6}>
                   <CFormInput
                     type="text"
                     label="Subtitle"
@@ -374,9 +374,7 @@ const News = () => {
                     <small className="text-danger">{errors.subtitle.message}</small>
                   )}
                 </CCol>
-              </CRow>
 
-              <CRow>
                 <CCol md={12}>
                   <p className="mb-2 ">Select Categories</p>
                   <CDropdown>
@@ -406,6 +404,37 @@ const News = () => {
                   </CDropdown>
                 </CCol>
               </CRow>
+
+              {/* <CRow>
+                <CCol md={12}>
+                  <p className="mb-2 ">Select Categories</p>
+                  <CDropdown>
+                    <CDropdownToggle color="secondary">
+                      {formDataValues.categories.length > 0
+                        ? categoriesList
+                            .filter((cat) => formDataValues.categories.includes(cat._id))
+                            .map((cat) => cat.name)
+                            .join(', ')
+                        : 'Select Categories'}
+                    </CDropdownToggle>
+                    <CDropdownMenu>
+                      {categoriesList.map((cat) => {
+                        const isSelected = formDataValues.categories.includes(cat._id)
+                        return (
+                          <CDropdownItem key={cat._id}>
+                            <CFormCheck
+                              id={`cat-${cat._id}`}
+                              label={cat.name}
+                              checked={isSelected}
+                              onChange={() => toggleCategory(cat._id)}
+                            />
+                          </CDropdownItem>
+                        )
+                      })}
+                    </CDropdownMenu>
+                  </CDropdown>
+                </CCol>
+              </CRow> */}
 
               <CRow className="mb-3 mt-2">
                 {/* <CCol md={6}>
