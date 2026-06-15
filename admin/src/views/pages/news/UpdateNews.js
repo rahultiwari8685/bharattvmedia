@@ -25,6 +25,7 @@ import {
 import secureLocalStorage from 'react-secure-storage'
 import EditorJSComponent from '../../../../../../igistrategy/admin/src/components/EditorJSComponent'
 import { useParams } from 'react-router-dom'
+import toast from 'react-hot-toast'
 
 const schema = yup.object().shape({
   title: yup.string().required('Title is required'),
@@ -86,17 +87,6 @@ const UpdateNews = () => {
   }
 
   const formDataValues = watch()
-
-  // useEffect(() => {
-  //   if (formDataValues.title && !slugEdited) {
-  //     const generatedSlug = formDataValues.title
-  //       .toLowerCase()
-  //       .replace(/[^a-z0-9\s-]/g, '')
-  //       .trim()
-  //       .replace(/\s+/g, '-')
-  //     setValue('slug', generatedSlug)
-  //   }
-  // }, [formDataValues.title, slugEdited, setValue])
 
   const toggleCategory = (id) => {
     const alreadySelected = formDataValues.categories.includes(id)
