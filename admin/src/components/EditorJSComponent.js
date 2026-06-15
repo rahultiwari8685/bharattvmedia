@@ -28,119 +28,112 @@ const EditorJSComponent = ({ data, onChange }) => {
             inlineToolbar: true,
           },
 
-          tools: {
-            paragraph: {
-              class: Paragraph,
-              inlineToolbar: true,
+          h1: {
+            class: Header,
+            inlineToolbar: true,
+            toolbox: {
+              title: 'Header 1',
             },
-
-            h1: {
-              class: Header,
-              inlineToolbar: true,
-              toolbox: {
-                title: 'Header 1',
-              },
-              config: {
-                placeholder: 'Heading 1',
-                levels: [1],
-                defaultLevel: 1,
-              },
+            config: {
+              placeholder: 'Heading 1',
+              levels: [1],
+              defaultLevel: 1,
             },
+          },
 
-            h2: {
-              class: Header,
-              inlineToolbar: true,
-              toolbox: {
-                title: 'Header 2',
-              },
-              config: {
-                placeholder: 'Heading 2',
-                levels: [2],
-                defaultLevel: 2,
-              },
+          h2: {
+            class: Header,
+            inlineToolbar: true,
+            toolbox: {
+              title: 'Header 2',
             },
-
-            h3: {
-              class: Header,
-              inlineToolbar: true,
-              toolbox: {
-                title: 'Header 3',
-              },
-              config: {
-                placeholder: 'Heading 3',
-                levels: [3],
-                defaultLevel: 3,
-              },
+            config: {
+              placeholder: 'Heading 2',
+              levels: [2],
+              defaultLevel: 2,
             },
+          },
 
-            h4: {
-              class: Header,
-              inlineToolbar: true,
-              toolbox: {
-                title: 'Header 4',
-              },
-              config: {
-                placeholder: 'Heading 4',
-                levels: [4],
-                defaultLevel: 4,
-              },
+          h3: {
+            class: Header,
+            inlineToolbar: true,
+            toolbox: {
+              title: 'Header 3',
             },
-
-            h5: {
-              class: Header,
-              inlineToolbar: true,
-              toolbox: {
-                title: 'Header 5',
-              },
-              config: {
-                placeholder: 'Heading 5',
-                levels: [5],
-                defaultLevel: 5,
-              },
+            config: {
+              placeholder: 'Heading 3',
+              levels: [3],
+              defaultLevel: 3,
             },
+          },
 
-            h6: {
-              class: Header,
-              inlineToolbar: true,
-              toolbox: {
-                title: 'Header 6',
-              },
-              config: {
-                placeholder: 'Heading 6',
-                levels: [6],
-                defaultLevel: 6,
-              },
+          h4: {
+            class: Header,
+            inlineToolbar: true,
+            toolbox: {
+              title: 'Header 4',
             },
-
-            list: {
-              class: List,
-              inlineToolbar: true,
+            config: {
+              placeholder: 'Heading 4',
+              levels: [4],
+              defaultLevel: 4,
             },
+          },
 
-            quote: {
-              class: Quote,
-              inlineToolbar: true,
+          h5: {
+            class: Header,
+            inlineToolbar: true,
+            toolbox: {
+              title: 'Header 5',
             },
-
-            embed: {
-              class: Embed,
-              inlineToolbar: true,
+            config: {
+              placeholder: 'Heading 5',
+              levels: [5],
+              defaultLevel: 5,
             },
+          },
 
-            image: {
-              class: ImageTool,
-              config: {
-                uploader: {
-                  uploadByFile(file) {
-                    return new Promise((resolve) => {
-                      const url = URL.createObjectURL(file)
+          h6: {
+            class: Header,
+            inlineToolbar: true,
+            toolbox: {
+              title: 'Header 6',
+            },
+            config: {
+              placeholder: 'Heading 6',
+              levels: [6],
+              defaultLevel: 6,
+            },
+          },
 
-                      resolve({
-                        success: 1,
-                        file: { url },
-                      })
+          list: {
+            class: List,
+            inlineToolbar: true,
+          },
+
+          quote: {
+            class: Quote,
+            inlineToolbar: true,
+          },
+
+          embed: {
+            class: Embed,
+            inlineToolbar: true,
+          },
+
+          image: {
+            class: ImageTool,
+            config: {
+              uploader: {
+                uploadByFile(file) {
+                  return new Promise((resolve) => {
+                    const url = URL.createObjectURL(file)
+
+                    resolve({
+                      success: 1,
+                      file: { url },
                     })
-                  },
+                  })
                 },
               },
             },
