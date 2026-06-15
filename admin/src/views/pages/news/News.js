@@ -325,7 +325,7 @@ const News = () => {
 
   return (
     <div className="d-flex flex-column flex-lg-row gap-4">
-      <CCol lg={8}>
+      <CCol lg={formDataValues.videoType === '1' ? 8 : 12}>
         <CCard className="shadow border-0 rounded-4">
           <CCardHeader className="bg-dark text-white fw-bold px-4 py-3 shadow-sm">
             <h5 className="mb-0">Create News</h5>
@@ -548,67 +548,69 @@ const News = () => {
         </CCard>
       </CCol>
 
-      <CCol lg={4}>
-        <CCard className="shadow border-0 rounded-4 text-dark">
-          <CCardHeader className="bg-dark text-white fw-bold px-4 py-3 shadow-sm">
-            <h5 className="mb-0">Live Preview</h5>
-          </CCardHeader>
+      {formDataValues.videoType === '1' && (
+        <CCol lg={4}>
+          <CCard className="shadow border-0 rounded-4 text-dark">
+            <CCardHeader className="bg-dark text-white fw-bold px-4 py-3 shadow-sm">
+              <h5 className="mb-0">Live Preview</h5>
+            </CCardHeader>
 
-          <CCardBody>
-            {formDataValues.title && (
-              <p>
-                <strong>Title:</strong> {formDataValues.title}
-              </p>
-            )}
-            {formDataValues.categories?.length > 0 && (
-              <p>
-                <strong>Categories:</strong>{' '}
-                {categoriesList
-                  .filter((cat) => formDataValues.categories.includes(cat._id))
-                  .map((cat) => cat.name)
-                  .join(', ')}
-              </p>
-            )}
+            <CCardBody>
+              {formDataValues.title && (
+                <p>
+                  <strong>Title:</strong> {formDataValues.title}
+                </p>
+              )}
+              {formDataValues.categories?.length > 0 && (
+                <p>
+                  <strong>Categories:</strong>{' '}
+                  {categoriesList
+                    .filter((cat) => formDataValues.categories.includes(cat._id))
+                    .map((cat) => cat.name)
+                    .join(', ')}
+                </p>
+              )}
 
-            {formDataValues.videoType === '1' &&
-              formDataValues.youtubeUrl &&
-              (() => {
-                const videoId = getYouTubeId(formDataValues.youtubeUrl)
-                return videoId ? (
-                  <iframe
-                    width="100%"
-                    height="250"
-                    className="rounded mb-3"
-                    src={`https://www.youtube.com/embed/${videoId}`}
-                    title="YouTube Preview"
-                    allowFullScreen
-                  ></iframe>
-                ) : (
-                  <p className="text-danger">Invalid YouTube URL</p>
-                )
-              })()}
+              {formDataValues.videoType === '1' &&
+                formDataValues.youtubeUrl &&
+                (() => {
+                  const videoId = getYouTubeId(formDataValues.youtubeUrl)
+                  return videoId ? (
+                    <iframe
+                      width="100%"
+                      height="250"
+                      className="rounded mb-3"
+                      src={`https://www.youtube.com/embed/${videoId}`}
+                      title="YouTube Preview"
+                      allowFullScreen
+                    ></iframe>
+                  ) : (
+                    <p className="text-danger">Invalid YouTube URL</p>
+                  )
+                })()}
 
-            {formDataValues.videoType === '2' && formDataValues.videoFile?.[0] && (
-              <video width="100%" height="auto" className="rounded" controls>
-                <source src={videoPreview} />
-                {/* <source src={URL.createObjectURL(formDataValues.videoFile[0])} /> */}
-              </video>
-            )}
+              {formDataValues.videoType === '2' && formDataValues.videoFile?.[0] && (
+                <video width="100%" height="auto" className="rounded" controls>
+                  <source src={videoPreview} />
+                  {/* <source src={URL.createObjectURL(formDataValues.videoFile[0])} /> */}
+                </video>
+              )}
 
-            {formDataValues.videoType === '2' && formDataValues.thumbnail?.[0] && (
-              <div className="mt-3">
-                <strong>Thumbnail:</strong>
-                <img
-                  src={thumbnailPreview}
-                  alt="Thumbnail"
-                  className="img-fluid rounded mt-2"
-                  style={{ maxHeight: '150px', objectFit: 'cover' }}
-                />
-              </div>
-            )}
-          </CCardBody>
-        </CCard>
-      </CCol>
+              {formDataValues.videoType === '2' && formDataValues.thumbnail?.[0] && (
+                <div className="mt-3">
+                  <strong>Thumbnail:</strong>
+                  <img
+                    src={thumbnailPreview}
+                    alt="Thumbnail"
+                    className="img-fluid rounded mt-2"
+                    style={{ maxHeight: '150px', objectFit: 'cover' }}
+                  />
+                </div>
+              )}
+            </CCardBody>
+          </CCard>
+        </CCol>
+      )}
     </div>
   )
 }
