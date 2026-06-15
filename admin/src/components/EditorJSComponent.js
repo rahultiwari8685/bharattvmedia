@@ -28,16 +28,121 @@ const EditorJSComponent = ({ data, onChange }) => {
             inlineToolbar: true,
           },
 
-          header: {
-            class: Header,
-            toolbox: {
-              title: 'Heading',
-              icon: '<svg width="18" height="18" viewBox="0 0 24 24"><path d="M4 4h3v7h10V4h3v16h-3v-7H7v7H4z"/></svg>',
+          tools: {
+            paragraph: {
+              class: Paragraph,
+              inlineToolbar: true,
             },
-            config: {
-              levels: [1, 2, 3, 4, 5, 6],
-              defaultLevel: 2,
-              placeholder: 'Enter Heading',
+
+            h1: {
+              class: Header,
+              inlineToolbar: true,
+              toolbox: {
+                title: 'Header 1',
+              },
+              config: {
+                placeholder: 'Heading 1',
+                levels: [1],
+                defaultLevel: 1,
+              },
+            },
+
+            h2: {
+              class: Header,
+              inlineToolbar: true,
+              toolbox: {
+                title: 'Header 2',
+              },
+              config: {
+                placeholder: 'Heading 2',
+                levels: [2],
+                defaultLevel: 2,
+              },
+            },
+
+            h3: {
+              class: Header,
+              inlineToolbar: true,
+              toolbox: {
+                title: 'Header 3',
+              },
+              config: {
+                placeholder: 'Heading 3',
+                levels: [3],
+                defaultLevel: 3,
+              },
+            },
+
+            h4: {
+              class: Header,
+              inlineToolbar: true,
+              toolbox: {
+                title: 'Header 4',
+              },
+              config: {
+                placeholder: 'Heading 4',
+                levels: [4],
+                defaultLevel: 4,
+              },
+            },
+
+            h5: {
+              class: Header,
+              inlineToolbar: true,
+              toolbox: {
+                title: 'Header 5',
+              },
+              config: {
+                placeholder: 'Heading 5',
+                levels: [5],
+                defaultLevel: 5,
+              },
+            },
+
+            h6: {
+              class: Header,
+              inlineToolbar: true,
+              toolbox: {
+                title: 'Header 6',
+              },
+              config: {
+                placeholder: 'Heading 6',
+                levels: [6],
+                defaultLevel: 6,
+              },
+            },
+
+            list: {
+              class: List,
+              inlineToolbar: true,
+            },
+
+            quote: {
+              class: Quote,
+              inlineToolbar: true,
+            },
+
+            embed: {
+              class: Embed,
+              inlineToolbar: true,
+            },
+
+            image: {
+              class: ImageTool,
+              config: {
+                uploader: {
+                  uploadByFile(file) {
+                    return new Promise((resolve) => {
+                      const url = URL.createObjectURL(file)
+
+                      resolve({
+                        success: 1,
+                        file: { url },
+                      })
+                    })
+                  },
+                },
+              },
             },
           },
 
