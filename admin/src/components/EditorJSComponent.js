@@ -208,7 +208,7 @@ const EditorJSComponent = ({ data, onChange }) => {
   return (
     <div
       id="editorjs"
-      className="min-h-[300px] rounded-xl border border-gray-300 bg-white p-4 shadow-sm"
+      className="min-h-[500px] rounded-xl border border-gray-300 bg-white p-4 shadow-sm"
     />
   )
 }
