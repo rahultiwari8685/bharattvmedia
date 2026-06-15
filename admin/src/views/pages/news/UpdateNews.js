@@ -219,7 +219,7 @@ const UpdateNews = () => {
       const result = await res.json()
       console.log('News API response:', result)
 
-      if (result.status === true) {
+      if (result.status) {
         toast.success('News Updated Successfully!')
         reset({
           title: '',
