@@ -87,16 +87,16 @@ const UpdateNews = () => {
 
   const formDataValues = watch()
 
-  useEffect(() => {
-    if (formDataValues.title && !slugEdited) {
-      const generatedSlug = formDataValues.title
-        .toLowerCase()
-        .replace(/[^a-z0-9\s-]/g, '')
-        .trim()
-        .replace(/\s+/g, '-')
-      setValue('slug', generatedSlug)
-    }
-  }, [formDataValues.title, slugEdited, setValue])
+  // useEffect(() => {
+  //   if (formDataValues.title && !slugEdited) {
+  //     const generatedSlug = formDataValues.title
+  //       .toLowerCase()
+  //       .replace(/[^a-z0-9\s-]/g, '')
+  //       .trim()
+  //       .replace(/\s+/g, '-')
+  //     setValue('slug', generatedSlug)
+  //   }
+  // }, [formDataValues.title, slugEdited, setValue])
 
   const toggleCategory = (id) => {
     const alreadySelected = formDataValues.categories.includes(id)
