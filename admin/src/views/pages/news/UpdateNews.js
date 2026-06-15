@@ -202,6 +202,7 @@ const UpdateNews = () => {
     formData.append('sub_title', data.subtitle)
     formData.append('video_type', data.videoType)
     formData.append('type', data.type)
+    formData.append('slug', data.slug)
 
     formData.append('categories', JSON.stringify(data.categories))
 
