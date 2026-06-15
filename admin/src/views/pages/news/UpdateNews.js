@@ -60,6 +60,7 @@ const UpdateNews = () => {
       categories: [],
       videoType: '',
       type: '',
+      slug: '',
       youtubeUrl: '',
       videoFile: null,
       thumbnail: null,
