@@ -206,6 +206,7 @@ export const updateNews = async (req, res) => {
       video_type,
       youtube_url,
       content,
+      slug,
       type,
       scheduledAt,
     } = req.body;
@@ -240,7 +241,7 @@ export const updateNews = async (req, res) => {
       subtitle: sub_title,
       categories,
       videoType: video_type,
-
+      slug: slug || undefined, // ✅ only update if slug is provided
       youtubeUrl: youtube_url || "",
 
       // ✅ update content
