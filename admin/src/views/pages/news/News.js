@@ -112,60 +112,6 @@ const News = () => {
     }
   }, [formDataValues.videoFile])
 
-  // useEffect(() => {
-  //   // Save only Draft
-  //   if (formDataValues.type !== '2') return
-
-  //   // Don't save empty form
-  //   if (!formDataValues.title && !formDataValues.subtitle) {
-  //     return
-  //   }
-
-  //   const timeout = setTimeout(async () => {
-  //     try {
-  //       const res = await fetch(`${setting.api}/api/news/auto-save`, {
-  //         method: 'POST',
-  //         headers: {
-  //           'Content-Type': 'application/json',
-  //         },
-  //         body: JSON.stringify({
-  //           title: formDataValues.title,
-  //           subtitle: formDataValues.subtitle,
-  //           categories: formDataValues.categories,
-  //           videoType: formDataValues.videoType,
-
-  //           // ❌ prevent translate spam
-  //           content: content,
-
-  //           type: 2,
-  //           author,
-  //         }),
-  //       })
-
-  //       const result = await res.json()
-
-  //       if (result.status) {
-  //         // ✅ store auto draft
-  //         if (result.data?._id) {
-  //           setEditingNews(result.data)
-  //         }
-
-  //         setDraftSaved(true)
-
-  //         setTimeout(() => {
-  //           setDraftSaved(false)
-  //         }, 2000)
-
-  //         console.log('Draft auto-saved')
-  //       }
-  //     } catch (error) {
-  //       console.error('Auto save failed', error)
-  //     }
-  //   }, 10000)
-
-  //   return () => clearTimeout(timeout)
-  // }, [formDataValues, content])
-
   useEffect(() => {
     if (formDataValues.type !== '2') return
 
@@ -320,16 +266,10 @@ const News = () => {
 
     let endpoint = '/api/news/saveNews'
 
-    // ✅ If auto draft exists then update it
     if (editingNews?._id) {
       endpoint = '/api/news/updateNews'
       formData.append('id', editingNews._id)
     }
-
-    // if (editingNews) {
-    //   endpoint = '/api/news/updateNews'
-    //   formData.append('id', editingNews.id)
-    // }
 
     try {
       const res = await fetch(setting.api + endpoint, {
