@@ -375,7 +375,7 @@ const News = () => {
                   )}
                 </CCol>
 
-                <CCol md={12}>
+                <CCol md={6}>
                   <p className="mb-2 ">Select Categories</p>
                   <CDropdown>
                     <CDropdownToggle color="secondary">
