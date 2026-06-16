@@ -164,16 +164,20 @@ const UpdateNews = () => {
       })
 
       if (selected.content) {
-        try {
-          const parsedContent =
-            typeof selected.content === 'string' ? JSON.parse(selected.content) : selected.content
-
-          setContent(parsedContent)
-        } catch (err) {
-          console.log('Content parse error:', err)
-          setContent({})
-        }
+        setContent(selected.content)
       }
+
+      // if (selected.content) {
+      //   try {
+      //     const parsedContent =
+      //       typeof selected.content === 'string' ? JSON.parse(selected.content) : selected.content
+
+      //     setContent(parsedContent)
+      //   } catch (err) {
+      //     console.log('Content parse error:', err)
+      //     setContent({})
+      //   }
+      // }
     } catch (error) {
       console.error('Error fetching news:', error)
     }
