@@ -404,67 +404,73 @@ const UpdateNews = () => {
                                                         `}
                         </style>
 
-                        <CKEditor
-                          initData={content}
-                          config={{
-                            height: 400,
+                        {editingNews && (
+                          <CKEditor
+                            key={editingNews._id}
+                            initData={editingNews.content}
+                            onChange={(event) => {
+                              const data = event.editor.getData()
+                              setContent(data)
+                            }}
+                            config={{
+                              height: 400,
 
-                            extraPlugins: 'font,colorbutton,justify',
+                              extraPlugins: 'font,colorbutton,justify',
 
-                            toolbar: [
-                              {
-                                name: 'styles',
-                                items: ['Styles', 'Format', 'Font', 'FontSize'],
-                              },
-                              {
-                                name: 'basicstyles',
-                                items: ['Bold', 'Italic', 'Underline', 'Strike'],
-                              },
-                              {
-                                name: 'colors',
-                                items: ['TextColor', 'BGColor'],
-                              },
-                              {
-                                name: 'paragraph',
-                                items: [
-                                  'NumberedList',
-                                  'BulletedList',
-                                  '-',
-                                  'Outdent',
-                                  'Indent',
-                                  '-',
-                                  'JustifyLeft',
-                                  'JustifyCenter',
-                                  'JustifyRight',
-                                  'JustifyBlock',
-                                ],
-                              },
-                              {
-                                name: 'insert',
-                                items: ['Image', 'Table'],
-                              },
-                              {
-                                name: 'links',
-                                items: ['Link', 'Unlink'],
-                              },
-                              {
-                                name: 'document',
-                                items: ['Source'],
-                              },
-                            ],
+                              toolbar: [
+                                {
+                                  name: 'styles',
+                                  items: ['Styles', 'Format', 'Font', 'FontSize'],
+                                },
+                                {
+                                  name: 'basicstyles',
+                                  items: ['Bold', 'Italic', 'Underline', 'Strike'],
+                                },
+                                {
+                                  name: 'colors',
+                                  items: ['TextColor', 'BGColor'],
+                                },
+                                {
+                                  name: 'paragraph',
+                                  items: [
+                                    'NumberedList',
+                                    'BulletedList',
+                                    '-',
+                                    'Outdent',
+                                    'Indent',
+                                    '-',
+                                    'JustifyLeft',
+                                    'JustifyCenter',
+                                    'JustifyRight',
+                                    'JustifyBlock',
+                                  ],
+                                },
+                                {
+                                  name: 'insert',
+                                  items: ['Image', 'Table'],
+                                },
+                                {
+                                  name: 'links',
+                                  items: ['Link', 'Unlink'],
+                                },
+                                {
+                                  name: 'document',
+                                  items: ['Source'],
+                                },
+                              ],
 
-                            font_names:
-                              'Arial/Arial, Helvetica, sans-serif;' +
-                              'Times New Roman/Times New Roman, Times, serif;' +
-                              'Verdana/Verdana, Geneva, sans-serif;' +
-                              'Tahoma/Tahoma, Geneva, sans-serif;' +
-                              'Georgia/Georgia, serif;',
+                              font_names:
+                                'Arial/Arial, Helvetica, sans-serif;' +
+                                'Times New Roman/Times New Roman, Times, serif;' +
+                                'Verdana/Verdana, Geneva, sans-serif;' +
+                                'Tahoma/Tahoma, Geneva, sans-serif;' +
+                                'Georgia/Georgia, serif;',
 
-                            fontSize_sizes:
-                              '8/8px;10/10px;12/12px;14/14px;16/16px;18/18px;20/20px;24/24px;28/28px;36/36px;48/48px;72/72px',
-                          }}
-                        />
-
+                              fontSize_sizes:
+                                '8/8px;10/10px;12/12px;14/14px;16/16px;18/18px;20/20px;24/24px;28/28px;36/36px;48/48px;72/72px',
+                            }}
+                          />
+                        )}
                         {errors.description && (
                           <p className="text-danger small mt-1">{errors.description.message}</p>
                         )}
