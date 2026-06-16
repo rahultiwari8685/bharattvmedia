@@ -518,7 +518,7 @@ const News = () => {
                                 `}
                         </style>
 
-                        <CKEditor
+                        {/* <CKEditor
                           key={editingNews?._id || 'new'}
                           initData={content}
                           config={{
@@ -542,6 +542,76 @@ const News = () => {
                               shouldValidate: true,
                               shouldDirty: true,
                             })
+                          }}
+                        /> */}
+
+                        <CKEditor
+                          key={editingNews?._id || 'new'}
+                          initData={content}
+                          config={{
+                            height: 400,
+
+                            toolbar: [
+                              {
+                                name: 'document',
+                                items: ['Source'],
+                              },
+                              {
+                                name: 'clipboard',
+                                items: ['Undo', 'Redo'],
+                              },
+                              {
+                                name: 'styles',
+                                items: ['Format', 'Font', 'FontSize'],
+                              },
+                              {
+                                name: 'colors',
+                                items: ['TextColor', 'BGColor'],
+                              },
+                              {
+                                name: 'basicstyles',
+                                items: ['Bold', 'Italic', 'Underline', 'Strike', 'RemoveFormat'],
+                              },
+                              {
+                                name: 'paragraph',
+                                items: [
+                                  'NumberedList',
+                                  'BulletedList',
+                                  '-',
+                                  'Outdent',
+                                  'Indent',
+                                  '-',
+                                  'JustifyLeft',
+                                  'JustifyCenter',
+                                  'JustifyRight',
+                                  'JustifyBlock',
+                                ],
+                              },
+                              {
+                                name: 'insert',
+                                items: ['Image', 'Table', 'HorizontalRule', 'SpecialChar'],
+                              },
+                              {
+                                name: 'links',
+                                items: ['Link', 'Unlink'],
+                              },
+                            ],
+
+                            format_tags: 'p;h1;h2;h3;h4;h5;h6;pre',
+
+                            font_names:
+                              'Arial/Arial, Helvetica, sans-serif;' +
+                              'Times New Roman/Times New Roman, Times, serif;' +
+                              'Verdana/Verdana, Geneva, sans-serif;' +
+                              'Tahoma/Tahoma, Geneva, sans-serif;' +
+                              'Georgia/Georgia, serif;' +
+                              'Courier New/Courier New, Courier, monospace;',
+
+                            fontSize_sizes:
+                              '8/8px;10/10px;12/12px;14/14px;16/16px;18/18px;20/20px;24/24px;28/28px;32/32px;36/36px;48/48px;72/72px',
+                          }}
+                          onChange={(evt) => {
+                            setContent(evt.editor.getData())
                           }}
                         />
 
