@@ -23,9 +23,9 @@ import {
   CDropdownItem,
 } from '@coreui/react'
 import secureLocalStorage from 'react-secure-storage'
-import EditorJSComponent from '../../../../../../igistrategy/admin/src/components/EditorJSComponent'
 import { useParams } from 'react-router-dom'
 import toast from 'react-hot-toast'
+import { CKEditor } from 'ckeditor4-react'
 
 const schema = yup.object().shape({
   title: yup.string().required('Title is required'),
@@ -44,7 +44,7 @@ const UpdateNews = () => {
   const [newsList, setNewsList] = useState([])
   const [categoriesList, setCategoryList] = useState([])
 
-  const [content, setContent] = useState({})
+  const [content, setContent] = useState('')
 
   const {
     register,
@@ -204,7 +204,7 @@ const UpdateNews = () => {
     if (data.videoType === '1') {
       formData.append('youtube_url', data.youtubeUrl)
     } else if (data.videoType === '2') {
-      formData.append('content', JSON.stringify(content))
+      formData.append('content', content)
 
       if (data.thumbnail?.[0]) formData.append('thumbnail', data.thumbnail[0])
     }
@@ -245,6 +245,12 @@ const UpdateNews = () => {
       toast.error(error.message || 'Something went wrong')
     }
   }
+
+  useEffect(() => {
+    if (editingNews?.content) {
+      setContent(editingNews.content)
+    }
+  }, [editingNews])
 
   return (
     <div className="d-flex flex-column flex-lg-row gap-4">
@@ -375,7 +381,7 @@ const UpdateNews = () => {
                   <CCol md={12} className="mb-2">
                     {formDataValues.videoType === '2' && (
                       <>
-                        <div
+                        {/* <div
                           style={{
                             width: '100%',
                             height: '250px',
@@ -388,7 +394,41 @@ const UpdateNews = () => {
                         >
                           <label className="fw-semibold mb-2">Description</label>
                           <EditorJSComponent data={content} onChange={setContent} />
-                        </div>
+                        </div> */}
+
+                        <style>
+                          {`
+                                                        .cke_notification_warning {
+                                                            display: none !important;
+                                                        }
+                                                        `}
+                        </style>
+
+                        <CKEditor
+                          key={content}
+                          initData={content}
+                          config={{
+                            height: 300,
+                            toolbar: [
+                              ['Format'],
+                              ['Bold', 'Italic', 'Underline'],
+                              ['NumberedList', 'BulletedList'],
+                              ['Link', 'Unlink'],
+                              ['Image', 'Table'],
+                              ['Source'],
+                            ],
+                          }}
+                          onInstanceReady={(evt) => {
+                            evt.editor.setData(content || '')
+                          }}
+                          onChange={(evt) => {
+                            setContent(evt.editor.getData())
+                          }}
+                        />
+
+                        {errors.description && (
+                          <p className="text-danger small mt-1">{errors.description.message}</p>
+                        )}
 
                         {/* <CCol md={12} className="mb-3">
                           <CFormInput
