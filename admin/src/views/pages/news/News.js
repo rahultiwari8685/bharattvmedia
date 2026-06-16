@@ -21,15 +21,17 @@ import {
   CDropdownItem,
 } from '@coreui/react'
 import secureLocalStorage from 'react-secure-storage'
-import EditorJSComponent from '../../../components/EditorJSComponent'
+// import EditorJSComponent from '../../../components/EditorJSComponent'
 import { useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
+import { CKEditor } from 'ckeditor4-react'
 
 const schema = yup.object().shape({
   title: yup.string().required('Title is required'),
   subtitle: yup.string().required('Subtitle is required'),
   videoType: yup.string().required('Video source is required'),
   type: yup.string().required('Video source is required'),
+  description: yup.string().required('Description is required'),
   thumbnail: yup.mixed().when('videoType', {
     is: '2',
     then: (schema) =>
@@ -49,7 +51,7 @@ const News = () => {
   const [newsList, setNewsList] = useState([])
   const [categoriesList, setCategoryList] = useState([])
 
-  const [content, setContent] = useState({})
+  const [content, setContent] = useState('')
 
   const [draftSaved, setDraftSaved] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -67,6 +69,7 @@ const News = () => {
     defaultValues: {
       title: '',
       subtitle: '',
+      description: '',
       categories: [],
       videoType: '',
       type: '2',
@@ -131,7 +134,8 @@ const News = () => {
 
         formData.append('categories', JSON.stringify(formDataValues.categories || []))
 
-        formData.append('content', typeof content === 'string' ? content : JSON.stringify(content))
+        // formData.append('content', typeof content === 'string' ? content : JSON.stringify(content))
+        formData.append('content', content)
 
         // ✅ Auto-save thumbnail
         if (formDataValues.thumbnail?.[0]) {
@@ -259,7 +263,7 @@ const News = () => {
     if (data.videoType === '1') {
       formData.append('youtube_url', data.youtubeUrl)
     } else if (data.videoType === '2') {
-      formData.append('content', JSON.stringify(content))
+      formData.append('content', content)
 
       if (data.thumbnail?.[0]) formData.append('thumbnail', data.thumbnail[0])
     }
@@ -311,6 +315,7 @@ const News = () => {
           youtubeUrl: '',
           thumbnail: null,
         })
+        setContent('')
         setEditingNews(null)
         navigate('/PublishedNews')
       } else {
@@ -490,7 +495,7 @@ const News = () => {
                   <CCol md={12} className="mb-2">
                     {formDataValues.videoType === '2' && (
                       <>
-                        <div
+                        {/* <div
                           style={{
                             width: '100%',
                             height: '250px',
@@ -503,7 +508,46 @@ const News = () => {
                         >
                           <label className="fw-semibold mb-2">Description</label>
                           <EditorJSComponent data={content} onChange={setContent} />
-                        </div>
+                        </div> */}
+
+                        <style>
+                          {`
+                                .cke_notification_warning {
+                                    display: none !important;
+                                }
+                                `}
+                        </style>
+
+                        <CKEditor
+                          key={editingNews?._id || 'new'}
+                          initData={content}
+                          config={{
+                            height: 300,
+                            toolbar: [
+                              ['Format'],
+                              ['Bold', 'Italic', 'Underline'],
+                              ['NumberedList', 'BulletedList'],
+                              ['Link', 'Unlink'],
+                              ['Image', 'Table'],
+                              ['Source'],
+                            ],
+                            format_tags: 'p;h1;h2;h3;h4;h5;h6',
+                          }}
+                          onChange={(evt) => {
+                            const data = evt.editor.getData()
+
+                            setContent(data)
+
+                            setValue('description', data, {
+                              shouldValidate: true,
+                              shouldDirty: true,
+                            })
+                          }}
+                        />
+
+                        {errors.description && (
+                          <p className="text-danger small mt-1">{errors.description.message}</p>
+                        )}
 
                         <CCol md={12} className="mb-3">
                           <CFormInput
