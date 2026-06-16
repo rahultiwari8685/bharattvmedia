@@ -405,24 +405,63 @@ const UpdateNews = () => {
                         </style>
 
                         <CKEditor
-                          key={content}
                           initData={content}
                           config={{
-                            height: 300,
+                            height: 400,
+
+                            extraPlugins: 'font,colorbutton,justify',
+
                             toolbar: [
-                              ['Format'],
-                              ['Bold', 'Italic', 'Underline'],
-                              ['NumberedList', 'BulletedList'],
-                              ['Link', 'Unlink'],
-                              ['Image', 'Table'],
-                              ['Source'],
+                              {
+                                name: 'styles',
+                                items: ['Styles', 'Format', 'Font', 'FontSize'],
+                              },
+                              {
+                                name: 'basicstyles',
+                                items: ['Bold', 'Italic', 'Underline', 'Strike'],
+                              },
+                              {
+                                name: 'colors',
+                                items: ['TextColor', 'BGColor'],
+                              },
+                              {
+                                name: 'paragraph',
+                                items: [
+                                  'NumberedList',
+                                  'BulletedList',
+                                  '-',
+                                  'Outdent',
+                                  'Indent',
+                                  '-',
+                                  'JustifyLeft',
+                                  'JustifyCenter',
+                                  'JustifyRight',
+                                  'JustifyBlock',
+                                ],
+                              },
+                              {
+                                name: 'insert',
+                                items: ['Image', 'Table'],
+                              },
+                              {
+                                name: 'links',
+                                items: ['Link', 'Unlink'],
+                              },
+                              {
+                                name: 'document',
+                                items: ['Source'],
+                              },
                             ],
-                          }}
-                          onInstanceReady={(evt) => {
-                            evt.editor.setData(content || '')
-                          }}
-                          onChange={(evt) => {
-                            setContent(evt.editor.getData())
+
+                            font_names:
+                              'Arial/Arial, Helvetica, sans-serif;' +
+                              'Times New Roman/Times New Roman, Times, serif;' +
+                              'Verdana/Verdana, Geneva, sans-serif;' +
+                              'Tahoma/Tahoma, Geneva, sans-serif;' +
+                              'Georgia/Georgia, serif;',
+
+                            fontSize_sizes:
+                              '8/8px;10/10px;12/12px;14/14px;16/16px;18/18px;20/20px;24/24px;28/28px;36/36px;48/48px;72/72px',
                           }}
                         />
 
