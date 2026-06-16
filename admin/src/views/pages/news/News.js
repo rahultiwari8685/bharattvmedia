@@ -32,6 +32,7 @@ const schema = yup.object().shape({
   videoType: yup.string().required('Video source is required'),
   type: yup.string().required('Video source is required'),
   description: yup.string().required('Description is required'),
+  slug: yup.string().required('Slug is required'),
   thumbnail: yup.mixed().when('videoType', {
     is: '2',
     then: (schema) =>
@@ -70,6 +71,7 @@ const News = () => {
       title: '',
       subtitle: '',
       description: '',
+      slug: '',
       categories: [],
       videoType: '',
       type: '2',
@@ -254,6 +256,7 @@ const News = () => {
     formData.append('sub_title', data.subtitle)
     formData.append('video_type', data.videoType)
     formData.append('type', data.type)
+    formData.append('slug', data.slug)
     formData.append('author', author)
 
     formData.append('scheduledAt', data.scheduledAt || '')
@@ -355,19 +358,15 @@ const News = () => {
               </CRow>
 
               <CRow className="mb-3">
-                {/* <CCol md={6}>
+                <CCol md={6}>
                   <CFormInput
                     type="text"
                     label="Slug"
-                    placeholder="Auto Generate"
+                    placeholder="Enter Slug"
                     {...register('slug')}
-                    onChange={(e) => {
-                      setValue('slug', e.target.value)
-                      setSlugEdited(true)
-                    }}
                   />
                   {errors.slug && <small className="text-danger">{errors.slug.message}</small>}
-                </CCol> */}
+                </CCol>
                 <CCol md={6}>
                   <CFormInput
                     type="text"
@@ -546,7 +545,12 @@ const News = () => {
                         /> */}
 
                         <CKEditor
-                          initData={content}
+                          key="new"
+                          initData={editingNews.content}
+                          onChange={(event) => {
+                            const data = event.editor.getData()
+                            setContent(data)
+                          }}
                           config={{
                             height: 400,
 

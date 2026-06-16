@@ -9,6 +9,7 @@ export const createNews = async (req, res) => {
       video_type,
       youtube_url,
       content,
+      slug,
       type,
       scheduledAt,
     } = req.body;
@@ -36,6 +37,19 @@ export const createNews = async (req, res) => {
       type: 1,
     });
 
+    if (slug) {
+      const existingSlug = await News.findOne({
+        slug: slug.trim(),
+      });
+
+      if (existingSlug) {
+        return res.status(400).json({
+          status: false,
+          message: "Slug already exists",
+        });
+      }
+    }
+
     const createdNews = await News.create({
       title,
       subtitle: sub_title,
@@ -43,7 +57,7 @@ export const createNews = async (req, res) => {
       author: req.body.author,
 
       categories,
-
+      slug: req.body.slug,
       videoType: video_type,
 
       youtubeUrl: youtube_url || "",
@@ -257,6 +271,20 @@ export const updateNews = async (req, res) => {
 
     if (req.file) {
       updateData.thumbnail = req.file.filename;
+    }
+
+    if (slug) {
+      const existingSlug = await News.findOne({
+        slug: slug.trim(),
+        _id: { $ne: id },
+      });
+
+      if (existingSlug) {
+        return res.status(400).json({
+          status: false,
+          message: "Slug already exists",
+        });
+      }
     }
 
     const updated = await News.findByIdAndUpdate(id, updateData, {
