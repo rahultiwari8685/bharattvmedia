@@ -406,6 +406,20 @@ export const autoSaveNews = async (req, res) => {
       type: 2,
     }).sort({ updatedAt: -1 });
 
+    if (slug) {
+      const existingSlug = await News.findOne({
+        slug: slug.trim(),
+        _id: { $ne: draft?._id },
+      });
+
+      if (existingSlug) {
+        return res.status(400).json({
+          status: false,
+          message: "Slug already exists",
+        });
+      }
+    }
+
     if (draft) {
       draft.title = title;
       draft.subtitle = subtitle;
