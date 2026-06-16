@@ -31,11 +31,24 @@ export const createNews = async (req, res) => {
       scheduledDate = new Date(new Date(scheduledAt).getTime() - 19800000);
     }
 
+    // const existingNews = await News.findOne({
+    //   title: title.trim(),
+    //   author: req.body.author,
+    //   type: 1,
+    // });
+
     const existingNews = await News.findOne({
       title: title.trim(),
       author: req.body.author,
       type: 1,
     });
+
+    if (existingNews) {
+      return res.status(400).json({
+        status: false,
+        message: "News already exists",
+      });
+    }
 
     if (slug) {
       const existingSlug = await News.findOne({
@@ -369,7 +382,8 @@ export const getAllNewsByAuthorId = async (req, res) => {
 
 export const autoSaveNews = async (req, res) => {
   try {
-    const { title, subtitle, categories, videoType, content, type } = req.body;
+    const { title, subtitle, categories, videoType, content, type, slug } =
+      req.body;
 
     if (Number(type) === 2) {
       console.log("Draft auto-save: translation skipped");
@@ -395,6 +409,7 @@ export const autoSaveNews = async (req, res) => {
     if (draft) {
       draft.title = title;
       draft.subtitle = subtitle;
+      draft.slug = slug; // ✅ Save slug
       draft.categories = parsedCategories;
       draft.videoType = videoType;
 
@@ -405,21 +420,18 @@ export const autoSaveNews = async (req, res) => {
         draft.thumbnail = req.file.filename;
       }
 
-      // Keep existing thumbnail & youtube url
       await draft.save();
     } else {
       draft = await News.create({
         title,
         subtitle,
+        slug, // ✅ Save slug
         categories: parsedCategories,
         videoType,
-
         content:
           typeof content === "string" ? content : JSON.stringify(content),
-
         type: 2,
         author: req.body.author,
-
         thumbnail: req.file?.filename || "",
         youtubeUrl: "",
       });

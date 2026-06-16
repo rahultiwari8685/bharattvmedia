@@ -133,7 +133,7 @@ const News = () => {
         formData.append('videoType', formDataValues.videoType || '')
         formData.append('type', '2')
         formData.append('author', author)
-
+        formData.append('slug', formDataValues.slug || '')
         formData.append('categories', JSON.stringify(formDataValues.categories || []))
 
         // formData.append('content', typeof content === 'string' ? content : JSON.stringify(content))
@@ -545,17 +545,21 @@ const News = () => {
                         /> */}
 
                         <CKEditor
-                          key="new"
-                          initData={editingNews.content}
+                          key={editingNews?._id || 'new'}
+                          initData={content}
                           onChange={(event) => {
-                            const data = event.editor.getData()
-                            setContent(data)
+                            const html = event.editor.getData()
+
+                            setContent(html)
+
+                            setValue('description', html, {
+                              shouldValidate: true,
+                              shouldDirty: true,
+                            })
                           }}
                           config={{
                             height: 400,
-
                             extraPlugins: 'font,colorbutton,justify',
-
                             toolbar: [
                               {
                                 name: 'styles',
@@ -597,16 +601,6 @@ const News = () => {
                                 items: ['Source'],
                               },
                             ],
-
-                            font_names:
-                              'Arial/Arial, Helvetica, sans-serif;' +
-                              'Times New Roman/Times New Roman, Times, serif;' +
-                              'Verdana/Verdana, Geneva, sans-serif;' +
-                              'Tahoma/Tahoma, Geneva, sans-serif;' +
-                              'Georgia/Georgia, serif;',
-
-                            fontSize_sizes:
-                              '8/8px;10/10px;12/12px;14/14px;16/16px;18/18px;20/20px;24/24px;28/28px;36/36px;48/48px;72/72px',
                           }}
                         />
 
