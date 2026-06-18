@@ -8,7 +8,7 @@ import userRoutes from "./routes/userRoutes.js";
 import categoryRoutes from "./routes/categoryRoutes.js";
 import newsRoutes from "./routes/newsRoutes.js";
 import authRoutes from "./routes/auth.js";
-
+import advertisementRoutes from "./routes/advertisementRoutes.js";
 import rateLimit from "express-rate-limit";
 import goldRoutes from "./routes/gold.js";
 import "./cron/publishScheduledNews.js";
@@ -70,7 +70,7 @@ app.use("/api/news", newsRoutes);
 
 app.use("/api/auth", authRoutes);
 app.use("/api", goldRoutes);
-
+app.use("/api/advertisements", advertisementRoutes);
 const PORT = process.env.PORT || 5001;
 const MONGO_URI = process.env.MONGO_URI;
 

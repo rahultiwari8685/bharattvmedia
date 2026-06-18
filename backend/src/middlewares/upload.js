@@ -6,7 +6,11 @@ const storage = multer.diskStorage({
     if (file.mimetype === "application/pdf") {
       cb(null, "uploads/reports");
     } else if (file.mimetype.startsWith("image/")) {
-      cb(null, "uploads/images");
+      if (req.baseUrl.includes("advertisements")) {
+        cb(null, "uploads/advertisements");
+      } else {
+        cb(null, "uploads/images");
+      }
     } else {
       cb(new Error("Unsupported file type"));
     }

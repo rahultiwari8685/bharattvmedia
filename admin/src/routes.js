@@ -11,6 +11,7 @@ const ScheduleNews = React.lazy(() => import('./views/pages/news/ScheduleNews'))
 
 const Users = React.lazy(() => import('./views/pages/users/Users'))
 const Category = React.lazy(() => import('./views/pages/category/Category'))
+const Advertisement = React.lazy(() => import('./views/pages/advertisement/Advertisement'))
 // import UpdateNews from "./pages/News/UpdateNews";
 
 const routes = [
@@ -27,5 +28,6 @@ const routes = [
   { path: '/ChangePassword', name: 'Change Password', element: ChangePassword },
   { path: '/Users', name: 'Users', element: Users },
   { path: '/Category', name: 'Category', element: Category },
+  { path: '/advertisement', name: 'Advertisement', element: Advertisement },
 ]
 export default routes
