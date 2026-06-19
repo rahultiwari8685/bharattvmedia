@@ -40,6 +40,8 @@ app.use("/api", limiter);
 const allowedOrigins = [
   "https://bharattvmedia.com",
   "https://admin.bharattvmedia.com",
+  "http://localhost:5173/",
+
 ];
 
 app.use((req, res, next) => {
