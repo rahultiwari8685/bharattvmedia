@@ -545,7 +545,6 @@ const News = () => {
                         /> */}
 
                         <CKEditor
-                          key={editingNews?._id || 'new'}
                           initData={content}
                           onChange={(event) => {
                             const html = event.editor.getData()
@@ -559,7 +558,16 @@ const News = () => {
                           }}
                           config={{
                             height: 400,
+
+                            // Better mobile compatibility
+                            autoParagraph: false,
+                            allowedContent: true,
+                            extraAllowedContent: '*[*]{*}(*)',
+
+                            removePlugins: 'elementspath,resize',
+
                             extraPlugins: 'font,colorbutton,justify',
+
                             toolbar: [
                               {
                                 name: 'styles',
@@ -596,10 +604,12 @@ const News = () => {
                                 name: 'links',
                                 items: ['Link', 'Unlink'],
                               },
-                              {
-                                name: 'document',
-                                items: ['Source'],
-                              },
+
+                              // Remove Source button on mobile
+                              // {
+                              //   name: 'document',
+                              //   items: ['Source'],
+                              // },
                             ],
                           }}
                         />
