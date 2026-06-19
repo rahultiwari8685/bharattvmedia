@@ -558,15 +558,15 @@ const News = () => {
                           }}
                           config={{
                             height: 400,
-
-                            // Better mobile compatibility
-                            autoParagraph: false,
                             allowedContent: true,
-                            extraAllowedContent: '*[*]{*}(*)',
-
-                            removePlugins: 'elementspath,resize',
-
+                            autoParagraph: false,
+                            removePlugins: 'resize,elementspath',
                             extraPlugins: 'font,colorbutton,justify',
+
+                            // Disable native spellchecker (helps on Android)
+                            disableNativeSpellChecker: false,
+
+                            toolbarCanCollapse: false,
 
                             toolbar: [
                               {
@@ -578,22 +578,13 @@ const News = () => {
                                 items: ['Bold', 'Italic', 'Underline', 'Strike'],
                               },
                               {
-                                name: 'colors',
-                                items: ['TextColor', 'BGColor'],
-                              },
-                              {
                                 name: 'paragraph',
                                 items: [
                                   'NumberedList',
                                   'BulletedList',
-                                  '-',
-                                  'Outdent',
-                                  'Indent',
-                                  '-',
                                   'JustifyLeft',
                                   'JustifyCenter',
                                   'JustifyRight',
-                                  'JustifyBlock',
                                 ],
                               },
                               {
@@ -604,12 +595,6 @@ const News = () => {
                                 name: 'links',
                                 items: ['Link', 'Unlink'],
                               },
-
-                              // Remove Source button on mobile
-                              // {
-                              //   name: 'document',
-                              //   items: ['Source'],
-                              // },
                             ],
                           }}
                         />
