@@ -70,7 +70,7 @@ const Advertisement = () => {
         status: editingAdvertisement.status,
       })
 
-      setPreview(`${setting.api}/uploads/images/${editingAdvertisement.image}`)
+      setPreview(`${setting.api}/uploads/advertisements/${editingAdvertisement.image}`)
     }
   }, [editingAdvertisement])
 
@@ -232,7 +232,7 @@ const Advertisement = () => {
 
                     <CTableDataCell>
                       <img
-                        src={`${setting.api}/uploads/images/${item.image}`}
+                        src={`${setting.api}/uploads/advertisements/${item.image}`}
                         width="90"
                         height="60"
                         alt=""
