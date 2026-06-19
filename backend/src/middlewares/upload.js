@@ -1,19 +1,32 @@
 import multer from "multer";
 import path from "path";
+import fs from "fs";
+
+const uploadDir = (folder) => {
+  const dir = path.join(process.cwd(), "uploads", folder);
+
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir, { recursive: true });
+  }
+
+  return dir;
+};
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
+    let folder = "";
+
     if (file.mimetype === "application/pdf") {
-      cb(null, "uploads/reports");
+      folder = "reports";
     } else if (file.mimetype.startsWith("image/")) {
-      if (req.baseUrl.includes("advertisements")) {
-        cb(null, "uploads/advertisements");
-      } else {
-        cb(null, "uploads/images");
-      }
+      folder = req.baseUrl.includes("advertisements")
+        ? "advertisements"
+        : "images";
     } else {
-      cb(new Error("Unsupported file type"));
+      return cb(new Error("Unsupported file type"));
     }
+
+    cb(null, uploadDir(folder));
   },
 
   filename: (req, file, cb) => {
@@ -22,28 +35,10 @@ const storage = multer.diskStorage({
   },
 });
 
-const fileFilter = (req, file, cb) => {
-  const allowedTypes = [
-    "application/pdf",
-    "image/jpeg",
-    "image/png",
-    "image/webp",
-    "image/avif",
-  ];
-
-  if (allowedTypes.includes(file.mimetype)) {
-    cb(null, true);
-  } else {
-    cb(new Error("File type not allowed"), false);
-  }
-};
-
-const upload = multer({
+export default multer({
   storage,
   fileFilter,
   limits: {
-    fileSize: 10 * 1024 * 1024, // 10MB
+    fileSize: 10 * 1024 * 1024,
   },
 });
-
-export default upload;
