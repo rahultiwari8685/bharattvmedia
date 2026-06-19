@@ -50,7 +50,7 @@ router.get("/:id", getAdvertisement);
 // ===============================
 // Update Advertisement
 // ===============================
-router.put("update/:id", upload.single("image"), updateAdvertisement);
+router.put("/update/:id", upload.single("image"), updateAdvertisement);
 
 // ===============================
 // Change Status
@@ -60,6 +60,6 @@ router.patch("/status/:id", changeStatus);
 // ===============================
 // Delete Advertisement
 // ===============================
-router.delete("delete/:id", deleteAdvertisement);
+router.delete("/delete/:id", deleteAdvertisement);
 
 export default router;
