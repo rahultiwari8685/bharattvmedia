@@ -346,17 +346,15 @@ const Advertisement = () => {
                 <CFormSelect label="Position" {...register('position')}>
                   <option value="">Select Position</option>
 
-                  <option value="home_top">Home Top</option>
-
-                  <option value="home_middle">Home Middle</option>
-
-                  <option value="home_bottom">Home Bottom</option>
-
+                  <option value="homepage_top">Home Top</option>
+                  <option value="homepage_middle">Home Middle</option>
+                  <option value="homepage_bottom">Home Bottom</option>
+                  <option value="article_top">Article Top</option>
+                  <option value="article_middle">Article Middle</option>
+                  <option value="article_bottom">Article Bottom</option>
                   <option value="sidebar">Sidebar</option>
-
-                  <option value="popup">Popup</option>
-
                   <option value="footer">Footer</option>
+                  <option value="popup">Popup</option>
                 </CFormSelect>
 
                 {errors.position && (
