@@ -14,19 +14,17 @@ const uploadDir = (folder) => {
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    let folder = "";
-
     if (file.mimetype === "application/pdf") {
-      folder = "reports";
+      cb(null, uploadDir("reports"));
     } else if (file.mimetype.startsWith("image/")) {
-      folder = req.baseUrl.includes("advertisements")
-        ? "advertisements"
-        : "images";
+      if (req.baseUrl.includes("advertisements")) {
+        cb(null, uploadDir("advertisements"));
+      } else {
+        cb(null, uploadDir("images"));
+      }
     } else {
-      return cb(new Error("Unsupported file type"));
+      cb(new Error("Unsupported file type"));
     }
-
-    cb(null, uploadDir(folder));
   },
 
   filename: (req, file, cb) => {
@@ -35,10 +33,28 @@ const storage = multer.diskStorage({
   },
 });
 
-export default multer({
+const fileFilter = (req, file, cb) => {
+  const allowedTypes = [
+    "application/pdf",
+    "image/jpeg",
+    "image/png",
+    "image/webp",
+    "image/avif",
+  ];
+
+  if (allowedTypes.includes(file.mimetype)) {
+    cb(null, true);
+  } else {
+    cb(new Error("File type not allowed"), false);
+  }
+};
+
+const upload = multer({
   storage,
   fileFilter,
   limits: {
     fileSize: 10 * 1024 * 1024,
   },
 });
+
+export default upload;
