@@ -12,6 +12,8 @@ import {
   deleteNews,
   autoSaveNews,
   increaseView,
+  getTrendingNews,
+  getPopularNews,
 } from "../controllers/newsController.js";
 
 const router = express.Router();
@@ -34,4 +36,8 @@ router.post("/view/:id", increaseView);
 router.get("/getAllNewsByAuthorId/:authorId", getAllNewsByAuthorId);
 
 router.post("/auto-save", upload.single("thumbnail"), autoSaveNews);
+
+router.get("/trending", getTrendingNews);
+
+router.get("/popular", getPopularNews);
 export default router;

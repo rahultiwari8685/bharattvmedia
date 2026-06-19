@@ -485,3 +485,64 @@ export const increaseView = async (req, res) => {
     });
   }
 };
+
+export const getTrendingNews = async (req, res) => {
+  try {
+    const { limit = 10 } = req.query;
+
+    // Last 7 days
+    const last7Days = new Date();
+    last7Days.setDate(last7Days.getDate() - 7);
+
+    const news = await News.find({
+      type: 1,
+      createdAt: { $gte: last7Days },
+    })
+      .populate("author", "name")
+      .populate("categories", "name slug")
+      .sort({
+        views: -1,
+        createdAt: -1,
+      })
+      .limit(parseInt(limit));
+
+    return res.status(200).json({
+      status: true,
+      total: news.length,
+      data: news,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      status: false,
+      message: error.message,
+    });
+  }
+};
+
+export const getPopularNews = async (req, res) => {
+  try {
+    const { limit = 10 } = req.query;
+
+    const news = await News.find({
+      type: 1,
+    })
+      .populate("author", "name")
+      .populate("categories", "name slug")
+      .sort({
+        views: -1,
+        createdAt: -1,
+      })
+      .limit(parseInt(limit));
+
+    return res.status(200).json({
+      status: true,
+      total: news.length,
+      data: news,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      status: false,
+      message: error.message,
+    });
+  }
+};
