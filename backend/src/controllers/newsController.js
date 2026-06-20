@@ -546,3 +546,40 @@ export const getPopularNews = async (req, res) => {
     });
   }
 };
+
+export const getVideoNews = async (req, res) => {
+  try {
+    const { page = 1, limit = 10 } = req.query;
+
+    const skip = (page - 1) * limit;
+
+    const news = await News.find({
+      type: 1, // Published
+      videoType: 1, // Video News
+    })
+      .populate("author", "name")
+      .populate("categories", "name slug")
+      .sort({
+        createdAt: -1,
+      })
+      .skip(skip)
+      .limit(parseInt(limit));
+
+    const total = await News.countDocuments({
+      type: 1,
+      videoType: 1,
+    });
+
+    return res.status(200).json({
+      status: true,
+      total,
+      totalPages: Math.ceil(total / limit),
+      data: news,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      status: false,
+      message: error.message,
+    });
+  }
+};

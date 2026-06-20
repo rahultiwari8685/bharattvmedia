@@ -14,6 +14,7 @@ import {
   increaseView,
   getTrendingNews,
   getPopularNews,
+  getVideoNews,
 } from "../controllers/newsController.js";
 
 const router = express.Router();
@@ -40,4 +41,5 @@ router.post("/auto-save", upload.single("thumbnail"), autoSaveNews);
 router.get("/trending", getTrendingNews);
 
 router.get("/popular", getPopularNews);
+router.get("/videos", getVideoNews);
 export default router;
