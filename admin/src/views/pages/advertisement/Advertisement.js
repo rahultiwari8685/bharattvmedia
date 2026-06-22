@@ -361,7 +361,17 @@ const Advertisement = () => {
 
             <CRow className="mb-3">
               <CCol md={6}>
-                <CFormSelect label="Position" {...register('position')}>
+                {/* <CFormSelect label="Position" {...register('position')}> */}
+                <CFormSelect
+                  label="Position"
+                  {...register('position')}
+                  onChange={(e) => {
+                    setValue('position', e.target.value, {
+                      shouldValidate: true,
+                      shouldDirty: true,
+                    })
+                  }}
+                >
                   <option value="">Select Position</option>
 
                   <option value="homepage_top">Home Top</option>
