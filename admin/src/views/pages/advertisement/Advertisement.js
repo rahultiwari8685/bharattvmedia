@@ -384,7 +384,7 @@ const Advertisement = () => {
                   <option value="footer">Footer</option>
                   <option value="popup">Popup</option>
                 </CFormSelect>
-
+                {/* 
                 {selectedPosition && (
                   <div className="alert alert-info mt-2 py-2">
                     <strong>Required Image Size</strong>
@@ -393,7 +393,7 @@ const Advertisement = () => {
                     <br />
                     Height :{imageDimensions[selectedPosition].height}px
                   </div>
-                )}
+                )} */}
 
                 {errors.position && (
                   <small className="text-danger">{errors.position.message}</small>
