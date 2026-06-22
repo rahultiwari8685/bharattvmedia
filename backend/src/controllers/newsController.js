@@ -547,6 +547,56 @@ export const getPopularNews = async (req, res) => {
   }
 };
 
+export const increaseShare = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    await News.findByIdAndUpdate(id, {
+      $inc: {
+        shares: 1,
+      },
+    });
+
+    return res.json({
+      status: true,
+      message: "Share updated",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      status: false,
+      message: error.message,
+    });
+  }
+};
+
+export const getMostSharedNews = async (req, res) => {
+  try {
+    const { limit = 5 } = req.query;
+
+    const news = await News.find({
+      type: 1,
+    })
+      .populate("author", "name")
+      .populate("categories", "name slug")
+      .sort({
+        shares: -1,
+        createdAt: -1,
+      })
+      .limit(parseInt(limit));
+
+    return res.status(200).json({
+      status: true,
+      total: news.length,
+      data: news,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      status: false,
+      message: error.message,
+    });
+  }
+};
+
 export const getVideoNews = async (req, res) => {
   try {
     const { page = 1, limit = 10 } = req.query;
