@@ -14,7 +14,7 @@ const MostView = ({ no_margin, title, dark }) => {
   const getPopularNews = async () => {
     try {
       const res = await fetch(
-        "https://api.bharattvmedia.com/api/news/popular?limit=12"
+        "https://api.bharattvmedia.com/api/news/popular?limit=8",
       );
 
       const data = await res.json();
@@ -67,9 +67,7 @@ const MostView = ({ no_margin, title, dark }) => {
 
                 <div className="single_post_text">
                   <div className="meta2">
-                    <Link to="#">
-                      {item.categories?.[0]?.name || "News"}
-                    </Link>
+                    <Link to="#">{item.categories?.[0]?.name || "News"}</Link>
 
                     <Link to="#">
                       {new Date(item.createdAt).toLocaleDateString("en-US", {
@@ -81,9 +79,7 @@ const MostView = ({ no_margin, title, dark }) => {
                   </div>
 
                   <h4>
-                    <Link to={`/news/${item.slug}`}>
-                      {item.title}
-                    </Link>
+                    <Link to={`/news/${item.slug}`}>{item.title}</Link>
                   </h4>
                 </div>
 
