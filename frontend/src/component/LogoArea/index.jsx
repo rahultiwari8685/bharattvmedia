@@ -14,7 +14,7 @@ const LogoArea = ({ className, dark }) => {
   const getBanner = async () => {
     try {
       const res = await fetch(
-        "https://api.bharattvmedia.com/api/advertisements"
+        "https://api.bharattvmedia.com/api/advertisements",
       );
 
       const result = await res.json();
@@ -22,9 +22,7 @@ const LogoArea = ({ className, dark }) => {
       if (result.success) {
         const ad = result.data
           .filter(
-            (item) =>
-              item.position === "homepage_top" &&
-              item.status === true
+            (item) => item.position === "homepage_top" && item.status === true,
           )
           .sort((a, b) => a.priority - b.priority)[0];
 
@@ -42,7 +40,12 @@ const LogoArea = ({ className, dark }) => {
           <div className="col-lg-4 align-self-center">
             <div className="logo">
               <Link to="/">
-                <img src={dark ? logoDark : logo} alt="logo" />
+                <img
+                  src={dark ? logoDark : logo}
+                  alt="logo"
+                  width={1000}
+                  height={385}
+                />
               </Link>
             </div>
           </div>
