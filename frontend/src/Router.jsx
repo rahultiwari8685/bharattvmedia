@@ -83,7 +83,7 @@ import HomeDarkAudioPost1 from "./pages/homeDark/audio_post1";
 import HomeDarkAudioPost2 from "./pages/homeDark/audio_post2";
 import HomeDarkAudioPost3 from "./pages/homeDark/audio_post3";
 import HomeDarkLeftPost2 from "./pages/homeDark/left_post2";
-import Category from "./pages/home/Category";
+import Category from "./pages/home/category";
 
 const router = createBrowserRouter([
   {
