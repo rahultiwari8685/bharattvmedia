@@ -1,0 +1,376 @@
+import React, { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import BreadCrumb from "../../../component/BreadCrumb";
+import FontAwesome from "../../../component/uiStyle/FontAwesome";
+import {
+  FacebookShareButton,
+  TwitterShareButton,
+  WhatsappShareButton,
+  TelegramShareButton,
+  LinkedinShareButton,
+  RedditShareButton,
+  EmailShareButton,
+  FacebookIcon,
+  TwitterIcon,
+  WhatsappIcon,
+  TelegramIcon,
+  LinkedinIcon,
+  RedditIcon,
+  EmailIcon,
+} from "react-share";
+import WidgetTab from "../../../component/WidgetTab";
+import WidgetTrendingNews from "../../../component/WidgetTrendingNews";
+import NewsLetter from "../../../component/NewsLetter";
+import MostShareWidget from "../../../component/MostShareWidget";
+import FollowUs from "../../../component/FollowUs";
+import BannerSection from "../../../component/BannerSection";
+import PostOnePagination from "../../../component/PostOnePagination";
+
+// images
+import banner2 from "../../../assets/img/ad/ad-2.jpg";
+import big2 from "../../../assets/img/post-thumb-4.png";
+import author2 from "../../../assets/img/comments-1.png";
+import quote from "../../../assets/img/icon/q.png";
+import quote_1 from "../../../assets/img/post-quote.jpg";
+import big1 from "../../../assets/img/post-thumb-3.jpg";
+import smail1 from "../../../assets/img/post-thumb-2.png";
+import single_post1 from "../../../assets/img/post-thumb-5.png";
+import OurBlogSection from "../../../component/OurBlogSection";
+import BlogComment from "../../../component/BlogComment";
+
+function Post1() {
+  const API = "https://api.bharattvmedia.com";
+
+  const { slug } = useParams();
+  const [news, setNews] = useState(null);
+
+  const shareUrl = window.location.href;
+
+  const shareTitle = news?.title || "";
+
+  const shareImage = news?.thumbnail
+    ? `${API}/uploads/images/${news.thumbnail}`
+    : "";
+
+  const cleanContent = news?.content
+    ?.replace(/style="[^"]*"/g, "")
+    ?.replace(/<p><br><\/p>/g, "");
+
+  useEffect(() => {
+    fetchNews();
+  }, [slug]);
+
+  const fetchNews = async () => {
+    try {
+      const res = await fetch(`${API}/api/news/slug/${slug}`);
+      const data = await res.json();
+
+      if (data.status) {
+        setNews(data.data);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  if (!news) {
+    return <h2 className="text-center mt-5">Loading...</h2>;
+  }
+
+  const getYoutubeId = (url) => {
+    if (!url) return "";
+
+    const regExp =
+      /^.*(?:youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+
+    const match = url.match(regExp);
+
+    return match && match[1].length === 11 ? match[1] : "";
+  };
+
+  const increaseShare = async () => {
+    try {
+      await fetch(`${API}/api/news/share/${news._id}`, {
+        method: "POST",
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  return (
+    <>
+      <div className="archives post post1">
+        <BreadCrumb
+          className="shadow5 padding-top-30"
+          title={`${news.categories?.[0]?.name || "News"} / ${news.title}`}
+        />
+        <span className="space-30" />
+        <div className="container">
+          <div className="row">
+            <div className="col-md-6 col-lg-8">
+              <div className="row">
+                <div className="col-8 align-self-center">
+                  <div className="page_category">
+                    {/* <h4>{news.categories?.[0]?.name}</h4> */}
+                    <div className="share-section mt-1">
+                      {/* <h5>Share this article</h5> */}
+
+                      <div className="d-flex gap-2 flex-wrap">
+                        <FacebookShareButton
+                          url={shareUrl}
+                          quote={shareTitle}
+                          onClick={increaseShare}
+                          hashtag="#BharatTVMedia"
+                        >
+                          <FacebookIcon size={42} round />
+                        </FacebookShareButton>
+
+                        <TwitterShareButton
+                          url={shareUrl}
+                          title={shareTitle}
+                          onClick={increaseShare}
+                        >
+                          <TwitterIcon size={42} round />
+                        </TwitterShareButton>
+
+                        <WhatsappShareButton
+                          url={shareUrl}
+                          title={shareTitle}
+                          onClick={increaseShare}
+                        >
+                          <WhatsappIcon size={42} round />
+                        </WhatsappShareButton>
+
+                        <TelegramShareButton
+                          url={shareUrl}
+                          title={shareTitle}
+                          onClick={increaseShare}
+                        >
+                          <TelegramIcon size={42} round />
+                        </TelegramShareButton>
+
+                        <LinkedinShareButton
+                          url={shareUrl}
+                          title={shareTitle}
+                          onClick={increaseShare}
+                          summary={news.subtitle}
+                        >
+                          <LinkedinIcon size={42} round />
+                        </LinkedinShareButton>
+
+                        <RedditShareButton
+                          url={shareUrl}
+                          title={shareTitle}
+                          onClick={increaseShare}
+                        >
+                          <RedditIcon size={42} round />
+                        </RedditShareButton>
+
+                        <EmailShareButton
+                          url={shareUrl}
+                          subject={shareTitle}
+                          body={shareTitle}
+                          onClick={increaseShare}
+                        >
+                          <EmailIcon size={42} round />
+                        </EmailShareButton>
+
+                        <button
+                          className="btn btn-danger mt-3"
+                          onClick={() => {
+                            navigator.clipboard.writeText(shareUrl);
+                            alert("Link copied!");
+                          }}
+                        >
+                          Copy Link
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {/* <div className="col-6 text-right">
+                  <div className="page_comments">
+                    <ul className="inline">
+                      <li>
+                        <FontAwesome name="comment" />
+                        {news.views}
+                      </li>
+                      <li>
+                        <FontAwesome name="fire" />
+                        {news.views}
+                      </li>
+                    </ul>
+                  </div>
+                </div> */}
+              </div>
+              <div className="space-30" />
+              <div className="single_post_heading">
+                <h1>{news.title}</h1>
+                <div className="space-10" />
+                <p>{news.subtitle}</p>
+              </div>
+              <div className="space-40" />
+              <img
+                src={
+                  news.thumbnail
+                    ? `${API}/uploads/images/${news.thumbnail}`
+                    : `https://img.youtube.com/vi/${getYoutubeId(
+                        news.youtubeUrl,
+                      )}/hqdefault.jpg`
+                }
+                alt={news.title}
+              />
+
+              <div
+                className="article-content mt-4"
+                dangerouslySetInnerHTML={{
+                  __html: cleanContent,
+                }}
+              />
+
+              <div className="tags">
+                <ul className="inline">
+                  <li className="tag_list">
+                    <FontAwesome name="tag" /> tags
+                  </li>
+                  {news.categories?.map((cat) => (
+                    <li key={cat._id}>
+                      <Link to={`/category/${cat._id}`}>{cat.name}</Link>
+                    </li>
+                  ))}
+                  <li>
+                    <Link to="/">World</Link>
+                  </li>
+                  <li>
+                    <Link to="/">Corona</Link>
+                  </li>
+                </ul>
+              </div>
+              <div className="space-40" />
+              <div className="border_black" />
+              <div className="space-40" />
+              <PostOnePagination />
+            </div>
+            <div className="col-md-6 col-lg-4">
+              {/* <WidgetTab /> */}
+              <WidgetTab categoryId={news.categories?.[0]?._id} />
+
+              <FollowUs title="Follow Us" />
+              <WidgetTrendingNews />
+              <div className="banner2 mb30">
+                <Link to="/">
+                  <img src={banner2} alt="thumb" />
+                </Link>
+              </div>
+              <MostShareWidget title="Most Share" />
+              <NewsLetter />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="space-60" />
+      <OurBlogSection />
+      <div className="space-60" />
+      <BlogComment />
+      <div className="space-100" />
+      <BannerSection />
+
+      <style>{`
+
+
+
+
+
+
+.share-section{
+    margin:35px 0;
+}
+
+.share-section h5{
+    font-weight:700;
+    margin-bottom:15px;
+}
+
+.share-section .d-flex{
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+}
+
+.share-section button{
+    border:none;
+    background:transparent;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.share-section button:hover{
+    transform:scale(1.1);
+}
+
+.article-content{
+    font-size:20px;
+    line-height:1.9;
+    color:#222;
+}
+
+.article-content p{
+    font-size:20px;
+    line-height:1.9;
+    margin-bottom:20px;
+}
+
+.article-content h1{
+    font-size:40px;
+    font-weight:700;
+    margin:30px 0 20px;
+}
+
+.article-content h2{
+    font-size:34px;
+    font-weight:700;
+    margin:30px 0 20px;
+}
+
+.article-content h3{
+    font-size:28px;
+    font-weight:700;
+    margin:25px 0 15px;
+}
+
+.article-content h4{
+    font-size:24px;
+    font-weight:700;
+    margin:20px 0 15px;
+}
+
+.article-content strong{
+    font-weight:700;
+}
+
+.article-content img{
+    width:100%;
+    height:auto;
+    margin:20px 0;
+    border-radius:6px;
+}
+
+.article-content iframe{
+    width:100%;
+    min-height:500px;
+}
+
+.article-content ul{
+    padding-left:25px;
+}
+
+.article-content li{
+    margin-bottom:10px;
+}
+`}</style>
+    </>
+  );
+}
+
+export default Post1;
