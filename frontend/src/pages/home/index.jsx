@@ -52,7 +52,7 @@ function Home() {
   const getBusinessNews = async () => {
     try {
       const res = await fetch(
-        "https://api.bharattvmedia.com/api/news/category/6a1ea7af54dc2dce809c32db?limit=4",
+        "https://api.bharattvmedia.com/api/news/category/6a1ea7af54dc2dce809c32db?limit=2",
       );
 
       const data = await res.json();
@@ -108,7 +108,7 @@ function Home() {
                       target="_blank"
                     >
                       <img
-                        src={`https://api.bharattvmedia.com/uploads/advertisements/${banners.homepage_middle.image}`}
+                        src={`https://api.bharattvmedia.com/uploads/advertisements/${banners.sidebar.image}`}
                         alt={banners.sidebar.title}
                         className="img-fluid"
                       />
