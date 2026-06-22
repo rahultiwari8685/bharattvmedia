@@ -16,6 +16,7 @@ import {
   getPopularNews,
   getVideoNews,
   getMostSharedNews,
+  increaseShare,
 } from "../controllers/newsController.js";
 
 const router = express.Router();
