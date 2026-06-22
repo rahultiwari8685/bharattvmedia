@@ -5,7 +5,7 @@ import Home from "./pages/home";
 import LayoutTheme1 from "./component/Layout/LayoutTheme1";
 // import Entertainment from "./pages/home/entertainment";
 // import Feature from "./pages/home/Feature";
-import Trending from "./pages/home/Trending";
+import Trending from "./pages/home/trending";
 import Sports from "./pages/home/sports";
 import About from "./pages/home/about";
 import Archive from "./pages/home/archive";
