@@ -40,12 +40,7 @@ const LogoArea = ({ className, dark }) => {
           <div className="col-lg-4 align-self-center">
             <div className="logo">
               <Link to="/">
-                <img
-                  src={dark ? logoDark : logo}
-                  alt="logo"
-                  width={1000}
-                  height={385}
-                />
+                <img src={dark ? logoDark : logo} alt="logo" />
               </Link>
             </div>
           </div>
