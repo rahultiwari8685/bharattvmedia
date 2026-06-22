@@ -118,7 +118,6 @@ function Home() {
               </div>
             </div>
             <FollowUs title="Follow Us" />
-            <MostView />
           </div>
         </div>
       </div>
@@ -168,6 +167,7 @@ function Home() {
                 <div className="col-lg-12">
                   <MostShareWidget title="Most share" />
                 </div>
+                <MostView />
                 {/* <div className="col-lg-12">
                   <UpcomingMatches />
                 </div> */}
