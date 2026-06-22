@@ -353,7 +353,7 @@ const Advertisement = () => {
               <CCol md={12}>
                 <CFormInput
                   label="Redirect URL"
-                  placeholder="https://pinkchoice.in/product/1"
+                  placeholder="https://pinkchoice.com/product/1"
                   {...register('redirectUrl')}
                 />
               </CCol>
