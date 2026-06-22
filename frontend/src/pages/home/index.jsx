@@ -25,9 +25,12 @@ function Home() {
   const [entertainments, setEntertainments] = useState([]);
   const [businessNews, setBusinessNews] = useState([]);
 
+  const [banners, setBanners] = useState({});
+
   useEffect(() => {
     getEntertainmentNews();
     getBusinessNews();
+    getAdvertisements();
   }, []);
 
   const getEntertainmentNews = async () => {
@@ -61,6 +64,30 @@ function Home() {
       console.log(err);
     }
   };
+
+  const getAdvertisements = async () => {
+    try {
+      const res = await fetch(
+        "https://api.bharattvmedia.com/api/advertisements",
+      );
+
+      const data = await res.json();
+
+      if (data.success) {
+        const ads = {};
+
+        data.data.forEach((item) => {
+          if (item.status) {
+            ads[item.position] = item;
+          }
+        });
+
+        setBanners(ads);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <>
       <PostCarousel className="fifth_bg" />
@@ -75,7 +102,18 @@ function Home() {
             <div className="col-lg-12">
               <div className="banner2 mb30">
                 <Link to="/">
-                  <img src={banner2} alt="thumb" />
+                  {banners.sidebar && (
+                    <Link
+                      to={banners.sidebar.redirectUrl || "#"}
+                      target="_blank"
+                    >
+                      <img
+                        src={`https://api.bharattvmedia.com/uploads/advertisements/${banners.homepage_middle.image}`}
+                        alt={banners.sidebar.title}
+                        className="img-fluid"
+                      />
+                    </Link>
+                  )}
                 </Link>
               </div>
             </div>
@@ -109,7 +147,18 @@ function Home() {
               <SportsNews />
               <div className="banner_area mt50 mb60 xs-mt60">
                 <Link to="/">
-                  <img src={banner1} alt="banner1" />
+                  {banners.homepage_middle && (
+                    <Link
+                      to={banners.homepage_middle.redirectUrl || "#"}
+                      target="_blank"
+                    >
+                      <img
+                        src={`https://api.bharattvmedia.com/uploads/advertisements/${banners.homepage_middle.image}`}
+                        alt={banners.homepage_middle.title}
+                        className="img-fluid"
+                      />
+                    </Link>
+                  )}
                 </Link>
               </div>
               <BusinessNews businessNews={businessNews} />
