@@ -72,6 +72,13 @@ function Home() {
             <TrendingNews />
           </div>
           <div className="col-md-12 col-lg-4">
+            <div className="col-lg-12">
+              <div className="banner2 mb30">
+                <Link to="/">
+                  <img src={banner2} alt="thumb" />
+                </Link>
+              </div>
+            </div>
             <FollowUs title="Follow Us" />
             <MostView />
           </div>
@@ -112,21 +119,14 @@ function Home() {
                 <div className="col-lg-12">
                   <MostShareWidget title="Most share" />
                 </div>
-                <div className="col-lg-12">
+                {/* <div className="col-lg-12">
                   <UpcomingMatches />
-                </div>
+                </div> */}
                 <div className="col-lg-12">
                   <NewsLetter />
                 </div>
                 <div className="col-lg-12">
                   <CategoriesWidget />
-                </div>
-                <div className="col-lg-12">
-                  <div className="banner2 mb30">
-                    <Link to="/">
-                      <img src={banner2} alt="thumb" />
-                    </Link>
-                  </div>
                 </div>
               </div>
             </div>

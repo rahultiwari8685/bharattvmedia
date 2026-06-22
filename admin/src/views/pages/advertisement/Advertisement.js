@@ -49,6 +49,22 @@ const Advertisement = () => {
   const [currentPage, setCurrentPage] = useState(1)
   const itemsPerPage = 10
 
+  const imageDimensions = {
+    homepage_top: { width: 640, height: 85 },
+    homepage_middle: { width: 670, height: 85 },
+    homepage_bottom: { width: 1200, height: 300 },
+
+    article_top: { width: 900, height: 250 },
+    article_middle: { width: 900, height: 250 },
+    article_bottom: { width: 690, height: 100 },
+
+    sidebar: { width: 390, height: 312 },
+
+    footer: { width: 1200, height: 200 },
+
+    popup: { width: 600, height: 600 },
+  }
+
   const {
     register,
     handleSubmit,
@@ -59,6 +75,8 @@ const Advertisement = () => {
   } = useForm({
     resolver: yupResolver(schema),
   })
+
+  const selectedPosition = watch('position')
 
   useEffect(() => {
     if (editingAdvertisement) {
@@ -357,6 +375,16 @@ const Advertisement = () => {
                   <option value="popup">Popup</option>
                 </CFormSelect>
 
+                {selectedPosition && (
+                  <div className="alert alert-info mt-2 py-2">
+                    <strong>Required Image Size</strong>
+                    <br />
+                    Width :{imageDimensions[selectedPosition].width}px
+                    <br />
+                    Height :{imageDimensions[selectedPosition].height}px
+                  </div>
+                )}
+
                 {errors.position && (
                   <small className="text-danger">{errors.position.message}</small>
                 )}
@@ -392,11 +420,54 @@ const Advertisement = () => {
                   onChange={(e) => {
                     const file = e.target.files[0]
 
-                    if (file) {
+                    if (!file) return
+
+                    const MAX_SIZE = 2 * 1024 * 1024 // 2MB
+
+                    if (file.size > MAX_SIZE) {
+                      alert('Image must be less than 2 MB')
+                      e.target.value = ''
+                      setPreview('')
+                      return
+                    }
+
+                    const img = new Image()
+
+                    img.onload = () => {
+                      const required = imageDimensions[selectedPosition]
+
+                      if (!required) {
+                        setPreview(URL.createObjectURL(file))
+                        return
+                      }
+
+                      if (img.width !== required.width || img.height !== required.height) {
+                        alert(
+                          `Invalid image size.
+Required: ${required.width} × ${required.height}px
+Selected: ${img.width} × ${img.height}px`,
+                        )
+
+                        e.target.value = ''
+                        setPreview('')
+                        return
+                      }
+
                       setPreview(URL.createObjectURL(file))
                     }
+
+                    img.src = URL.createObjectURL(file)
                   }}
                 />
+
+                {selectedPosition && (
+                  <small className="text-primary d-block mt-2">
+                    Required Size: {imageDimensions[selectedPosition].width} ×{' '}
+                    {imageDimensions[selectedPosition].height}px
+                    <br />
+                    Max File Size: 2 MB
+                  </small>
+                )}
               </CCol>
             </CRow>
 
