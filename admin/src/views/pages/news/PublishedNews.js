@@ -48,10 +48,16 @@ const PublishedNews = () => {
     try {
       const token = JSON.parse(secureLocalStorage.getItem('logininfo')).token
 
-      const res = await fetch(setting.api + '/api/news/getAllNews', {
-        method: 'GET',
+      // const res = await fetch(setting.api + '/api/news/getAllNews', {
+      //   method: 'GET',
+      //   headers: {
+      //     Authorization: 'Bearer ' + token,
+      //   },
+      // })
+
+      const res = await fetch(`${setting.api}/api/news/getAllNews?limit=100`, {
         headers: {
-          Authorization: 'Bearer ' + token,
+          Authorization: `Bearer ${token}`,
         },
       })
 
@@ -269,7 +275,7 @@ const PublishedNews = () => {
 
                   <CTableDataCell>
                     <a
-                     href={`https://bharattvmedia.com/news/${news.slug}`}
+                      href={`https://bharattvmedia.com/news/${news.slug}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       style={{

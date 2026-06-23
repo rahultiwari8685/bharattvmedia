@@ -311,7 +311,7 @@ function Post1() {
       </div>
       {/* <div className="space-10" /> */}
       <OurBlogSection />
-      <div className="space-10" />
+      {/* <div className="space-10" /> */}
       {/* <BlogComment /> */}
       {/* <div className="space-10" /> */}
       <BannerSection />
