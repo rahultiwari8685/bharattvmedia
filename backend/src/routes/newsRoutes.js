@@ -17,6 +17,7 @@ import {
   getVideoNews,
   getMostSharedNews,
   increaseShare,
+  previousNextNews,
 } from "../controllers/newsController.js";
 
 const router = express.Router();
@@ -46,4 +47,5 @@ router.get("/popular", getPopularNews);
 router.get("/videos", getVideoNews);
 router.get("/most-shared", getMostSharedNews);
 router.post("/share/:id", increaseShare);
+router.get("/previous-next/:id", previousNextNews);
 export default router;

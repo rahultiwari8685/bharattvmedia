@@ -250,7 +250,7 @@ function Post1() {
               <div className="space-40" />
               <div className="border_black" />
               <div className="space-40" />
-              <PostOnePagination />
+              <PostOnePagination newsId={news._id} />
             </div>
             <div className="col-md-6 col-lg-4">
               {/* <WidgetTab /> */}
@@ -263,7 +263,7 @@ function Post1() {
                   <img src={banner2} alt="thumb" />
                 </Link>
               </div>
-              <MostShareWidget title="Most Share" />
+              {/* <MostShareWidget title="Most Share" /> */}
               <NewsLetter />
             </div>
           </div>

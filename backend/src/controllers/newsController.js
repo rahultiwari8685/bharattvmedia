@@ -113,15 +113,56 @@ export const createNews = async (req, res) => {
   }
 };
 
+// export const getNews = async (req, res) => {
+//   try {
+//     const news = await News.find()
+//       .populate("author", "name email")
+//       .populate("categories", "name")
+//       .sort({ createdAt: -1 });
+
+//     return res.status(200).json({
+//       status: true,
+//       data: news,
+//     });
+//   } catch (error) {
+//     return res.status(500).json({
+//       status: false,
+//       message: error.message,
+//     });
+//   }
+// };
+
 export const getNews = async (req, res) => {
   try {
-    const news = await News.find()
+    const { page = 1, limit } = req.query;
+
+    const query = {
+      type: 1, // Published News
+    };
+
+    let newsQuery = News.find(query)
       .populate("author", "name email")
-      .populate("categories", "name")
+      .populate("categories", "name slug")
       .sort({ createdAt: -1 });
+
+    // Apply pagination only if limit is provided
+    if (limit) {
+      const pageNumber = parseInt(page);
+      const limitNumber = parseInt(limit);
+
+      newsQuery = newsQuery
+        .skip((pageNumber - 1) * limitNumber)
+        .limit(limitNumber);
+    }
+
+    const news = await newsQuery;
+
+    const total = await News.countDocuments(query);
 
     return res.status(200).json({
       status: true,
+      total,
+      totalPages: limit ? Math.ceil(total / parseInt(limit)) : 1,
       data: news,
     });
   } catch (error) {
@@ -630,6 +671,37 @@ export const getVideoNews = async (req, res) => {
     return res.status(500).json({
       status: false,
       message: error.message,
+    });
+  }
+};
+
+export const previousNextNews = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const previous = await News.findOne({
+      _id: { $lt: id },
+      status: "published",
+    })
+      .sort({ _id: -1 })
+      .select("title slug");
+
+    const next = await News.findOne({
+      _id: { $gt: id },
+      status: "published",
+    })
+      .sort({ _id: 1 })
+      .select("title slug");
+
+    return res.json({
+      success: true,
+      previous,
+      next,
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: err.message,
     });
   }
 };
