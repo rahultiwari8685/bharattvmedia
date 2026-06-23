@@ -544,7 +544,7 @@ const News = () => {
                           }}
                         /> */}
 
-                        <CKEditor
+                        {/* <CKEditor
                           initData={content}
                           onChange={(event) => {
                             const html = event.editor.getData()
@@ -566,6 +566,60 @@ const News = () => {
                             // Disable native spellchecker (helps on Android)
                             disableNativeSpellChecker: false,
 
+                            toolbarCanCollapse: false,
+
+                            toolbar: [
+                              {
+                                name: 'styles',
+                                items: ['Styles', 'Format', 'Font', 'FontSize'],
+                              },
+                              {
+                                name: 'basicstyles',
+                                items: ['Bold', 'Italic', 'Underline', 'Strike'],
+                              },
+                              {
+                                name: 'paragraph',
+                                items: [
+                                  'NumberedList',
+                                  'BulletedList',
+                                  'JustifyLeft',
+                                  'JustifyCenter',
+                                  'JustifyRight',
+                                ],
+                              },
+                              {
+                                name: 'insert',
+                                items: ['Image', 'Table'],
+                              },
+                              {
+                                name: 'links',
+                                items: ['Link', 'Unlink'],
+                              },
+                            ],
+                          }}
+                        /> */}
+
+                        <CKEditor
+                          editorUrl="https://cdn.ckeditor.com/4.22.1/full/ckeditor.js"
+                          initData={content}
+                          onChange={(event) => {
+                            const html = event.editor.getData()
+
+                            setContent(html)
+
+                            setValue('description', html, {
+                              shouldValidate: true,
+                              shouldDirty: true,
+                            })
+                          }}
+                          config={{
+                            versionCheck: false,
+                            height: 400,
+                            allowedContent: true,
+                            autoParagraph: false,
+                            removePlugins: 'resize,elementspath',
+                            extraPlugins: 'font,colorbutton,justify',
+                            disableNativeSpellChecker: false,
                             toolbarCanCollapse: false,
 
                             toolbar: [
