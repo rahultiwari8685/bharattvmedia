@@ -44,7 +44,15 @@ function Post1() {
   const { slug } = useParams();
   const [news, setNews] = useState(null);
 
-  const shareUrl = `https://api.bharattvmedia.com/api/news/share/${news.slug}`;
+  useEffect(() => {
+    fetchNews();
+  }, [slug]);
+
+  if (!news) {
+    return <h2 className="text-center mt-5">Loading...</h2>;
+  }
+
+  const shareUrl = `https://api.bharattvmedia.com/api/news/share/${news?.slug || ""}`;
 
   const shareTitle = news?.title || "";
 
@@ -55,10 +63,6 @@ function Post1() {
   const cleanContent = news?.content
     ?.replace(/style="[^"]*"/g, "")
     ?.replace(/<p><br><\/p>/g, "");
-
-  useEffect(() => {
-    fetchNews();
-  }, [slug]);
 
   const fetchNews = async () => {
     try {
@@ -72,10 +76,6 @@ function Post1() {
       console.log(err);
     }
   };
-
-  if (!news) {
-    return <h2 className="text-center mt-5">Loading...</h2>;
-  }
 
   const getYoutubeId = (url) => {
     if (!url) return "";
