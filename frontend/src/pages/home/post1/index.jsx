@@ -45,9 +45,7 @@ function Post1() {
   const [news, setNews] = useState(null);
 
   // const shareUrl = window.location.href;
-  const shareUrl = news
-    ? `https://api.bharattvmedia.com/api/news/share/${news.slug}`
-    : "";
+  const shareUrl = `https://api.bharattvmedia.com/api/news/share/${news.slug}`;
 
   const shareTitle = news?.title || "";
 
