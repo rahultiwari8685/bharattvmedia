@@ -31,9 +31,9 @@ const MainMenu = ({ className, dark }) => {
     }
   };
 
-  const arr = parentMenus;
-
   const parentMenus = menuItems.filter((item) => item.parentCategory === null);
+
+  const arr = parentMenus;
 
   const visibleMenus = parentMenus.slice(0, 7);
   const moreMenus = parentMenus.slice(7);
