@@ -679,19 +679,28 @@ export const previousNextNews = async (req, res) => {
   try {
     const { id } = req.params;
 
+    const currentNews = await News.findById(id);
+
+    if (!currentNews) {
+      return res.status(404).json({
+        success: false,
+        message: "News not found",
+      });
+    }
+
     const previous = await News.findOne({
-      _id: { $lt: id },
-      status: "published",
+      type: 1,
+      createdAt: { $lt: currentNews.createdAt },
     })
-      .sort({ _id: -1 })
-      .select("title slug");
+      .sort({ createdAt: -1 })
+      .select("_id title slug");
 
     const next = await News.findOne({
-      _id: { $gt: id },
-      status: "published",
+      type: 1,
+      createdAt: { $gt: currentNews.createdAt },
     })
-      .sort({ _id: 1 })
-      .select("title slug");
+      .sort({ createdAt: 1 })
+      .select("_id title slug");
 
     return res.json({
       success: true,
@@ -699,7 +708,7 @@ export const previousNextNews = async (req, res) => {
       next,
     });
   } catch (err) {
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       message: err.message,
     });

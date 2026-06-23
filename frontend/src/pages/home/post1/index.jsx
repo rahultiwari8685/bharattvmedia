@@ -264,7 +264,7 @@ function Post1() {
                 </Link>
               </div>
               {/* <MostShareWidget title="Most Share" /> */}
-              <NewsLetter />
+              {/* <NewsLetter /> */}
             </div>
           </div>
         </div>
