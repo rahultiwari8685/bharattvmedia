@@ -1,15 +1,31 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import logo from "../../assets/img/Bharat_Logo.png";
-import logoDark from "../../assets/img/logo-2.png";
 
 const LogoArea = ({ className, dark }) => {
   const [banner, setBanner] = useState(null);
+  const [siteSetting, setSiteSetting] = useState(null);
 
   useEffect(() => {
     getBanner();
+    getSiteSetting();
   }, []);
+
+  const getSiteSetting = async () => {
+    try {
+      const res = await fetch(
+        "https://api.bharattvmedia.com/api/site-settings",
+      );
+
+      const result = await res.json();
+
+      if (result.success) {
+        setSiteSetting(result.data);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   const getBanner = async () => {
     try {
@@ -34,13 +50,21 @@ const LogoArea = ({ className, dark }) => {
   };
 
   return (
-    <div className={`logo_area ${className ? className : ""}`}>
+    <div className={`logo_area ${className || ""}`}>
       <div className="container">
         <div className="row">
           <div className="col-lg-4 align-self-center">
             <div className="logo">
               <Link to="/">
-                <img src={dark ? logoDark : logo} alt="logo" />
+                {siteSetting?.headerLogo ? (
+                  <img
+                    src={`https://api.bharattvmedia.com/uploads/images/${siteSetting.headerLogo}`}
+                    alt={siteSetting.siteName}
+                    className="img-fluid"
+                  />
+                ) : (
+                  <h3>Bharat TV Media</h3>
+                )}
               </Link>
             </div>
           </div>
