@@ -1,6 +1,6 @@
 import fs from "fs";
 import path from "path";
-import SiteSetting from "../models/SiteSetting.js";
+import SiteSetting from "../models/SiteSetting";
 
 const deleteFile = (filename) => {
   if (!filename) return;
