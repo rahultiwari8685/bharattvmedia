@@ -42,10 +42,6 @@ const MainMenu = ({ className, dark }) => {
     return menuItems.filter((item) => item.parentCategory?._id === parentId);
   };
 
-  const getChildren = (parentId) => {
-    return menuItems.filter((item) => item.parentCategory?._id === parentId);
-  };
-
   return (
     <>
       <div className={`main-menu ${className ? className : ""}`} id="header">
