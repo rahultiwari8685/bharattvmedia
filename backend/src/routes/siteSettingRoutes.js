@@ -1,5 +1,5 @@
 import express from "express";
-import upload from "../middleware/siteSettingUpload.js";
+import upload from "../middleware/upload.js";
 
 import {
   saveSiteSetting,
