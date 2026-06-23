@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ProtoTypes from "prop-types";
 import { Link } from "react-router-dom";
 import FooterCopyright from "../FooterCopyright";
