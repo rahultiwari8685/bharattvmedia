@@ -135,12 +135,12 @@ function Post1() {
           className="shadow5 padding-top-10"
           title={`${news.categories?.[0]?.name || "News"} / ${news.title}`}
         />
-        <span className="space-30" />
+        <span className="space-10" />
         <div className="container">
           <div className="row">
             <div className="col-md-6 col-lg-8">
               <div className="row">
-                <div className="col-12">
+                <div className="col-11">
                   <div className="page_category">
                     {/* <h4>{news.categories?.[0]?.name}</h4> */}
                     <div className="share-section mt-1">
@@ -234,7 +234,7 @@ function Post1() {
                   </div>
                 </div> */}
               </div>
-              <div className="space-30" />
+              <div className="space-10" />
               <div className="single_post_heading">
                 <h1>{news.title}</h1>
                 <div className="space-10" />
