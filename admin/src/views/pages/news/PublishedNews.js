@@ -40,7 +40,9 @@ const PublishedNews = () => {
 
   const [categoryList, setCategoryList] = useState([])
 
-  const userRole = JSON.parse(secureLocalStorage.getItem('logininfo')).role
+  const loginInfo = JSON.parse(secureLocalStorage.getItem('logininfo') || '{}')
+
+  const userRole = loginInfo.role || ''
 
   console.log('User role from storage:', userRole)
 
@@ -264,7 +266,7 @@ const PublishedNews = () => {
             {paginatedItems.map((news, index) => {
               const actualIndex = (currentPage - 1) * itemsPerPage + index
               return (
-                <CTableRow key={news.id}>
+                <CTableRow key={news._id}>
                   <CTableDataCell>{actualIndex + 1}</CTableDataCell>
 
                   <CTableDataCell>
