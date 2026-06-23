@@ -47,10 +47,6 @@ function Post1() {
   const [banners, setBanners] = useState({});
 
   useEffect(() => {
-    getAdvertisements();
-  }, []);
-
-  useEffect(() => {
     const loadNews = async () => {
       try {
         const res = await fetch(`${API}/api/news/slug/${slug}`);
@@ -106,6 +102,10 @@ function Post1() {
       console.log(err);
     }
   };
+
+  useEffect(() => {
+    getAdvertisements();
+  }, []);
 
   const getYoutubeId = (url) => {
     if (!url) return "";
@@ -317,11 +317,6 @@ function Post1() {
       <BannerSection />
 
       <style>{`
-
-
-
-
-
 
 .share-section {
   margin: 35px 0;
