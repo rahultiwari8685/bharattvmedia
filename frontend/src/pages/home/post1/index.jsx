@@ -44,6 +44,12 @@ function Post1() {
   const { slug } = useParams();
   const [news, setNews] = useState(null);
 
+  const [banners, setBanners] = useState({});
+
+  useEffect(() => {
+    getAdvertisements();
+  }, []);
+
   useEffect(() => {
     const loadNews = async () => {
       try {
@@ -77,18 +83,29 @@ function Post1() {
     ?.replace(/style="[^"]*"/g, "")
     ?.replace(/<p><br><\/p>/g, "");
 
-  // const fetchNews = async () => {
-  //   try {
-  //     const res = await fetch(`${API}/api/news/slug/${slug}`);
-  //     const data = await res.json();
+  const getAdvertisements = async () => {
+    try {
+      const res = await fetch(
+        "https://api.bharattvmedia.com/api/advertisements",
+      );
 
-  //     if (data.status) {
-  //       setNews(data.data);
-  //     }
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
+      const data = await res.json();
+
+      if (data.success) {
+        const ads = {};
+
+        data.data.forEach((item) => {
+          if (item.status) {
+            ads[item.position] = item;
+          }
+        });
+
+        setBanners(ads);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const getYoutubeId = (url) => {
     if (!url) return "";
@@ -190,13 +207,13 @@ function Post1() {
                         </EmailShareButton>
 
                         <button
-                          className="btn btn-danger mt-3"
+                          className="btn btn-danger btn-sm"
                           onClick={() => {
                             navigator.clipboard.writeText(shareUrl);
                             alert("Link copied!");
                           }}
                         >
-                          Copy Link
+                          Copy
                         </button>
                       </div>
                     </div>
@@ -272,9 +289,19 @@ function Post1() {
               <FollowUs title="Follow Us" />
               <WidgetTrendingNews />
               <div className="banner2 mb30">
-                <Link to="/">
-                  <img src={banner2} alt="thumb" />
-                </Link>
+                {banners.homepage_middle && (
+                  <a
+                    href={banners.homepage_middle.redirectUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <img
+                      src={`https://api.bharattvmedia.com/uploads/advertisements/${banners.homepage_middle.image}`}
+                      alt={banners.homepage_middle.title}
+                      className="img-fluid"
+                    />
+                  </a>
+                )}
               </div>
               {/* <MostShareWidget title="Most Share" /> */}
               {/* <NewsLetter /> */}
@@ -296,19 +323,38 @@ function Post1() {
 
 
 
-.share-section{
-    margin:35px 0;
+.share-section {
+  margin: 35px 0;
 }
 
-.share-section h5{
-    font-weight:700;
-    margin-bottom:15px;
+.share-section .d-flex {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: nowrap !important;
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  padding-bottom: 8px;
 }
 
-.share-section .d-flex{
-    display:flex;
-    gap:12px;
-    flex-wrap:wrap;
+.share-section .d-flex::-webkit-scrollbar {
+  height: 4px;
+}
+
+.share-section .d-flex::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 10px;
+}
+
+.share-section .d-flex > * {
+  flex: 0 0 auto;
+}
+
+.share-section button {
+  flex: 0 0 auto;
 }
 
 .share-section button{
