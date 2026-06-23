@@ -404,7 +404,7 @@ const UpdateNews = () => {
                                                         `}
                         </style>
 
-                        {editingNews && (
+                        {/* {editingNews && (
                           <CKEditor
                             key={editingNews._id}
                             initData={editingNews.content}
@@ -468,6 +468,74 @@ const UpdateNews = () => {
 
                               fontSize_sizes:
                                 '8/8px;10/10px;12/12px;14/14px;16/16px;18/18px;20/20px;24/24px;28/28px;36/36px;48/48px;72/72px',
+                            }}
+                          />
+                        )} */}
+
+                        {editingNews && (
+                          <CKEditor
+                            key={editingNews._id}
+                            editorUrl="https://cdn.ckeditor.com/4.22.1/full/ckeditor.js"
+                            initData={content}
+                            onChange={(event) => {
+                              const html = event.editor.getData()
+
+                              setContent(html)
+
+                              setValue('description', html, {
+                                shouldValidate: true,
+                                shouldDirty: true,
+                              })
+                            }}
+                            config={{
+                              versionCheck: false,
+                              height: 400,
+                              allowedContent: true,
+                              autoParagraph: false,
+                              removePlugins: 'resize,elementspath',
+                              extraPlugins: 'font,colorbutton,justify',
+                              disableNativeSpellChecker: false,
+                              toolbarCanCollapse: false,
+
+                              toolbar: [
+                                {
+                                  name: 'styles',
+                                  items: ['Styles', 'Format', 'Font', 'FontSize'],
+                                },
+                                {
+                                  name: 'basicstyles',
+                                  items: ['Bold', 'Italic', 'Underline', 'Strike'],
+                                },
+                                {
+                                  name: 'colors',
+                                  items: ['TextColor', 'BGColor'],
+                                },
+                                {
+                                  name: 'paragraph',
+                                  items: [
+                                    'NumberedList',
+                                    'BulletedList',
+                                    'Outdent',
+                                    'Indent',
+                                    'JustifyLeft',
+                                    'JustifyCenter',
+                                    'JustifyRight',
+                                    'JustifyBlock',
+                                  ],
+                                },
+                                {
+                                  name: 'insert',
+                                  items: ['Image', 'Table'],
+                                },
+                                {
+                                  name: 'links',
+                                  items: ['Link', 'Unlink'],
+                                },
+                                {
+                                  name: 'document',
+                                  items: ['Source'],
+                                },
+                              ],
                             }}
                           />
                         )}
