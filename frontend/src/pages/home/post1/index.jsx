@@ -45,7 +45,20 @@ function Post1() {
   const [news, setNews] = useState(null);
 
   useEffect(() => {
-    fetchNews();
+    const loadNews = async () => {
+      try {
+        const res = await fetch(`${API}/api/news/slug/${slug}`);
+        const data = await res.json();
+
+        if (data.status) {
+          setNews(data.data);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    loadNews();
   }, [slug]);
 
   if (!news) {
@@ -64,18 +77,18 @@ function Post1() {
     ?.replace(/style="[^"]*"/g, "")
     ?.replace(/<p><br><\/p>/g, "");
 
-  const fetchNews = async () => {
-    try {
-      const res = await fetch(`${API}/api/news/slug/${slug}`);
-      const data = await res.json();
+  // const fetchNews = async () => {
+  //   try {
+  //     const res = await fetch(`${API}/api/news/slug/${slug}`);
+  //     const data = await res.json();
 
-      if (data.status) {
-        setNews(data.data);
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  //     if (data.status) {
+  //       setNews(data.data);
+  //     }
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
 
   const getYoutubeId = (url) => {
     if (!url) return "";
