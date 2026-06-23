@@ -40,9 +40,10 @@ const DraftNews = () => {
     try {
       const token = JSON.parse(secureLocalStorage.getItem('logininfo')).token
 
-      const res = await fetch(`${setting.api}/api/news/getAllNews?limit=100`, {
+      const res = await fetch(setting.api + '/api/news/getAllNews', {
+        method: 'GET',
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: 'Bearer ' + token,
         },
       })
 
