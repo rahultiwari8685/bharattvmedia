@@ -1,11 +1,12 @@
 import fs from "fs";
 import path from "path";
-import SiteSetting from "../models/SiteSetting";
+
+import SiteSetting from "../models/SiteSetting.js";
 
 const deleteFile = (filename) => {
   if (!filename) return;
 
-  const filePath = path.join("uploads", "settings", filename);
+  const filePath = path.join(process.cwd(), "uploads", "images", filename);
 
   if (fs.existsSync(filePath)) {
     fs.unlinkSync(filePath);

@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const SiteSettingSchema = new mongoose.Schema(
   {
@@ -7,39 +7,86 @@ const SiteSettingSchema = new mongoose.Schema(
       required: true,
     },
 
-    headerLogo: String,
+    headerLogo: {
+      type: String,
+      default: "",
+    },
 
-    footerLogo: String,
+    footerLogo: {
+      type: String,
+      default: "",
+    },
 
-    favicon: String,
+    favicon: {
+      type: String,
+      default: "",
+    },
 
-    metaTitle: String,
+    metaTitle: {
+      type: String,
+      default: "",
+    },
 
-    metaDescription: String,
+    metaDescription: {
+      type: String,
+      default: "",
+    },
 
-    metaKeywords: String,
+    metaKeywords: {
+      type: String,
+      default: "",
+    },
 
-    facebook: String,
+    facebook: {
+      type: String,
+      default: "",
+    },
 
-    twitter: String,
+    twitter: {
+      type: String,
+      default: "",
+    },
 
-    instagram: String,
+    instagram: {
+      type: String,
+      default: "",
+    },
 
-    youtube: String,
+    youtube: {
+      type: String,
+      default: "",
+    },
 
-    linkedin: String,
+    linkedin: {
+      type: String,
+      default: "",
+    },
 
-    email: String,
+    email: {
+      type: String,
+      default: "",
+    },
 
-    phone: String,
+    phone: {
+      type: String,
+      default: "",
+    },
 
-    address: String,
+    address: {
+      type: String,
+      default: "",
+    },
 
-    copyright: String,
+    copyright: {
+      type: String,
+      default: "",
+    },
   },
   {
     timestamps: true,
   },
 );
 
-module.exports = mongoose.model("SiteSetting", SiteSettingSchema);
+const SiteSetting = mongoose.model("SiteSetting", SiteSettingSchema);
+
+export default SiteSetting;
