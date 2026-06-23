@@ -12,6 +12,7 @@ const ScheduleNews = React.lazy(() => import('./views/pages/news/ScheduleNews'))
 const Users = React.lazy(() => import('./views/pages/users/Users'))
 const Category = React.lazy(() => import('./views/pages/category/Category'))
 const Advertisement = React.lazy(() => import('./views/pages/advertisement/Advertisement'))
+const SiteSetting = React.lazy(() => import('./views/pages/siteSetting/SiteSetting'))
 // import UpdateNews from "./pages/News/UpdateNews";
 
 const routes = [
@@ -24,6 +25,7 @@ const routes = [
   { path: '/DraftNews', name: 'Draft News', element: DraftNews },
   { path: '/DeletedNews', name: 'Deleted News', element: DeletedNews },
   { path: '/ScheduleNews', name: 'Scheduled News', element: ScheduleNews },
+  { path: '/siteSetting', name: 'Site Setting', element: SiteSetting },
 
   { path: '/ChangePassword', name: 'Change Password', element: ChangePassword },
   { path: '/Users', name: 'Users', element: Users },
