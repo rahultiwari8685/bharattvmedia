@@ -78,10 +78,6 @@ function Post1() {
     }
   };
 
-  if (!news) {
-    return <h2 className="text-center mt-5">Loading...</h2>;
-  }
-
   const getYoutubeId = (url) => {
     if (!url) return "";
 
