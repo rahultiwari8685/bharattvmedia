@@ -132,7 +132,7 @@ function Post1() {
     <>
       <div className="archives post post1">
         <BreadCrumb
-          className="shadow5 padding-top-30"
+          className="shadow5 padding-top-10"
           title={`${news.categories?.[0]?.name || "News"} / ${news.title}`}
         />
         <span className="space-30" />
@@ -140,7 +140,7 @@ function Post1() {
           <div className="row">
             <div className="col-md-6 col-lg-8">
               <div className="row">
-                <div className="col-8 align-self-center">
+                <div className="col-12">
                   <div className="page_category">
                     {/* <h4>{news.categories?.[0]?.name}</h4> */}
                     <div className="share-section mt-1">
@@ -289,15 +289,15 @@ function Post1() {
               <FollowUs title="Follow Us" />
               <WidgetTrendingNews />
               <div className="banner2 mb30">
-                {banners.homepage_middle && (
+                {banners.sidebar && (
                   <a
-                    href={banners.homepage_middle.redirectUrl}
+                    href={banners.sidebar.redirectUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
                     <img
-                      src={`https://api.bharattvmedia.com/uploads/advertisements/${banners.homepage_middle.image}`}
-                      alt={banners.homepage_middle.title}
+                      src={`https://api.bharattvmedia.com/uploads/advertisements/${banners.sidebar.image}`}
+                      alt={banners.sidebar.title}
                       className="img-fluid"
                     />
                   </a>
