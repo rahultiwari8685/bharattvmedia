@@ -31,12 +31,12 @@ const MainMenu = ({ className, dark }) => {
     }
   };
 
-  const arr = dark ? menusDark : menus;
+  const arr = parentMenus;
 
   const parentMenus = menuItems.filter((item) => item.parentCategory === null);
 
   const visibleMenus = parentMenus.slice(0, 7);
-  const moreMenus = parentMenus.slice(10);
+  const moreMenus = parentMenus.slice(7);
 
   const getChildren = (parentId) => {
     return menuItems.filter((item) => item.parentCategory?._id === parentId);
@@ -109,48 +109,18 @@ const MainMenu = ({ className, dark }) => {
 
                       {moreMenus.length > 0 && (
                         <li className="nav-item dropdown">
-                          <a href="#" className="menu-dropdown">
-                            More
-                            <FontAwesome name="angle-down" />
-                          </a>
+                          <span className="menu-dropdown">
+                            More <FontAwesome name="angle-down" />
+                          </span>
 
                           <ul className="dropdown-menu">
-                            {moreMenus.map((parent) => {
-                              const children = getChildren(parent._id);
-
-                              return (
-                                <li
-                                  key={parent._id}
-                                  className={
-                                    children.length ? "dropdown-submenu" : ""
-                                  }
-                                >
-                                  {children.length > 0 ? (
-                                    <>
-                                      <NavLink to={`/category/${parent._id}`}>
-                                        {parent.name}
-                                      </NavLink>
-
-                                      <ul className="dropdown-menu">
-                                        {children.map((child) => (
-                                          <li key={child._id}>
-                                            <NavLink
-                                              to={`/category/${child._id}`}
-                                            >
-                                              {child.name}
-                                            </NavLink>
-                                          </li>
-                                        ))}
-                                      </ul>
-                                    </>
-                                  ) : (
-                                    <NavLink to={`/category/${parent._id}`}>
-                                      {parent.name}
-                                    </NavLink>
-                                  )}
-                                </li>
-                              );
-                            })}
+                            {moreMenus.map((parent) => (
+                              <li key={parent._id}>
+                                <NavLink to={`/category/${parent._id}`}>
+                                  {parent.name}
+                                </NavLink>
+                              </li>
+                            ))}
                           </ul>
                         </li>
                       )}
