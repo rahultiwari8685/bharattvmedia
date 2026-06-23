@@ -309,11 +309,11 @@ function Post1() {
           </div>
         </div>
       </div>
-      <div className="space-60" />
+      <div className="space-10" />
       <OurBlogSection />
-      <div className="space-60" />
+      <div className="space-10" />
       {/* <BlogComment /> */}
-      <div className="space-100" />
+      <div className="space-10" />
       <BannerSection />
 
       <style>{`
