@@ -6,413 +6,6 @@ import { Link, NavLink } from "react-router-dom";
 import SearchModal from "../SearchModal";
 import SidebarMenu from "../SidebarMenu";
 
-const menus = [
-  {
-    id: 1,
-    linkText: "Home",
-    child: true,
-    icon: "angle-down",
-    submenu: [
-      {
-        id: 11,
-        link: "/",
-        linkText: "Home 1",
-      },
-      {
-        id: 12,
-        link: "/dark",
-        linkText: "Home Dark",
-      },
-      {
-        id: 13,
-        new: true,
-        link: "/home-two",
-        linkText: "Home 2",
-      },
-      {
-        id: 14,
-        link: "/home-three",
-        linkText: "Home 3",
-      },
-    ],
-  },
-  {
-    id: 2,
-    linkText: "Pages",
-    child: true,
-    icon: "angle-down",
-    submenu: [
-      {
-        id: 21,
-        link: "/about",
-        linkText: "About",
-      },
-      {
-        id: 22,
-        link: "/archive",
-        linkText: "Archive",
-      },
-      {
-        id: 23,
-        link: "/contact",
-        linkText: "Contact Us",
-      },
-      {
-        id: 24,
-        link: "/404",
-        linkText: "404",
-      },
-    ],
-  },
-  {
-    id: 3,
-    linkText: "Posts",
-    child: true,
-    icon: "angle-down",
-    submenu: [
-      {
-        id: 31,
-        child: true,
-        linkText: "General Posts",
-        third_menu: [
-          {
-            id: 311,
-            link: "/post1",
-            linkText: "Post 1",
-          },
-          {
-            id: 312,
-            link: "/post2",
-            linkText: "Post 2",
-          },
-          {
-            id: 313,
-            link: "/post3",
-            linkText: "Post 3",
-          },
-        ],
-      },
-      {
-        id: 32,
-        child: true,
-        linkText: "Video Posts",
-        third_menu: [
-          {
-            id: 321,
-            link: "/video_post1",
-            linkText: "Video Style 1",
-          },
-          {
-            id: 322,
-            link: "/video_post2",
-            linkText: "Video Style 2",
-          },
-          {
-            id: 323,
-            link: "/video_post3",
-            linkText: "Video Style 3",
-          },
-        ],
-      },
-      {
-        id: 33,
-        child: true,
-        linkText: "Audio Posts",
-        third_menu: [
-          {
-            id: 331,
-            link: "/audio_post1",
-            linkText: "Audio Style 1",
-          },
-          {
-            id: 332,
-            link: "/audio_post2",
-            linkText: "Audio Style 2",
-          },
-          {
-            id: 333,
-            link: "/audio_post3",
-            linkText: "Audio Style 3",
-          },
-        ],
-      },
-      {
-        id: 34,
-        child: true,
-        linkText: "Sidebars",
-        third_menu: [
-          {
-            id: 341,
-            link: "/post1",
-            linkText: "Right Sidebar",
-          },
-          {
-            id: 342,
-            link: "/left_post2",
-            linkText: "Left Sidebar",
-          },
-          {
-            id: 343,
-            link: "/post2",
-            linkText: "No Sidebar",
-          },
-        ],
-      },
-    ],
-  },
-  {
-    id: 4,
-    linkText: "Categories",
-    child: true,
-    icon: "angle-down",
-    submenu: [
-      {
-        id: 41,
-        link: "/business",
-        linkText: "Business",
-      },
-      {
-        id: 42,
-        link: "/entertainment",
-        linkText: "Entertainment",
-      },
-      {
-        id: 43,
-        link: "/features",
-        linkText: "Features",
-      },
-      {
-        id: 44,
-        link: "/sports",
-        linkText: "Sports",
-      },
-      {
-        id: 45,
-        link: "/trending",
-        linkText: "Trending",
-      },
-    ],
-  },
-  {
-    id: 5,
-    linkText: "World",
-    link: "/world",
-  },
-  {
-    id: 6,
-    linkText: "Sports",
-    link: "/sports",
-  },
-  {
-    id: 7,
-    linkText: "Contact",
-    link: "/contact",
-  },
-];
-const menusDark = [
-  {
-    id: 1,
-    linkText: "Home",
-    child: true,
-    icon: "angle-down",
-    submenu: [
-      {
-        id: 11,
-        link: "/",
-        linkText: "Home 1",
-      },
-      {
-        id: 12,
-        link: "/dark",
-        linkText: "Home Dark",
-      },
-      {
-        id: 13,
-        new: true,
-        link: "/home-two",
-        linkText: "Home 2",
-      },
-      {
-        id: 14,
-        link: "/home-three",
-        linkText: "Home 3",
-      },
-    ],
-  },
-  {
-    id: 2,
-    linkText: "Pages",
-    child: true,
-    icon: "angle-down",
-    submenu: [
-      {
-        id: 21,
-        link: "/dark/about",
-        linkText: "About",
-      },
-      {
-        id: 22,
-        link: "/dark/archive",
-        linkText: "Archive",
-      },
-      {
-        id: 23,
-        link: "/dark/contact",
-        linkText: "Contact Us",
-      },
-      {
-        id: 24,
-        link: "/dark/404",
-        linkText: "404",
-      },
-    ],
-  },
-  {
-    id: 3,
-    linkText: "Posts",
-    child: true,
-    icon: "angle-down",
-    submenu: [
-      {
-        id: 31,
-        child: true,
-        linkText: "General Posts",
-        third_menu: [
-          {
-            id: 311,
-            link: "/dark/post1",
-            linkText: "Post 1",
-          },
-          {
-            id: 312,
-            link: "/dark/post2",
-            linkText: "Post 2",
-          },
-          {
-            id: 313,
-            link: "/dark/post3",
-            linkText: "Post 3",
-          },
-        ],
-      },
-      {
-        id: 32,
-        child: true,
-        linkText: "Video Posts",
-        third_menu: [
-          {
-            id: 321,
-            link: "/dark/video_post1",
-            linkText: "Video Style 1",
-          },
-          {
-            id: 322,
-            link: "/dark/video_post2",
-            linkText: "Video Style 2",
-          },
-          {
-            id: 323,
-            link: "/dark/video_post3",
-            linkText: "Video Style 3",
-          },
-        ],
-      },
-      {
-        id: 33,
-        child: true,
-        linkText: "Audio Posts",
-        third_menu: [
-          {
-            id: 331,
-            link: "/dark/audio_post1",
-            linkText: "Audio Style 1",
-          },
-          {
-            id: 332,
-            link: "/dark/audio_post2",
-            linkText: "Audio Style 2",
-          },
-          {
-            id: 333,
-            link: "/dark/audio_post3",
-            linkText: "Audio Style 3",
-          },
-        ],
-      },
-      {
-        id: 34,
-        child: true,
-        linkText: "Sidebars",
-        third_menu: [
-          {
-            id: 341,
-            link: "/dark/post1",
-            linkText: "Right Sidebar",
-          },
-          {
-            id: 342,
-            link: "/dark/left_post2",
-            linkText: "Left Sidebar",
-          },
-          {
-            id: 343,
-            link: "/dark/post2",
-            linkText: "No Sidebar",
-          },
-        ],
-      },
-    ],
-  },
-  {
-    id: 4,
-    linkText: "Categories",
-    child: true,
-    icon: "angle-down",
-    submenu: [
-      {
-        id: 41,
-        link: "/dark/business",
-        linkText: "Business",
-      },
-      {
-        id: 42,
-        link: "/dark/entertainment",
-        linkText: "Entertainment",
-      },
-      {
-        id: 43,
-        link: "/dark/features",
-        linkText: "Features",
-      },
-      {
-        id: 44,
-        link: "/dark/sports",
-        linkText: "Sports",
-      },
-      {
-        id: 45,
-        link: "/dark/trending",
-        linkText: "Trending",
-      },
-    ],
-  },
-  {
-    id: 5,
-    linkText: "World",
-    link: "/dark/world",
-  },
-  {
-    id: 6,
-    linkText: "Sports",
-    link: "/dark/sports",
-  },
-  {
-    id: 7,
-    linkText: "Contact",
-    link: "/dark/contact",
-  },
-];
-
 const MainMenu = ({ className, dark }) => {
   const API = "https://api.bharattvmedia.com";
 
@@ -442,6 +35,13 @@ const MainMenu = ({ className, dark }) => {
 
   const parentMenus = menuItems.filter((item) => item.parentCategory === null);
 
+  const visibleMenus = parentMenus.slice(0, 7);
+  const moreMenus = parentMenus.slice(10);
+
+  const getChildren = (parentId) => {
+    return menuItems.filter((item) => item.parentCategory?._id === parentId);
+  };
+
   const getChildren = (parentId) => {
     return menuItems.filter((item) => item.parentCategory?._id === parentId);
   };
@@ -467,88 +67,12 @@ const MainMenu = ({ className, dark }) => {
                     id="navbarSupportedContent"
                     className="collapse navbar-collapse navbar-responsive-collapse"
                   >
-                    {/* <ul className="nav navbar-nav" id="scroll">
-                      {arr.length > 0
-                        ? arr.map((item, i) => (
-                            <li
-                              key={i}
-                              className={`
-                                                ${item.child ? "dropdown" : ""}
-                                                nav-item`}
-                            >
-                              {item.child ? (
-                                <NavLink
-                                  onClick={(e) => e.preventDefault()}
-                                  to="/"
-                                  className="menu-dropdown"
-                                  data-toggle="dropdown"
-                                >
-                                  {item.linkText}
-                                  <FontAwesome name={item.icon} />
-                                </NavLink>
-                              ) : (
-                                <NavLink
-                                  to={item.link}
-                                  className="menu-dropdown"
-                                  data-toggle="dropdown"
-                                >
-                                  {item.linkText}{" "}
-                                  <FontAwesome name={item.icon} />
-                                </NavLink>
-                              )}
-
-                              {item.child ? (
-                                <ul className="dropdown-menu" role="menu">
-                                  {item.submenu.map((sub_item, i) => (
-                                    <li
-                                      key={i}
-                                      className={`${
-                                        sub_item.child
-                                          ? "dropdown-submenu"
-                                          : null
-                                      }
-                                                        `}
-                                    >
-                                      {sub_item.child ? (
-                                        <NavLink
-                                          onClick={(e) => e.preventDefault()}
-                                          to="/"
-                                        >
-                                          {sub_item.linkText}
-                                        </NavLink>
-                                      ) : (
-                                        <NavLink to={sub_item.link}>
-                                          {sub_item.linkText}
-                                        </NavLink>
-                                      )}
-                                      {sub_item.third_menu ? (
-                                        <ul className="dropdown-menu">
-                                          {sub_item.third_menu.map(
-                                            (third_item, i) => (
-                                              <li key={i}>
-                                                <NavLink to={third_item.link}>
-                                                  {third_item.linkText}
-                                                </NavLink>
-                                              </li>
-                                            )
-                                          )}
-                                        </ul>
-                                      ) : null}
-                                    </li>
-                                  ))}
-                                </ul>
-                              ) : null}
-                            </li>
-                          ))
-                        : null}
-                    </ul> */}
-
                     <ul className="nav navbar-nav" id="scroll">
                       <li className="nav-item">
                         <NavLink to="/">Home</NavLink>
                       </li>
 
-                      {parentMenus.map((parent) => {
+                      {visibleMenus.map((parent) => {
                         const children = getChildren(parent._id);
 
                         return (
@@ -586,6 +110,54 @@ const MainMenu = ({ className, dark }) => {
                           </li>
                         );
                       })}
+
+                      {moreMenus.length > 0 && (
+                        <li className="nav-item dropdown">
+                          <a href="#" className="menu-dropdown">
+                            More
+                            <FontAwesome name="angle-down" />
+                          </a>
+
+                          <ul className="dropdown-menu">
+                            {moreMenus.map((parent) => {
+                              const children = getChildren(parent._id);
+
+                              return (
+                                <li
+                                  key={parent._id}
+                                  className={
+                                    children.length ? "dropdown-submenu" : ""
+                                  }
+                                >
+                                  {children.length > 0 ? (
+                                    <>
+                                      <NavLink to={`/category/${parent._id}`}>
+                                        {parent.name}
+                                      </NavLink>
+
+                                      <ul className="dropdown-menu">
+                                        {children.map((child) => (
+                                          <li key={child._id}>
+                                            <NavLink
+                                              to={`/category/${child._id}`}
+                                            >
+                                              {child.name}
+                                            </NavLink>
+                                          </li>
+                                        ))}
+                                      </ul>
+                                    </>
+                                  ) : (
+                                    <NavLink to={`/category/${parent._id}`}>
+                                      {parent.name}
+                                    </NavLink>
+                                  )}
+                                </li>
+                              );
+                            })}
+                          </ul>
+                        </li>
+                      )}
                     </ul>
                   </div>
                   <SidebarMenu
@@ -595,7 +167,7 @@ const MainMenu = ({ className, dark }) => {
                   />
                 </div>
               </nav>
-              <div className="col-lg-4 align-self-center">
+              {/* <div className="col-lg-4 align-self-center">
                 <div className="menu_right">
                   <div className="users_area">
                     <ul className="inline">
@@ -643,7 +215,7 @@ const MainMenu = ({ className, dark }) => {
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
