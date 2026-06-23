@@ -63,22 +63,6 @@ function Post1() {
     loadNews();
   }, [slug]);
 
-  if (!news) {
-    return <h2 className="text-center mt-5">Loading...</h2>;
-  }
-
-  const shareUrl = `https://api.bharattvmedia.com/api/news/share/${news?.slug || ""}`;
-
-  const shareTitle = news?.title || "";
-
-  const shareImage = news?.thumbnail
-    ? `${API}/uploads/images/${news.thumbnail}`
-    : "";
-
-  const cleanContent = news?.content
-    ?.replace(/style="[^"]*"/g, "")
-    ?.replace(/<p><br><\/p>/g, "");
-
   const getAdvertisements = async () => {
     try {
       const res = await fetch(
@@ -106,6 +90,22 @@ function Post1() {
   useEffect(() => {
     getAdvertisements();
   }, []);
+
+  if (!news) {
+    return <h2 className="text-center mt-5">Loading...</h2>;
+  }
+
+  const shareUrl = `https://api.bharattvmedia.com/api/news/share/${news?.slug || ""}`;
+
+  const shareTitle = news?.title || "";
+
+  const shareImage = news?.thumbnail
+    ? `${API}/uploads/images/${news.thumbnail}`
+    : "";
+
+  const cleanContent = news?.content
+    ?.replace(/style="[^"]*"/g, "")
+    ?.replace(/<p><br><\/p>/g, "");
 
   const getYoutubeId = (url) => {
     if (!url) return "";
