@@ -44,11 +44,6 @@ function Post1() {
   const { slug } = useParams();
   const [news, setNews] = useState(null);
 
-  // const shareUrl = window.location.href;
-  if (!news) {
-    return <h2 className="text-center mt-5">Loading...</h2>;
-  }
-
   const shareUrl = `https://api.bharattvmedia.com/api/news/share/${news.slug}`;
 
   const shareTitle = news?.title || "";
@@ -77,6 +72,10 @@ function Post1() {
       console.log(err);
     }
   };
+
+  if (!news) {
+    return <h2 className="text-center mt-5">Loading...</h2>;
+  }
 
   const getYoutubeId = (url) => {
     if (!url) return "";
