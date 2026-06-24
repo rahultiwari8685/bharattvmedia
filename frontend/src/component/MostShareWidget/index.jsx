@@ -64,7 +64,7 @@ const MostShareWidget = ({ title, dark }) => {
 
                   <ul className="inline socail_share">
                     <li>
-                      <FontAwesome name="share-alt" /> {item.shareCount || 0}
+                      <FontAwesome name="share-alt" /> {item.shares || 0}
                     </li>
                   </ul>
 
