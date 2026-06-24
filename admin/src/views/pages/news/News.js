@@ -661,6 +661,7 @@ const News = () => {
                         /> */}
 
                         <Editor
+                          apiKey="okwya9fvn8y65h8ufs9cpsvbv2a4yo789vbfvbfr3rkfjp32"
                           value={content}
                           onEditorChange={(newValue) => {
                             setContent(newValue)
