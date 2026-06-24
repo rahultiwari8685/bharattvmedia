@@ -669,17 +669,29 @@ const News = () => {
                           config={{
                             versionCheck: false,
                             height: 500,
-
                             allowedContent: true,
 
-                            filebrowserUploadUrl: `${setting.api}/api/upload/ckeditor`,
+                            extraPlugins: 'uploadimage,image2',
 
+                            // Remove the old image plugin
+                            removePlugins: 'image',
+
+                            uploadUrl: `${setting.api}/api/upload/ckeditor`,
+                            filebrowserUploadUrl: `${setting.api}/api/upload/ckeditor`,
                             filebrowserUploadMethod: 'form',
 
                             toolbar: [
                               {
                                 name: 'clipboard',
-                                items: ['Undo', 'Redo'],
+                                items: [
+                                  'Undo',
+                                  'Redo',
+                                  'Cut',
+                                  'Copy',
+                                  'Paste',
+                                  'PasteText',
+                                  'PasteFromWord',
+                                ],
                               },
                               {
                                 name: 'styles',
@@ -687,32 +699,97 @@ const News = () => {
                               },
                               {
                                 name: 'basicstyles',
-                                items: ['Bold', 'Italic', 'Underline', 'Strike'],
+                                items: [
+                                  'Bold',
+                                  'Italic',
+                                  'Underline',
+                                  'Strike',
+                                  'Subscript',
+                                  'Superscript',
+                                  'RemoveFormat',
+                                ],
                               },
                               {
                                 name: 'paragraph',
                                 items: [
                                   'NumberedList',
                                   'BulletedList',
+                                  'Outdent',
+                                  'Indent',
+                                  'Blockquote',
                                   'JustifyLeft',
                                   'JustifyCenter',
                                   'JustifyRight',
+                                  'JustifyBlock',
                                 ],
                               },
                               {
                                 name: 'insert',
-                                items: ['Image', 'Table', 'HorizontalRule'],
+                                items: [
+                                  'UploadImage',
+                                  'Image',
+                                  'Table',
+                                  'HorizontalRule',
+                                  'SpecialChar',
+                                ],
                               },
                               {
                                 name: 'links',
-                                items: ['Link', 'Unlink'],
+                                items: ['Link', 'Unlink', 'Anchor'],
                               },
                               {
                                 name: 'document',
-                                items: ['Source'],
+                                items: ['Source', 'Maximize'],
                               },
                             ],
                           }}
+                          // config={{
+                          //   versionCheck: false,
+                          //   height: 500,
+
+                          //   allowedContent: true,
+
+                          //   filebrowserUploadUrl: `${setting.api}/api/upload/ckeditor`,
+
+                          //   filebrowserUploadMethod: 'form',
+
+                          //   toolbar: [
+                          //     {
+                          //       name: 'clipboard',
+                          //       items: ['Undo', 'Redo'],
+                          //     },
+                          //     {
+                          //       name: 'styles',
+                          //       items: ['Format', 'Font', 'FontSize'],
+                          //     },
+                          //     {
+                          //       name: 'basicstyles',
+                          //       items: ['Bold', 'Italic', 'Underline', 'Strike'],
+                          //     },
+                          //     {
+                          //       name: 'paragraph',
+                          //       items: [
+                          //         'NumberedList',
+                          //         'BulletedList',
+                          //         'JustifyLeft',
+                          //         'JustifyCenter',
+                          //         'JustifyRight',
+                          //       ],
+                          //     },
+                          //     {
+                          //       name: 'insert',
+                          //       items: ['Image', 'Table', 'HorizontalRule'],
+                          //     },
+                          //     {
+                          //       name: 'links',
+                          //       items: ['Link', 'Unlink'],
+                          //     },
+                          //     {
+                          //       name: 'document',
+                          //       items: ['Source'],
+                          //     },
+                          //   ],
+                          // }}
                         />
 
                         {errors.description && (
