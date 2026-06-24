@@ -737,3 +737,56 @@ export const shareNews = async (req, res) => {
     res.status(500).send(err.message);
   }
 };
+
+export const newsMeta = async (req, res) => {
+  try {
+    const news = await News.findOne({
+      slug: req.params.slug,
+      type: 1,
+    });
+
+    if (!news) {
+      return res.status(404).send("News not found");
+    }
+
+    const image = `https://api.bharattvmedia.com/uploads/images/${news.thumbnail}`;
+    const url = `https://bharattvmedia.com/news/${news.slug}`;
+
+    res.send(`
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+
+<title>${news.title}</title>
+
+<meta name="description" content="${news.subtitle || ""}">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="${news.title}">
+<meta property="og:description" content="${news.subtitle || ""}">
+<meta property="og:image" content="${image}">
+<meta property="og:url" content="${url}">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="${news.title}">
+<meta name="twitter:description" content="${news.subtitle || ""}">
+<meta name="twitter:image" content="${image}">
+
+<script>
+window.location.href="${url}";
+</script>
+
+</head>
+
+<body>
+Redirecting...
+</body>
+
+</html>
+`);
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+};

@@ -19,6 +19,7 @@ import {
   increaseShare,
   previousNextNews,
   shareNews,
+  newsMeta,
 } from "../controllers/newsController.js";
 
 const router = express.Router();
@@ -50,4 +51,6 @@ router.get("/most-shared", getMostSharedNews);
 router.post("/share/:id", increaseShare);
 router.get("/previous-next/:id", previousNextNews);
 router.get("/share/:slug", shareNews);
+router.get("/news/:slug", newsMeta);
+router.get("/:slug/meta", newsMeta);
 export default router;
