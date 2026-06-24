@@ -25,7 +25,9 @@ import {
 import secureLocalStorage from 'react-secure-storage'
 import { useParams } from 'react-router-dom'
 import toast from 'react-hot-toast'
-import { CKEditor } from 'ckeditor4-react'
+// import { CKEditor } from 'ckeditor4-react'
+
+import { Editor } from '@tinymce/tinymce-react'
 
 const schema = yup.object().shape({
   title: yup.string().required('Title is required'),
@@ -472,7 +474,7 @@ const UpdateNews = () => {
                           />
                         )} */}
 
-                        {editingNews && (
+                        {/* {editingNews && (
                           <CKEditor
                             key={editingNews._id}
                             editorUrl="https://cdn.ckeditor.com/4.22.1/full/ckeditor.js"
@@ -538,7 +540,73 @@ const UpdateNews = () => {
                               ],
                             }}
                           />
+                        )} */}
+
+                        {editingNews && (
+                          <Editor
+                            apiKey="okwya9fvn8y65h8ufs9cpsvbv2a4yo789vbfvbfr3rkfjp32"
+                            value={content}
+                            onEditorChange={(newValue) => {
+                              setContent(newValue)
+
+                              setValue('description', newValue, {
+                                shouldValidate: true,
+                                shouldDirty: true,
+                              })
+                            }}
+                            init={{
+                              height: 600,
+                              menubar: true,
+                              branding: false,
+
+                              plugins: [
+                                'advlist',
+                                'autolink',
+                                'lists',
+                                'link',
+                                'image',
+                                'charmap',
+                                'preview',
+                                'anchor',
+                                'searchreplace',
+                                'visualblocks',
+                                'code',
+                                'fullscreen',
+                                'insertdatetime',
+                                'media',
+                                'table',
+                                'wordcount',
+                              ],
+
+                              toolbar:
+                                'undo redo | styles | bold italic underline | ' +
+                                'alignleft aligncenter alignright alignjustify | ' +
+                                'bullist numlist outdent indent | ' +
+                                'link image media table | ' +
+                                'code fullscreen',
+
+                              images_upload_handler: async (blobInfo) => {
+                                const formData = new FormData()
+
+                                formData.append('file', blobInfo.blob(), blobInfo.filename())
+
+                                const response = await fetch(`${setting.api}/api/upload/image`, {
+                                  method: 'POST',
+                                  body: formData,
+                                })
+
+                                const result = await response.json()
+
+                                if (!response.ok) {
+                                  throw new Error(result.message)
+                                }
+
+                                return result.location
+                              },
+                            }}
+                          />
                         )}
+
                         {errors.description && (
                           <p className="text-danger small mt-1">{errors.description.message}</p>
                         )}
