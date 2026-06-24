@@ -65,7 +65,7 @@ app.get("/news/:slug", async (req, res) => {
 });
 
 // React routes
-app.get("*", (req, res) => {
+app.use((req, res) => {
   res.sendFile(INDEX);
 });
 
