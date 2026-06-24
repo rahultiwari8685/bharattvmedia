@@ -1,13 +1,10 @@
-CKEDITOR.editorConfig = function (config) {
-  config.height = 500
+/**
+ * @license Copyright (c) 2003-2023, CKSource Holding sp. z o.o. All rights reserved.
+ * For licensing, see https://ckeditor.com/legal/ckeditor-oss-license
+ */
 
-  config.allowedContent = true
-
-  //   config.extraPlugins = 'uploadimage,image2'
-
-  config.removePlugins = 'easyimage,cloudservices'
-
-  config.filebrowserUploadUrl = 'https://api.bharattvmedia.com/api/upload/ckeditor'
-
-  config.filebrowserUploadMethod = 'form'
-}
+CKEDITOR.editorConfig = function( config ) {
+	// Define changes to default configuration here. For example:
+	// config.language = 'fr';
+	// config.uiColor = '#AADC6E';
+};
