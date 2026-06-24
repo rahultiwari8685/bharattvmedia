@@ -671,11 +671,6 @@ const News = () => {
                             height: 500,
                             allowedContent: true,
 
-                            extraPlugins: 'uploadimage,image2',
-
-                            // Remove the old image plugin
-                            removePlugins: 'image',
-
                             uploadUrl: `${setting.api}/api/upload/ckeditor`,
                             filebrowserUploadUrl: `${setting.api}/api/upload/ckeditor`,
                             filebrowserUploadMethod: 'form',
