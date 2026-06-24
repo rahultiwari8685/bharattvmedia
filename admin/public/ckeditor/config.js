@@ -3,7 +3,7 @@ CKEDITOR.editorConfig = function (config) {
 
   config.allowedContent = true
 
-  config.extraPlugins = 'uploadimage,image2'
+  //   config.extraPlugins = 'uploadimage,image2'
 
   config.removePlugins = 'easyimage,cloudservices'
 
