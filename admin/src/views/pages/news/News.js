@@ -672,7 +672,7 @@ const News = () => {
                             height: 500,
                             allowedContent: true,
 
-                            uploadUrl: `${setting.api}/api/upload/ckeditor`,
+                            // uploadUrl: `${setting.api}/api/upload/ckeditor`,
                             filebrowserUploadUrl: `${setting.api}/api/upload/ckeditor`,
                             filebrowserUploadMethod: 'form',
 
@@ -721,13 +721,14 @@ const News = () => {
                               },
                               {
                                 name: 'insert',
-                                items: [
-                                  'UploadImage',
-                                  'Image',
-                                  'Table',
-                                  'HorizontalRule',
-                                  'SpecialChar',
-                                ],
+                                // items: [
+                                //   'UploadImage',
+                                //   'Image',
+                                //   'Table',
+                                //   'HorizontalRule',
+                                //   'SpecialChar',
+                                // ],
+                                items: ['Image', 'Table', 'HorizontalRule', 'SpecialChar'],
                               },
                               {
                                 name: 'links',
