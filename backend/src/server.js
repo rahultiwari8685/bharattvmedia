@@ -15,6 +15,7 @@ import rateLimit from "express-rate-limit";
 import goldRoutes from "./routes/gold.js";
 import "./cron/publishScheduledNews.js";
 import siteSettingRoutes from "./routes/siteSettingRoutes.js";
+import uploadRoutes from "./routes/uploadRoutes.js";
 const app = express();
 
 const __filename = fileURLToPath(import.meta.url);
@@ -81,7 +82,7 @@ app.use("/api/news", newsRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api", goldRoutes);
 app.use("/api/advertisements", advertisementRoutes);
-
+app.use("/api/upload", uploadRoutes);
 app.use("/api/site-settings", siteSettingRoutes);
 
 const PORT = process.env.PORT || 5001;

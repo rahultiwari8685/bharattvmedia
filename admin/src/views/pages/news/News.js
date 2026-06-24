@@ -599,7 +599,7 @@ const News = () => {
                           }}
                         /> */}
 
-                        <CKEditor
+                        {/* <CKEditor
                           editorUrl="https://cdn.ckeditor.com/4.22.1/full/ckeditor.js"
                           initData={content}
                           onChange={(event) => {
@@ -648,6 +648,68 @@ const News = () => {
                               {
                                 name: 'links',
                                 items: ['Link', 'Unlink'],
+                              },
+                            ],
+                          }}
+                        /> */}
+
+                        <CKEditor
+                          editorUrl="https://cdn.ckeditor.com/4.22.1/full/ckeditor.js"
+                          initData={content}
+                          onChange={(event) => {
+                            const html = event.editor.getData()
+
+                            setContent(html)
+
+                            setValue('description', html, {
+                              shouldValidate: true,
+                              shouldDirty: true,
+                            })
+                          }}
+                          config={{
+                            versionCheck: false,
+                            height: 500,
+
+                            allowedContent: true,
+
+                            filebrowserUploadUrl: `${setting.api}/api/upload/ckeditor`,
+
+                            filebrowserUploadMethod: 'form',
+
+                            toolbar: [
+                              {
+                                name: 'clipboard',
+                                items: ['Undo', 'Redo'],
+                              },
+                              {
+                                name: 'styles',
+                                items: ['Format', 'Font', 'FontSize'],
+                              },
+                              {
+                                name: 'basicstyles',
+                                items: ['Bold', 'Italic', 'Underline', 'Strike'],
+                              },
+                              {
+                                name: 'paragraph',
+                                items: [
+                                  'NumberedList',
+                                  'BulletedList',
+                                  'JustifyLeft',
+                                  'JustifyCenter',
+                                  'JustifyRight',
+                                ],
+                              },
+                              {
+                                name: 'insert',
+                                items: ['Image', 'Table', 'HorizontalRule'],
+                              },
+                              {
+                                name: 'links',
+                                items: ['Link', 'Unlink'],
+                              },
+                              {
+                                name: 'document',
+                                items: ['Source'],
                               },
                             ],
                           }}
