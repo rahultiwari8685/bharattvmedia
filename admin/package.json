@@ -45,6 +45,7 @@
     "recharts": "^3.2.1",
     "redux": "5.0.1",
     "simplebar-react": "^3.3.0",
+    "tinymce": "^8.6.0",
     "yup": "^1.6.1"
   },
   "devDependencies": {

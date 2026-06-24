@@ -24,7 +24,8 @@ import secureLocalStorage from 'react-secure-storage'
 // import EditorJSComponent from '../../../components/EditorJSComponent'
 import { useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
-import { CKEditor } from 'ckeditor4-react'
+// import { CKEditor } from 'ckeditor4-react'
+import { Editor } from '@tinymce/tinymce-react'
 
 const schema = yup.object().shape({
   title: yup.string().required('Title is required'),
@@ -518,88 +519,6 @@ const News = () => {
                         </style>
 
                         {/* <CKEditor
-                          key={editingNews?._id || 'new'}
-                          initData={content}
-                          config={{
-                            height: 300,
-                            toolbar: [
-                              ['Format'],
-                              ['Bold', 'Italic', 'Underline'],
-                              ['NumberedList', 'BulletedList'],
-                              ['Link', 'Unlink'],
-                              ['Image', 'Table'],
-                              ['Source'],
-                            ],
-                            format_tags: 'p;h1;h2;h3;h4;h5;h6',
-                          }}
-                          onChange={(evt) => {
-                            const data = evt.editor.getData()
-
-                            setContent(data)
-
-                            setValue('description', data, {
-                              shouldValidate: true,
-                              shouldDirty: true,
-                            })
-                          }}
-                        /> */}
-
-                        {/* <CKEditor
-                          initData={content}
-                          onChange={(event) => {
-                            const html = event.editor.getData()
-
-                            setContent(html)
-
-                            setValue('description', html, {
-                              shouldValidate: true,
-                              shouldDirty: true,
-                            })
-                          }}
-                          config={{
-                            height: 400,
-                            allowedContent: true,
-                            autoParagraph: false,
-                            removePlugins: 'resize,elementspath',
-                            extraPlugins: 'font,colorbutton,justify',
-
-                            // Disable native spellchecker (helps on Android)
-                            disableNativeSpellChecker: false,
-
-                            toolbarCanCollapse: false,
-
-                            toolbar: [
-                              {
-                                name: 'styles',
-                                items: ['Styles', 'Format', 'Font', 'FontSize'],
-                              },
-                              {
-                                name: 'basicstyles',
-                                items: ['Bold', 'Italic', 'Underline', 'Strike'],
-                              },
-                              {
-                                name: 'paragraph',
-                                items: [
-                                  'NumberedList',
-                                  'BulletedList',
-                                  'JustifyLeft',
-                                  'JustifyCenter',
-                                  'JustifyRight',
-                                ],
-                              },
-                              {
-                                name: 'insert',
-                                items: ['Image', 'Table'],
-                              },
-                              {
-                                name: 'links',
-                                items: ['Link', 'Unlink'],
-                              },
-                            ],
-                          }}
-                        /> */}
-
-                        {/* <CKEditor
                           editorUrl="https://cdn.ckeditor.com/4.22.1/full/ckeditor.js"
                           initData={content}
                           onChange={(event) => {
@@ -653,7 +572,7 @@ const News = () => {
                           }}
                         /> */}
 
-                        <CKEditor
+                        {/* <CKEditor
                           editorUrl="https://cdn.ckeditor.com/4.22.1/full/ckeditor.js"
                           initData={content}
                           onChange={(event) => {
@@ -738,53 +657,58 @@ const News = () => {
                               },
                             ],
                           }}
-                          // config={{
-                          //   versionCheck: false,
-                          //   height: 500,
+                        
+                        /> */}
 
-                          //   allowedContent: true,
+                        <Editor
+                          value={content}
+                          onEditorChange={(newValue) => {
+                            setContent(newValue)
 
-                          //   filebrowserUploadUrl: `${setting.api}/api/upload/ckeditor`,
+                            setValue('description', newValue, {
+                              shouldValidate: true,
+                              shouldDirty: true,
+                            })
+                          }}
+                          init={{
+                            height: 600,
 
-                          //   filebrowserUploadMethod: 'form',
+                            menubar: true,
 
-                          //   toolbar: [
-                          //     {
-                          //       name: 'clipboard',
-                          //       items: ['Undo', 'Redo'],
-                          //     },
-                          //     {
-                          //       name: 'styles',
-                          //       items: ['Format', 'Font', 'FontSize'],
-                          //     },
-                          //     {
-                          //       name: 'basicstyles',
-                          //       items: ['Bold', 'Italic', 'Underline', 'Strike'],
-                          //     },
-                          //     {
-                          //       name: 'paragraph',
-                          //       items: [
-                          //         'NumberedList',
-                          //         'BulletedList',
-                          //         'JustifyLeft',
-                          //         'JustifyCenter',
-                          //         'JustifyRight',
-                          //       ],
-                          //     },
-                          //     {
-                          //       name: 'insert',
-                          //       items: ['Image', 'Table', 'HorizontalRule'],
-                          //     },
-                          //     {
-                          //       name: 'links',
-                          //       items: ['Link', 'Unlink'],
-                          //     },
-                          //     {
-                          //       name: 'document',
-                          //       items: ['Source'],
-                          //     },
-                          //   ],
-                          // }}
+                            branding: false,
+
+                            plugins: [
+                              'advlist',
+                              'autolink',
+                              'lists',
+                              'link',
+                              'image',
+                              'charmap',
+                              'preview',
+                              'anchor',
+                              'searchreplace',
+                              'visualblocks',
+                              'code',
+                              'fullscreen',
+                              'insertdatetime',
+                              'media',
+                              'table',
+                              'wordcount',
+                            ],
+
+                            toolbar:
+                              'undo redo | styles | bold italic underline | ' +
+                              'alignleft aligncenter alignright alignjustify | ' +
+                              'bullist numlist outdent indent | ' +
+                              'link image media table | ' +
+                              'code fullscreen',
+
+                            images_upload_url: `${setting.api}/api/upload/image`,
+
+                            automatic_uploads: true,
+
+                            images_reuse_filename: true,
+                          }}
                         />
 
                         {errors.description && (
