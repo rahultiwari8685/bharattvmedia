@@ -704,7 +704,7 @@ const News = () => {
                               'link image media table | ' +
                               'code fullscreen',
 
-                            images_upload_url: `${setting.api}/api/upload/image`,
+                            images_upload_url: `${setting.api}/api/upload/ckeditor`,
 
                             automatic_uploads: true,
 
