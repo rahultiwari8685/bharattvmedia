@@ -704,9 +704,24 @@ const News = () => {
                               'link image media table | ' +
                               'code fullscreen',
 
-                            images_upload_url: `${setting.api}/api/upload/ckeditor`,
+                            images_upload_handler: async (blobInfo) => {
+                              const formData = new FormData()
 
-                            automatic_uploads: true,
+                              formData.append('file', blobInfo.blob(), blobInfo.filename())
+
+                              const response = await fetch(`${setting.api}/api/upload/image`, {
+                                method: 'POST',
+                                body: formData,
+                              })
+
+                              const result = await response.json()
+
+                              if (!response.ok) {
+                                throw new Error(result.message || 'Upload failed')
+                              }
+
+                              return result.location
+                            },
 
                             images_reuse_filename: true,
                           }}
