@@ -652,9 +652,10 @@ const News = () => {
                             ],
                           }}
                         /> */}
-
+                        {/* 
                         <CKEditor
-                          editorUrl="https://cdn.ckeditor.com/4.22.1/full/ckeditor.js"
+                          // editorUrl="https://cdn.ckeditor.com/4.22.1/full/ckeditor.js"
+                          editorUrl="/ckeditor/ckeditor.js"
                           initData={content}
                           onChange={(event) => {
                             const html = event.editor.getData()
@@ -785,6 +786,21 @@ const News = () => {
                           //     },
                           //   ],
                           // }}
+                        /> */}
+
+                        <CKEditor
+                          editorUrl="/ckeditor/ckeditor.js"
+                          initData={content}
+                          onChange={(event) => {
+                            const html = event.editor.getData()
+
+                            setContent(html)
+
+                            setValue('description', html, {
+                              shouldValidate: true,
+                              shouldDirty: true,
+                            })
+                          }}
                         />
 
                         {errors.description && (
