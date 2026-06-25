@@ -126,10 +126,16 @@ const MainMenu = ({ className, dark }) => {
                       )}
                     </ul>
                   </div>
-                  <SidebarMenu
+                  {/* <SidebarMenu
                     sideShow={sideShow}
                     setSideShow={setSideShow}
                     menus={arr}
+                  /> */}
+
+                  <SidebarMenu
+                    sideShow={sideShow}
+                    setSideShow={setSideShow}
+                    menus={menuItems}
                   />
                 </div>
               </nav>

@@ -1,110 +1,89 @@
 import React, { useState } from "react";
-import ProtoTypes from "prop-types";
 import { NavLink } from "react-router-dom";
-import FontAwesome from "../uiStyle/FontAwesome";
 import { Collapse } from "reactstrap";
+import FontAwesome from "../uiStyle/FontAwesome";
 
 import "./style.scss";
 
 const SidebarMenu = ({ menus, sideShow, setSideShow, className }) => {
-  const [sMenu, setSMenu] = useState(null);
-  const [stMenu, setSTMenu] = useState(null);
+  const [openMenu, setOpenMenu] = useState(null);
+
+  const parentMenus = menus.filter((item) => item.parentCategory === null);
+
+  const getChildren = (parentId) => {
+    return menus.filter((item) => item.parentCategory?._id === parentId);
+  };
+
   return (
     <div
-      className={`sidebarMenu ${sideShow ? "" : "hideSideMenu"} ${
-        className ? className : ""
-      }`}
+      className={`sidebarMenu ${
+        sideShow ? "" : "hideSideMenu"
+      } ${className || ""}`}
     >
       <span className="clox" onClick={() => setSideShow(false)}>
         Close
       </span>
+
       <ul className="navBar">
-        {menus.length > 0
-          ? menus.map((item, i) => (
-              <li key={i} className={`${item.child ? "has_sub" : ""}`}>
-                {item.child ? (
+        <li>
+          <NavLink to="/" onClick={() => setSideShow(false)}>
+            Home
+          </NavLink>
+        </li>
+
+        {parentMenus.map((parent) => {
+          const children = getChildren(parent._id);
+
+          return (
+            <li key={parent._id} className={children.length ? "has_sub" : ""}>
+              {children.length > 0 ? (
+                <>
                   <p
-                    onClick={() => setSMenu(item.id === sMenu ? null : item.id)}
-                    className={sMenu === item.id ? "active" : ""}
+                    onClick={() =>
+                      setOpenMenu(openMenu === parent._id ? null : parent._id)
+                    }
+                    className={openMenu === parent._id ? "active" : ""}
                   >
-                    {item.linkText}
+                    {parent.name}
+
                     <FontAwesome
                       name={
-                        sMenu === item.id ? "angle-down active" : "angle-down"
+                        openMenu === parent._id
+                          ? "angle-down active"
+                          : "angle-down"
                       }
                     />
                   </p>
-                ) : (
-                  <NavLink
-                    exact="true"
-                    className={sMenu === item.id ? "active" : ""}
-                    to={item.link}
-                  >
-                    {item.linkText}
-                  </NavLink>
-                )}
-                {item.child ? (
-                  <Collapse isOpen={sMenu === item.id}>
+
+                  <Collapse isOpen={openMenu === parent._id}>
                     <ul className="subMenu">
-                      {item.submenu.map((sub_item, i) => (
-                        <li
-                          key={i}
-                          className={`${sub_item.child ? "has_sub" : ""}`}
-                        >
-                          {sub_item.child ? (
-                            <p
-                              onClick={() =>
-                                setSTMenu(
-                                  sub_item.id === stMenu ? null : sub_item.id
-                                )
-                              }
-                              className={stMenu === sub_item.id ? "active" : ""}
-                            >
-                              {sub_item.linkText}
-                              <FontAwesome
-                                name={
-                                  stMenu === sub_item.id
-                                    ? "angle-down active"
-                                    : "angle-down"
-                                }
-                              />
-                            </p>
-                          ) : (
-                            <NavLink exact="true" to={sub_item.link}>
-                              {sub_item.linkText}
-                            </NavLink>
-                          )}
-                          {sub_item.third_menu ? (
-                            <Collapse isOpen={stMenu === sub_item.id}>
-                              <ul className="thirdMenu">
-                                {sub_item.third_menu.map((third_item, i) => (
-                                  <li key={i}>
-                                    <NavLink to={third_item.link}>
-                                      {third_item.linkText}
-                                    </NavLink>
-                                  </li>
-                                ))}
-                              </ul>
-                            </Collapse>
-                          ) : null}
+                      {children.map((child) => (
+                        <li key={child._id}>
+                          <NavLink
+                            to={`/category/${child._id}`}
+                            onClick={() => setSideShow(false)}
+                          >
+                            {child.name}
+                          </NavLink>
                         </li>
                       ))}
                     </ul>
                   </Collapse>
-                ) : null}
-              </li>
-            ))
-          : null}
+                </>
+              ) : (
+                <NavLink
+                  to={`/category/${parent._id}`}
+                  onClick={() => setSideShow(false)}
+                >
+                  {parent.name}
+                </NavLink>
+              )}
+            </li>
+          );
+        })}
       </ul>
     </div>
   );
 };
 
 export default SidebarMenu;
-
-SidebarMenu.propTypes = {
-  className: ProtoTypes.string,
-  menus: ProtoTypes.array,
-  sideShow: ProtoTypes.bool,
-  setSideShow: ProtoTypes.func,
-};
