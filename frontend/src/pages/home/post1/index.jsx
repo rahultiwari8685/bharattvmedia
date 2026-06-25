@@ -206,7 +206,7 @@ function Post1() {
                           <EmailIcon size={42} round />
                         </EmailShareButton>
 
-                        <button
+                        {/* <button
                           className="btn btn-dark btn-sm"
                           style={{ display: "inline-block", zIndex: 9999 }}
                           onClick={() => {
@@ -215,7 +215,7 @@ function Post1() {
                           }}
                         >
                           Copy
-                        </button>
+                        </button> */}
                       </div>
                     </div>
                   </div>
