@@ -10,39 +10,6 @@ import hside3 from "../../assets/img/post-3.jpg";
 import FontAwesome from "../uiStyle/FontAwesome";
 import Slider from "../Slider";
 
-// const postSlider = [
-//   {
-//     title: "The home decorations document: photograph of an",
-//     body: "People have been infected",
-//     image: hside4,
-//   },
-//   {
-//     title: "U.S. Response subash says he will label regions by risk of…",
-//     body: "People have been infected",
-//     image: hside5,
-//   },
-//   {
-//     title: "Stimul package will transform the government fundamentally.",
-//     body: "People have been infected",
-//     image: hside6,
-//   },
-//   {
-//     title: "U.S. Response subash says he will label regions by risk of…",
-//     body: "People have been infected",
-//     image: hside1,
-//   },
-//   {
-//     title: "U.S. Response subash says he will label regions by risk of…",
-//     body: "People have been infected",
-//     image: hside2,
-//   },
-//   {
-//     title: "U.S. Response subash says he will label regions by risk of…",
-//     body: "People have been infected",
-//     image: hside3,
-//   },
-// ];
-
 const PostCarousel = ({ className }) => {
   const [postSlider, setPostSlider] = useState([]);
 
@@ -58,8 +25,14 @@ const PostCarousel = ({ className }) => {
 
       const data = await res.json();
 
+      // if (data.status) {
+      //   setPostSlider(data.data);
+      // }
+
       if (data.status) {
-        setPostSlider(data.data);
+        const videoPosts = data.data.filter((item) => item.videoType === 2);
+
+        setPostSlider(videoPosts);
       }
     } catch (error) {
       console.log(error);

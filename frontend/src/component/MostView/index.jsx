@@ -19,8 +19,14 @@ const MostView = ({ no_margin, title, dark }) => {
 
       const data = await res.json();
 
+      // if (data.status) {
+      //   setMostView(data.data);
+      // }
+
       if (data.status) {
-        setMostView(data.data);
+        const videoPosts = data.data.filter((item) => item.videoType === 2);
+
+        setMostView(videoPosts);
       }
     } catch (err) {
       console.log(err);

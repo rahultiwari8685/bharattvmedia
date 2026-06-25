@@ -14,13 +14,18 @@ const PopularPosts = () => {
   const getPopularPosts = async () => {
     try {
       const res = await fetch(
-        "https://api.bharattvmedia.com/api/news/popular?limit=8"
+        "https://api.bharattvmedia.com/api/news/popular?limit=8",
       );
 
       const data = await res.json();
 
+      // if (data.status) {
+      //   setPosts(data.data);
+      // }
       if (data.status) {
-        setPosts(data.data);
+        const videoPosts = data.data.filter((item) => item.videoType === 2);
+
+        setPosts(videoPosts);
       }
     } catch (error) {
       console.log(error);
@@ -63,22 +68,16 @@ const PopularPosts = () => {
                   </Link>
                 </div>
 
-                <span className="tranding tranding_border">
-                  {index + 1}
-                </span>
+                <span className="tranding tranding_border">{index + 1}</span>
               </div>
 
               <div className="single_post_text">
                 <h4>
-                  <Link to={`/news/${item.slug}`}>
-                    {item.title}
-                  </Link>
+                  <Link to={`/news/${item.slug}`}>{item.title}</Link>
                 </h4>
 
                 <div className="meta4">
-                  <Link to="#">
-                    {item.categories?.[0]?.name || "News"}
-                  </Link>
+                  <Link to="#">{item.categories?.[0]?.name || "News"}</Link>
                 </div>
               </div>
             </div>

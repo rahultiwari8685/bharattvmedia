@@ -20,8 +20,13 @@ const FeatureNews = ({ className }) => {
 
       const data = await res.json();
 
+      // if (data.status) {
+      //   setNews(data.data);
+      // }
       if (data.status) {
-        setNews(data.data);
+        const videoPosts = data.data.filter((item) => item.videoType === 2);
+
+        setNews(videoPosts);
       }
     } catch (err) {
       console.log(err);

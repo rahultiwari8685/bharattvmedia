@@ -11,21 +11,27 @@ const SportsNews = ({ dark }) => {
     getSportsNews();
   }, []);
 
- const getSportsNews = async () => {
-  try {
-    const res = await fetch(
-      "https://api.bharattvmedia.com/api/news/category/6a2ac8970492bc79b68ee903?limit=10"
-    );
+  const getSportsNews = async () => {
+    try {
+      const res = await fetch(
+        "https://api.bharattvmedia.com/api/news/category/6a2ac8970492bc79b68ee903?limit=10",
+      );
 
-    const data = await res.json();
+      const data = await res.json();
 
-    if (data.status) {
-      setSportsNews(data.data);
+      // if (data.status) {
+      //   setSportsNews(data.data);
+      // }
+
+      if (data.status) {
+        const videoPosts = data.data.filter((item) => item.videoType === 2);
+
+        setSportsNews(videoPosts);
+      }
+    } catch (err) {
+      console.log(err);
     }
-  } catch (err) {
-    console.log(err);
-  }
-};
+  };
 
   if (!sportsNews.length) return null;
 
@@ -68,9 +74,7 @@ const SportsNews = ({ dark }) => {
 
                 <div className="single_post_text">
                   <div className="meta3">
-                    <Link to="#">
-                      {featured.categories?.[0]?.name}
-                    </Link>
+                    <Link to="#">{featured.categories?.[0]?.name}</Link>
 
                     <Link to="#">
                       {new Date(featured.createdAt).toLocaleDateString()}
@@ -78,9 +82,7 @@ const SportsNews = ({ dark }) => {
                   </div>
 
                   <h4>
-                    <Link to={`/news/${featured.slug}`}>
-                      {featured.title}
-                    </Link>
+                    <Link to={`/news/${featured.slug}`}>{featured.title}</Link>
                   </h4>
 
                   <div className="space-10" />
@@ -91,10 +93,7 @@ const SportsNews = ({ dark }) => {
 
                   <div className="space-20" />
 
-                  <Link
-                    to={`/news/${featured.slug}`}
-                    className="readmore"
-                  >
+                  <Link to={`/news/${featured.slug}`} className="readmore">
                     Read More
                   </Link>
                 </div>
@@ -104,10 +103,7 @@ const SportsNews = ({ dark }) => {
             {/* Right Slider */}
             <div className="col-md-6">
               <div className="sports_carousel nav_style1">
-                <SportsCarousel
-                  dark={dark}
-                  sportsNews={carouselNews}
-                />
+                <SportsCarousel dark={dark} sportsNews={carouselNews} />
               </div>
             </div>
           </div>

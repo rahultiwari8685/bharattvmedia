@@ -41,8 +41,14 @@ function Home() {
 
       const data = await res.json();
 
+      // if (data.status) {
+      //   setEntertainments(data.data);
+      // }
+
       if (data.status) {
-        setEntertainments(data.data);
+        const videoPosts = data.data.filter((item) => item.videoType === 2);
+
+        setEntertainments(videoPosts);
       }
     } catch (err) {
       console.log(err);
@@ -57,8 +63,14 @@ function Home() {
 
       const data = await res.json();
 
+      // if (data.status) {
+      //   setBusinessNews(data.data);
+      // }
+
       if (data.status) {
-        setBusinessNews(data.data);
+        const videoPosts = data.data.filter((item) => item.videoType === 2);
+
+        setBusinessNews(videoPosts);
       }
     } catch (err) {
       console.log(err);
