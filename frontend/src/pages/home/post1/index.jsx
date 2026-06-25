@@ -208,6 +208,7 @@ function Post1() {
 
                         <button
                           className="btn btn-dark btn-sm"
+                          style={{ display: "inline-block", zIndex: 9999 }}
                           onClick={() => {
                             navigator.clipboard.writeText(shareUrl);
                             alert("Link copied!");
