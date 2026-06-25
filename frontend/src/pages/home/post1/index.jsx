@@ -207,7 +207,7 @@ function Post1() {
                         </EmailShareButton>
 
                         <button
-                          className="btn btn-danger btn-sm"
+                          className="btn btn-dark btn-sm"
                           onClick={() => {
                             navigator.clipboard.writeText(shareUrl);
                             alert("Link copied!");

@@ -100,8 +100,14 @@ const WidgetTab = ({ categoryId, className, dark }) => {
 
     const data = await res.json();
 
+    // if (data.status) {
+    //   setRelated(data.data);
+    // }
+
     if (data.status) {
-      setRelated(data.data);
+      const videoPosts = data.data.filter((item) => item.videoType === 2);
+
+      setRelated(videoPosts);
     }
   };
 
@@ -110,8 +116,13 @@ const WidgetTab = ({ categoryId, className, dark }) => {
 
     const data = await res.json();
 
+    // if (data.status) {
+    //   setLatest(data.data);
+    // }
     if (data.status) {
-      setLatest(data.data);
+      const videoPosts = data.data.filter((item) => item.videoType === 2);
+
+      setLatest(videoPosts);
     }
   };
 
@@ -120,8 +131,14 @@ const WidgetTab = ({ categoryId, className, dark }) => {
 
     const data = await res.json();
 
+    // if (data.status) {
+    //   setPopular(data.data);
+    // }
+
     if (data.status) {
-      setPopular(data.data);
+      const videoPosts = data.data.filter((item) => item.videoType === 2);
+
+      setPopular(videoPosts);
     }
   };
 

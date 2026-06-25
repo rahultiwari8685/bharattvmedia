@@ -20,9 +20,15 @@ const PostOnePagination = ({ newsId, className }) => {
 
       const data = await res.json();
 
-      if (data.success) {
-        setPrevious(data.previous);
-        setNext(data.next);
+      // if (data.success) {
+      //   setPrevious(data.previous);
+      //   setNext(data.next);
+      // }
+      if (data.status) {
+        const videoPosts = data.data.filter((item) => item.videoType === 2);
+
+        setPrevious(videoPosts.previous);
+        setNext(videoPosts.next);
       }
     } catch (err) {
       console.log(err);

@@ -36,8 +36,13 @@ function Category() {
 
       const data = await res.json();
 
+      // if (data.status) {
+      //   setNews(data.data);
+
       if (data.status) {
-        setNews(data.data);
+        const videoPosts = data.data.filter((item) => item.videoType === 2);
+
+        setNews(videoPosts);
 
         if (data.data.length > 0) {
           const currentCategory = data.data[0].categories.find(

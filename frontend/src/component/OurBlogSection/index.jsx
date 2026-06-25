@@ -17,8 +17,14 @@ const OurBlogSection = ({ dark }) => {
       const res = await fetch(`${API}/api/news/getAllNews?limit=3`);
       const data = await res.json();
 
+      // if (data.status) {
+      //   setBlogs(data.data);
+      // }
+
       if (data.status) {
-        setBlogs(data.data);
+        const videoPosts = data.data.filter((item) => item.videoType === 2);
+
+        setBlogs(videoPosts);
       }
     } catch (err) {
       console.log(err);
