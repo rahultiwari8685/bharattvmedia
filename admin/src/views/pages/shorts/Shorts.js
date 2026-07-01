@@ -98,10 +98,12 @@ const Shorts = () => {
   useEffect(() => {
     getShorts()
 
-    getAuthors()
-
     getCategories()
   }, [])
+
+  useEffect(() => {
+    console.log(authors)
+  }, [authors])
 
   const getShorts = async () => {
     const res = await fetch(
@@ -132,19 +134,17 @@ const Shorts = () => {
   }
 
   const getAuthors = async () => {
-    const res = await fetch(
-      setting.api + '/api/users/getAllUser',
-
-      {
-        headers: {
-          Authorization: 'Bearer ' + token,
-        },
+    const res = await fetch(setting.api + '/api/users/getAllUser', {
+      headers: {
+        Authorization: 'Bearer ' + token,
       },
-    )
+    })
 
     const data = await res.json()
 
-    if (data.status) {
+    console.log(data)
+
+    if (data.success) {
       setAuthors(data.data)
     }
   }
