@@ -36,9 +36,9 @@ const newsSchema = new mongoose.Schema(
       default: 0,
     },
     shares: {
-  type: Number,
-  default: 0,
-},
+      type: Number,
+      default: 0,
+    },
 
     isScheduled: {
       type: Boolean,

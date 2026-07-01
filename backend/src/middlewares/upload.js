@@ -16,12 +16,20 @@ const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     if (file.mimetype === "application/pdf") {
       cb(null, uploadDir("reports"));
-    } else if (file.mimetype.startsWith("image/")) {
+    }
+
+    // Images
+    else if (file.mimetype.startsWith("image/")) {
       if (req.baseUrl.includes("advertisements")) {
         cb(null, uploadDir("advertisements"));
       } else {
         cb(null, uploadDir("images"));
       }
+    }
+
+    // Videos
+    else if (file.mimetype.startsWith("video/")) {
+      cb(null, uploadDir("videos"));
     } else {
       cb(new Error("Unsupported file type"));
     }
@@ -36,10 +44,17 @@ const storage = multer.diskStorage({
 const fileFilter = (req, file, cb) => {
   const allowedTypes = [
     "application/pdf",
+
     "image/jpeg",
     "image/png",
     "image/webp",
     "image/avif",
+
+    // Videos
+    "video/mp4",
+    "video/quicktime", // .mov
+    "video/x-msvideo", // .avi
+    "video/x-matroska", // .mkv
   ];
 
   if (allowedTypes.includes(file.mimetype)) {
@@ -53,7 +68,7 @@ const upload = multer({
   storage,
   fileFilter,
   limits: {
-    fileSize: 10 * 1024 * 1024,
+    fileSize: 300 * 1024 * 1024, // 300 MB
   },
 });
 
