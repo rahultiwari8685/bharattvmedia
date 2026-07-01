@@ -10,6 +10,7 @@ import {
   CTableRow,
   CTableHeaderCell,
   CTableDataCell,
+  CFormLabel,
   CForm,
   CFormInput,
   CFormTextarea,
