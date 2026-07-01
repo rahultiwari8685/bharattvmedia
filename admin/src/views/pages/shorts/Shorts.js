@@ -27,7 +27,7 @@ import {
 import { useForm } from 'react-hook-form'
 
 import { yupResolver } from '@hookform/resolvers/yup'
-import { toast } from 'react-toastify'
+import toast from 'react-hot-toast'
 import * as yup from 'yup'
 
 import secureLocalStorage from 'react-secure-storage'
