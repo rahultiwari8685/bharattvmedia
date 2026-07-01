@@ -277,7 +277,14 @@ const Shorts = () => {
               color="light"
               className="rounded-pill px-4"
               onClick={() => {
-                reset()
+                reset({
+                  id: '',
+                  title: '',
+                  subtitle: '',
+                  author: '',
+                  categories: '',
+                  status: '1',
+                })
                 setEditing(null)
                 setThumbnailPreview('')
                 setVideoPreview('')
@@ -446,6 +453,7 @@ const Shorts = () => {
             <COffcanvasBody>
               <CForm>
                 <CRow>
+                  <CFormInput type="hidden" {...register('id')} />
                   <CCol md={12}>
                     <CFormLabel>Title</CFormLabel>
 
