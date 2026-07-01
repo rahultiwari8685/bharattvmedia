@@ -19,6 +19,7 @@ import {
   cilChart,
   cilCalendar,
   cilUser,
+  cilVideo,
   cilTags,
 } from '@coreui/icons'
 
@@ -41,6 +42,12 @@ export const adminNav = [
         name: 'Add News',
         to: '/news',
         icon: <CIcon icon={cilPlus} customClassName="nav-icon" />,
+      },
+      {
+        component: CNavItem,
+        name: 'Add Short',
+        to: '/shorts',
+        icon: <CIcon icon={cilVideo} customClassName="nav-icon" />,
       },
       {
         component: CNavItem,
