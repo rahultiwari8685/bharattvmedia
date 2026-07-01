@@ -72,7 +72,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(express.json({ limit: "1mb" }));
+app.use(express.json({ limit: "300mb" }));
 
 app.use("/uploads", express.static("uploads"));
 

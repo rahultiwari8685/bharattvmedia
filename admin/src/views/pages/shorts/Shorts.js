@@ -176,7 +176,9 @@ const Shorts = () => {
       const formData = new FormData()
 
       formData.append('title', values.title)
-      formData.append('id', values.id)
+      if (editing) {
+        formData.append('id', values.id)
+      }
       formData.append('subtitle', values.subtitle)
       formData.append('author', values.author)
       formData.append('status', values.status)
