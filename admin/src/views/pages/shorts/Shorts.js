@@ -94,10 +94,9 @@ const Shorts = () => {
   const loginInfo = JSON.parse(secureLocalStorage.getItem('logininfo') || '{}')
 
   const token = loginInfo?.token || ''
-
   useEffect(() => {
     getShorts()
-
+    getAuthors()
     getCategories()
   }, [])
 
