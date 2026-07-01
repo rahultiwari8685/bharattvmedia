@@ -91,7 +91,9 @@ const Shorts = () => {
     resolver: yupResolver(schema),
   })
 
-  const token = JSON.parse(secureLocalStorage.getItem('logininfo')).token
+  const loginInfo = JSON.parse(secureLocalStorage.getItem('logininfo') || '{}')
+
+  const token = loginInfo?.token || ''
 
   useEffect(() => {
     getShorts()
@@ -256,11 +258,14 @@ const Shorts = () => {
     }
   }
 
-  const totalPages = Math.ceil(shorts.length / itemsPerPage)
+  const filteredShorts = shorts.filter((item) =>
+    item.title.toLowerCase().includes(search.toLowerCase()),
+  )
 
-  const paginatedItems = shorts.slice(
+  const totalPages = Math.ceil(filteredShorts.length / itemsPerPage)
+
+  const paginatedItems = filteredShorts.slice(
     (currentPage - 1) * itemsPerPage,
-
     currentPage * itemsPerPage,
   )
   return (
@@ -360,79 +365,77 @@ const Shorts = () => {
                   </CTableDataCell>
                 </CTableRow>
               )}
-              {paginatedItems
-                .filter((item) => item.title.toLowerCase().includes(search.toLowerCase()))
-                .map((item, index) => {
-                  const actualIndex = (currentPage - 1) * itemsPerPage + index
+              {paginatedItems.map((item, index) => {
+                const actualIndex = (currentPage - 1) * itemsPerPage + index
 
-                  return (
-                    <CTableRow key={item._id}>
-                      <CTableDataCell>{actualIndex + 1}</CTableDataCell>
+                return (
+                  <CTableRow key={item._id}>
+                    <CTableDataCell>{actualIndex + 1}</CTableDataCell>
 
-                      <CTableDataCell>
-                        <CImage
-                          rounded
-                          width={90}
-                          height={60}
-                          src={
-                            item.thumbnail
-                              ? `${setting.api}/uploads/images/${item.thumbnail}`
-                              : '/no-image.png'
-                          }
-                        />
-                      </CTableDataCell>
+                    <CTableDataCell>
+                      <CImage
+                        rounded
+                        width={90}
+                        height={60}
+                        src={
+                          item.thumbnail
+                            ? `${setting.api}/uploads/images/${item.thumbnail}`
+                            : '/no-image.png'
+                        }
+                      />
+                    </CTableDataCell>
 
-                      <CTableDataCell>
-                        <strong>{item.title}</strong>
-                      </CTableDataCell>
+                    <CTableDataCell>
+                      <strong>{item.title}</strong>
+                    </CTableDataCell>
 
-                      <CTableDataCell>
-                        <span className="badge bg-primary">{item.categories?.[0]?.name}</span>
-                      </CTableDataCell>
+                    <CTableDataCell>
+                      <span className="badge bg-primary">{item.categories?.[0]?.name}</span>
+                    </CTableDataCell>
 
-                      <CTableDataCell>{item.author?.name}</CTableDataCell>
+                    <CTableDataCell>{item.author?.name}</CTableDataCell>
 
-                      <CTableDataCell>{item.views}</CTableDataCell>
-                      <CTableDataCell>
-                        <video
-                          width="120"
-                          height="70"
-                          controls
-                          src={`${setting.api}/uploads/videos/${item.video}`}
-                        />
-                      </CTableDataCell>
+                    <CTableDataCell>{item.views}</CTableDataCell>
+                    <CTableDataCell>
+                      <video
+                        width="120"
+                        height="70"
+                        controls
+                        src={`${setting.api}/uploads/videos/${item.video}`}
+                      />
+                    </CTableDataCell>
 
-                      <CTableDataCell>
-                        <span
-                          className={item.status == 1 ? 'badge bg-success' : 'badge bg-secondary'}
-                        >
-                          {item.status == 1 ? 'Published' : 'Draft'}
-                        </span>
-                      </CTableDataCell>
+                    <CTableDataCell>
+                      <span
+                        className={item.status == 1 ? 'badge bg-success' : 'badge bg-secondary'}
+                      >
+                        {item.status == 1 ? 'Published' : 'Draft'}
+                      </span>
+                    </CTableDataCell>
 
-                      <CTableDataCell>
-                        <CButton
-                          size="sm"
-                          color="warning"
-                          className="rounded-pill me-2"
-                          onClick={() => editShort(item)}
-                        >
-                          <CIcon icon={cilPencil} />
-                        </CButton>
+                    <CTableDataCell>
+                      <CButton
+                        size="sm"
+                        color="warning"
+                        className="rounded-pill me-2"
+                        onClick={() => editShort(item)}
+                      >
+                        <CIcon icon={cilPencil} />
+                      </CButton>
 
-                        <CButton size="sm" color="danger" onClick={() => deleteShort(item._id)}>
-                          <CIcon icon={cilTrash} />
-                        </CButton>
-                      </CTableDataCell>
-                    </CTableRow>
-                  )
-                })}
+                      <CButton size="sm" color="danger" onClick={() => deleteShort(item._id)}>
+                        <CIcon icon={cilTrash} />
+                      </CButton>
+                    </CTableDataCell>
+                  </CTableRow>
+                )
+              })}
             </CTableBody>
           </CTable>
 
           <div className="d-flex justify-content-end">
             <CPagination>
-              {[...Array(totalPages)].map((_, i) => (
+              {Array.from({ length: totalPages }, (_, i) => (
                 <CPaginationItem
                   key={i}
                   active={currentPage === i + 1}
