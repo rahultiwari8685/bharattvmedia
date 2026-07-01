@@ -374,7 +374,11 @@ const Shorts = () => {
                           rounded
                           width={90}
                           height={60}
-                          src={`${setting.api}/uploads/images/${item.thumbnail}`}
+                          src={
+                            item.thumbnail
+                              ? `${setting.api}/uploads/images/${item.thumbnail}`
+                              : '/no-image.png'
+                          }
                         />
                       </CTableDataCell>
 
