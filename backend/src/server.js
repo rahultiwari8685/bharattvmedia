@@ -73,6 +73,7 @@ app.use((req, res, next) => {
 });
 
 app.use(express.json({ limit: "300mb" }));
+app.use(express.urlencoded({ extended: true, limit: "300mb" }));
 
 app.use("/uploads", express.static("uploads"));
 

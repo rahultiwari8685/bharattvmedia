@@ -20,6 +20,7 @@ import {
   previousNextNews,
   shareNews,
   newsMeta,
+  getLiveStatus,
 } from "../controllers/newsController.js";
 
 const router = express.Router();
@@ -42,7 +43,7 @@ router.post("/view/:id", increaseView);
 router.get("/getAllNewsByAuthorId/:authorId", getAllNewsByAuthorId);
 
 router.post("/auto-save", upload.single("thumbnail"), autoSaveNews);
-
+router.get("/live", getLiveStatus);
 router.get("/trending", getTrendingNews);
 
 router.get("/popular", getPopularNews);

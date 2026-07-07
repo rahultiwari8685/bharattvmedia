@@ -738,6 +738,39 @@ export const shareNews = async (req, res) => {
   }
 };
 
+export const getLiveStatus = async (req, res) => {
+  try {
+    const API_KEY = process.env.YOUTUBE_API_KEY;
+    const CHANNEL_ID = process.env.YOUTUBE_CHANNEL_ID;
+
+    const response = await axios.get(
+      `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${CHANNEL_ID}&eventType=live&type=video&key=${API_KEY}`,
+    );
+
+    if (response.data.items.length > 0) {
+      const live = response.data.items[0];
+
+      return res.json({
+        status: true,
+        isLive: true,
+        videoId: live.id.videoId,
+        title: live.snippet.title,
+        thumbnail: live.snippet.thumbnails.high.url,
+      });
+    }
+
+    return res.json({
+      status: true,
+      isLive: false,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      status: false,
+      message: error.message,
+    });
+  }
+};
+
 export const newsMeta = async (req, res) => {
   try {
     const news = await News.findOne({
