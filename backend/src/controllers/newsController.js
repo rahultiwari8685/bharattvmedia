@@ -114,25 +114,6 @@ export const createNews = async (req, res) => {
   }
 };
 
-// export const getNews = async (req, res) => {
-//   try {
-//     const news = await News.find()
-//       .populate("author", "name email")
-//       .populate("categories", "name")
-//       .sort({ createdAt: -1 });
-
-//     return res.status(200).json({
-//       status: true,
-//       data: news,
-//     });
-//   } catch (error) {
-//     return res.status(500).json({
-//       status: false,
-//       message: error.message,
-//     });
-//   }
-// };
-
 export const getNews = async (req, res) => {
   try {
     const { page = 1, limit } = req.query;
