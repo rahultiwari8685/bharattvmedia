@@ -744,9 +744,22 @@ export const getLiveStatus = async (req, res) => {
     const API_KEY = process.env.YOUTUBE_API_KEY;
     const CHANNEL_ID = process.env.YOUTUBE_CHANNEL_ID;
 
-    const response = await axios.get(
-      `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${CHANNEL_ID}&eventType=live&type=video&key=${API_KEY}`,
-    );
+    console.log("API KEY:", API_KEY);
+    console.log("CHANNEL:", CHANNEL_ID);
+
+    const url = `https://www.googleapis.com/youtube/v3/search`;
+
+    const response = await axios.get(url, {
+      params: {
+        part: "snippet",
+        channelId: CHANNEL_ID,
+        eventType: "live",
+        type: "video",
+        key: API_KEY,
+      },
+    });
+
+    console.log(response.data);
 
     if (response.data.items.length > 0) {
       const live = response.data.items[0];
@@ -764,19 +777,21 @@ export const getLiveStatus = async (req, res) => {
       status: true,
       isLive: false,
     });
-  } catch (error) {
-    console.log("YouTube Error:");
+  } catch (err) {
+    console.log("========== GOOGLE ERROR ==========");
 
-    if (error.response) {
-      console.log(error.response.status);
-      console.log(error.response.data);
-    } else {
-      console.log(error.message);
+    if (err.response) {
+      console.log(err.response.status);
+      console.log(JSON.stringify(err.response.data, null, 2));
+
+      return res.status(err.response.status).json(err.response.data);
     }
+
+    console.log(err.message);
 
     return res.status(500).json({
       status: false,
-      message: error.response?.data || error.message,
+      message: err.message,
     });
   }
 };
