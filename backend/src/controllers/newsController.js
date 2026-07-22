@@ -71,7 +71,9 @@ export const createNews = async (req, res) => {
       author: req.body.author,
 
       categories,
-      slug: req.body.slug,
+      ...(req.body.slug && req.body.slug.trim()
+        ? { slug: req.body.slug.trim() }
+        : {}),
       videoType: video_type,
 
       youtubeUrl: youtube_url || "",
@@ -291,7 +293,7 @@ export const updateNews = async (req, res) => {
       subtitle: sub_title,
       categories,
       videoType: video_type,
-      slug: slug,
+      ...(slug && slug.trim() ? { slug: slug.trim() } : {}),
       youtubeUrl: youtube_url || "",
 
       // ✅ update content
@@ -446,7 +448,9 @@ export const autoSaveNews = async (req, res) => {
     if (draft) {
       draft.title = title;
       draft.subtitle = subtitle;
-      draft.slug = slug; // ✅ Save slug
+      if (slug && slug.trim()) {
+        draft.slug = slug.trim();
+      }
       draft.categories = parsedCategories;
       draft.videoType = videoType;
 
@@ -462,7 +466,7 @@ export const autoSaveNews = async (req, res) => {
       draft = await News.create({
         title,
         subtitle,
-        slug, // ✅ Save slug
+        ...(slug && slug.trim() ? { slug: slug.trim() } : {}),
         categories: parsedCategories,
         videoType,
         content:
