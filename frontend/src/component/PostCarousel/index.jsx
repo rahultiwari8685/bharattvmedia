@@ -20,7 +20,7 @@ const PostCarousel = ({ className }) => {
   const getTrendingNews = async () => {
     try {
       const res = await fetch(
-        "https://api.bharattvmedia.com/api/news/trending?limit=10",
+        "https://api.hindustantvlive.com/api/news/trending?limit=10",
       );
 
       const data = await res.json();
@@ -84,7 +84,7 @@ const PostCarousel = ({ className }) => {
                         <div className="img_wrap">
                           <Link to={`/news/${item.slug}`}>
                             <img
-                              src={`https://api.bharattvmedia.com/uploads/images/${item.thumbnail}`}
+                              src={`https://api.hindustantvlive.com/uploads/images/${item.thumbnail}`}
                               alt={item.title}
                               style={{
                                 width: "100%",

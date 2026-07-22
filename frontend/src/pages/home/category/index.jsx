@@ -13,7 +13,7 @@ import BannerSection from "../../../component/BannerSection";
 // Image
 import banner2 from "../../../assets/img/ad/ad-2.jpg";
 
-const API = "https://api.bharattvmedia.com";
+const API = "https://api.hindustantvlive.com";
 
 function Category() {
   const { categoryId } = useParams();

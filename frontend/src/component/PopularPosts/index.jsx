@@ -14,7 +14,7 @@ const PopularPosts = () => {
   const getPopularPosts = async () => {
     try {
       const res = await fetch(
-        "https://api.bharattvmedia.com/api/news/popular?limit=8",
+        "https://api.hindustantvlive.com/api/news/popular?limit=8",
       );
 
       const data = await res.json();
@@ -57,7 +57,7 @@ const PopularPosts = () => {
                 <div className="img_wrap">
                   <Link to={`/news/${item.slug}`}>
                     <img
-                      src={`https://api.bharattvmedia.com/uploads/images/${item.thumbnail}`}
+                      src={`https://api.hindustantvlive.com/uploads/images/${item.thumbnail}`}
                       alt={item.title}
                       style={{
                         width: "90px",

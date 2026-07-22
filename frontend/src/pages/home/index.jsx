@@ -36,7 +36,7 @@ function Home() {
   const getEntertainmentNews = async () => {
     try {
       const res = await fetch(
-        "https://api.bharattvmedia.com/api/news/category/6a216b7d9e23d11b9fe3c594?limit=4",
+        "https://api.hindustantvlive.com/api/news/category/6a216b7d9e23d11b9fe3c594?limit=4",
       );
 
       const data = await res.json();
@@ -58,7 +58,7 @@ function Home() {
   const getBusinessNews = async () => {
     try {
       const res = await fetch(
-        "https://api.bharattvmedia.com/api/news/category/6a1ea7af54dc2dce809c32db?limit=2",
+        "https://api.hindustantvlive.com/api/news/category/6a1ea7af54dc2dce809c32db?limit=2",
       );
 
       const data = await res.json();
@@ -80,7 +80,7 @@ function Home() {
   const getAdvertisements = async () => {
     try {
       const res = await fetch(
-        "https://api.bharattvmedia.com/api/advertisements",
+        "https://api.hindustantvlive.com/api/advertisements",
       );
 
       const data = await res.json();
@@ -120,7 +120,7 @@ function Home() {
                     rel="noopener noreferrer"
                   >
                     <img
-                      src={`https://api.bharattvmedia.com/uploads/advertisements/${banners.sidebar.image}`}
+                      src={`https://api.hindustantvlive.com/uploads/advertisements/${banners.sidebar.image}`}
                       alt={banners.sidebar.title}
                       className="img-fluid"
                     />
@@ -164,7 +164,7 @@ function Home() {
                     rel="noopener noreferrer"
                   >
                     <img
-                      src={`https://api.bharattvmedia.com/uploads/advertisements/${banners.homepage_middle.image}`}
+                      src={`https://api.hindustantvlive.com/uploads/advertisements/${banners.homepage_middle.image}`}
                       alt={banners.homepage_middle.title}
                       className="img-fluid"
                     />

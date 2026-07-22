@@ -13,7 +13,7 @@ const TrendingNewsSlider = () => {
   const getTrendingNews = async () => {
     try {
       const res = await fetch(
-        "https://api.bharattvmedia.com/api/news/trending?limit=3"
+        "https://api.hindustantvlive.com/api/news/trending?limit=3",
       );
 
       const data = await res.json();
@@ -57,7 +57,7 @@ const TrendingNewsSlider = () => {
             <div className="post_img">
               <div className="img_wrap">
                 <img
-                  src={`https://api.bharattvmedia.com/uploads/images/${item.thumbnail}`}
+                  src={`https://api.hindustantvlive.com/uploads/images/${item.thumbnail}`}
                   alt={item.title}
                   style={{
                     width: "100%",
@@ -74,9 +74,7 @@ const TrendingNewsSlider = () => {
 
             <div className="single_post_text">
               <div className="meta3">
-                <Link to="#">
-                  {item.categories?.[0]?.name || "News"}
-                </Link>
+                <Link to="#">{item.categories?.[0]?.name || "News"}</Link>
 
                 <Link to="#">
                   {new Date(item.createdAt).toLocaleDateString("en-US", {
@@ -88,17 +86,13 @@ const TrendingNewsSlider = () => {
               </div>
 
               <h4>
-                <Link to={`/news/${item.slug}`}>
-                  {item.title}
-                </Link>
+                <Link to={`/news/${item.slug}`}>{item.title}</Link>
               </h4>
 
               <div className="space-10" />
 
               <p className="post-p">
-                {item.subtitle
-                  ? item.subtitle.substring(0, 120) + "..."
-                  : ""}
+                {item.subtitle ? item.subtitle.substring(0, 120) + "..." : ""}
               </p>
             </div>
           </div>

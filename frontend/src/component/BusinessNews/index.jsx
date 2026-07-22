@@ -32,7 +32,7 @@ const BusinessNews = ({ businessNews, headerHide }) => {
                     <div className="img_wrap">
                       <Link to={`/news/${item.slug}`}>
                         <img
-                          src={`https://api.bharattvmedia.com/uploads/images/${item.thumbnail}`}
+                          src={`https://api.hindustantvlive.com/uploads/images/${item.thumbnail}`}
                           alt={item.title}
                           style={{
                             width: "100%",
@@ -60,9 +60,7 @@ const BusinessNews = ({ businessNews, headerHide }) => {
                     </div>
 
                     <h4>
-                      <Link to={`/news/${item.slug}`}>
-                        {item.title}
-                      </Link>
+                      <Link to={`/news/${item.slug}`}>{item.title}</Link>
                     </h4>
 
                     <div className="space-10" />
@@ -75,10 +73,7 @@ const BusinessNews = ({ businessNews, headerHide }) => {
 
                     <div className="space-20" />
 
-                    <Link
-                      to={`/news/${item.slug}`}
-                      className="readmore"
-                    >
+                    <Link to={`/news/${item.slug}`} className="readmore">
                       Read More
                     </Link>
                   </div>

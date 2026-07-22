@@ -12,7 +12,7 @@ const BannerSection = ({ className }) => {
   const getBanner = async () => {
     try {
       const res = await fetch(
-        "https://api.bharattvmedia.com/api/advertisements"
+        "https://api.hindustantvlive.com/api/advertisements",
       );
 
       const result = await res.json();
@@ -21,9 +21,7 @@ const BannerSection = ({ className }) => {
         // Homepage Top Advertisement
         const homeTop = result.data
           .filter(
-            (item) =>
-              item.position === "homepage_top" &&
-              item.status === true
+            (item) => item.position === "homepage_top" && item.status === true,
           )
           .sort((a, b) => a.priority - b.priority)[0];
 
@@ -48,7 +46,7 @@ const BannerSection = ({ className }) => {
                 rel="noopener noreferrer"
               >
                 <img
-                  src={`https://api.bharattvmedia.com/uploads/advertisements/${banner.image}`}
+                  src={`https://api.hindustantvlive.com/uploads/advertisements/${banner.image}`}
                   alt={banner.title}
                   className="img-fluid"
                 />

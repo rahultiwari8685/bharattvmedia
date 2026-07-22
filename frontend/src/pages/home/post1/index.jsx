@@ -39,7 +39,7 @@ import OurBlogSection from "../../../component/OurBlogSection";
 import BlogComment from "../../../component/BlogComment";
 
 function Post1() {
-  const API = "https://api.bharattvmedia.com";
+  const API = "https://api.hindustantvlive.com";
 
   const { slug } = useParams();
   const [news, setNews] = useState(null);
@@ -66,7 +66,7 @@ function Post1() {
   const getAdvertisements = async () => {
     try {
       const res = await fetch(
-        "https://api.bharattvmedia.com/api/advertisements",
+        "https://api.hindustantvlive.com/api/advertisements",
       );
 
       const data = await res.json();
@@ -95,7 +95,7 @@ function Post1() {
     return <h2 className="text-center mt-5">Loading...</h2>;
   }
 
-  const shareUrl = `https://api.bharattvmedia.com/api/news/share/${news?.slug || ""}`;
+  const shareUrl = `https://api.hindustantvlive.com/api/news/share/${news?.slug || ""}`;
 
   const shareTitle = news?.title || "";
 
@@ -151,7 +151,7 @@ function Post1() {
                           url={shareUrl}
                           quote={shareTitle}
                           onClick={increaseShare}
-                          hashtag="#BharatTVMedia"
+                          hashtag="#hindustantvlive"
                         >
                           <FacebookIcon size={42} round />
                         </FacebookShareButton>
@@ -297,7 +297,7 @@ function Post1() {
                     rel="noopener noreferrer"
                   >
                     <img
-                      src={`https://api.bharattvmedia.com/uploads/advertisements/${banners.sidebar.image}`}
+                      src={`https://api.hindustantvlive.com/uploads/advertisements/${banners.sidebar.image}`}
                       alt={banners.sidebar.title}
                       className="img-fluid"
                     />

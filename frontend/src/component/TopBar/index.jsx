@@ -14,7 +14,7 @@ const TopBar = ({ className, dark }) => {
   const getTrendingNews = async () => {
     try {
       const res = await fetch(
-        "https://api.bharattvmedia.com/api/news/trending?limit=10"
+        "https://api.hindustantvlive.com/api/news/trending?limit=10",
       );
 
       const data = await res.json();
@@ -53,14 +53,9 @@ const TopBar = ({ className, dark }) => {
                   }}
                 >
                   {trendingNews.map((news) => (
-                    <div
-                      className="trancarousel_item"
-                      key={news._id}
-                    >
+                    <div className="trancarousel_item" key={news._id}>
                       <p>
-                        <Link to={`/news/${news.slug}`}>
-                          {news.title}
-                        </Link>
+                        <Link to={`/news/${news.slug}`}>{news.title}</Link>
                       </p>
                     </div>
                   ))}

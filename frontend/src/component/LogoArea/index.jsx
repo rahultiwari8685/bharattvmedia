@@ -14,7 +14,7 @@ const LogoArea = ({ className, dark }) => {
   const getSiteSetting = async () => {
     try {
       const res = await fetch(
-        "https://api.bharattvmedia.com/api/site-settings",
+        "https://api.hindustantvlive.com/api/site-settings",
       );
 
       const result = await res.json();
@@ -30,7 +30,7 @@ const LogoArea = ({ className, dark }) => {
   const getBanner = async () => {
     try {
       const res = await fetch(
-        "https://api.bharattvmedia.com/api/advertisements",
+        "https://api.hindustantvlive.com/api/advertisements",
       );
 
       const result = await res.json();
@@ -58,7 +58,7 @@ const LogoArea = ({ className, dark }) => {
               <Link to="/">
                 {siteSetting?.headerLogo ? (
                   <img
-                    src={`https://api.bharattvmedia.com/uploads/images/${siteSetting.headerLogo}`}
+                    src={`https://api.hindustantvlive.com/uploads/images/${siteSetting.headerLogo}`}
                     alt={siteSetting.siteName}
                     className="img-fluid"
                   />
@@ -78,7 +78,7 @@ const LogoArea = ({ className, dark }) => {
                   rel="noopener noreferrer"
                 >
                   <img
-                    src={`https://api.bharattvmedia.com/uploads/advertisements/${banner.image}`}
+                    src={`https://api.hindustantvlive.com/uploads/advertisements/${banner.image}`}
                     alt={banner.title}
                     className="img-fluid"
                   />
