@@ -27,7 +27,7 @@ app.get("/news/:slug", async (req, res) => {
 
   try {
     const { data } = await axios.get(
-      `https://api.bharattvmedia.com/api/news/slug/${req.params.slug}`,
+      `https://api.hindustantvlive.com/api/news/slug/${req.params.slug}`,
     );
 
     if (!data.status) {
@@ -36,7 +36,7 @@ app.get("/news/:slug", async (req, res) => {
 
     const news = data.data;
 
-    const image = `https://api.bharattvmedia.com/uploads/images/${news.thumbnail}`;
+    const image = `https://api.hindustantvlive.com/uploads/images/${news.thumbnail}`;
 
     const tags = `
 <title>${news.metaTitle || news.title}</title>
@@ -47,7 +47,7 @@ app.get("/news/:slug", async (req, res) => {
 <meta property="og:title" content="${news.title}">
 <meta property="og:description" content="${news.metaDescription || news.subtitle || ""}">
 <meta property="og:image" content="${image}">
-<meta property="og:url" content="https://bharattvmedia.com/news/${news.slug}">
+<meta property="og:url" content="https://hindustantvlive.com/news/${news.slug}">
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="${news.title}">
