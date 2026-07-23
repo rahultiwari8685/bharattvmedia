@@ -62,7 +62,7 @@ const LogoArea = ({ className, dark }) => {
                     alt={siteSetting.siteName}
                     style={{
                       width: "220px",
-                      height: "80px",
+                      height: "120px",
                       objectFit: "contain",
                     }}
                   />
@@ -86,7 +86,7 @@ const LogoArea = ({ className, dark }) => {
                     alt={banner.title}
                     style={{
                       width: "728px",
-                      height: "90px",
+                      height: "120px",
                       objectFit: "cover",
                     }}
                   />
