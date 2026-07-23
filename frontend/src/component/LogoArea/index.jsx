@@ -60,10 +60,14 @@ const LogoArea = ({ className, dark }) => {
                   <img
                     src={`https://api.hindustantvlive.com/uploads/images/${siteSetting.headerLogo}`}
                     alt={siteSetting.siteName}
-                    className="img-fluid"
+                    style={{
+                      width: "220px",
+                      height: "80px",
+                      objectFit: "contain",
+                    }}
                   />
                 ) : (
-                  <h3>Bharat TV Media</h3>
+                  <h3>Hindustan TV Live</h3>
                 )}
               </Link>
             </div>
@@ -80,7 +84,11 @@ const LogoArea = ({ className, dark }) => {
                   <img
                     src={`https://api.hindustantvlive.com/uploads/advertisements/${banner.image}`}
                     alt={banner.title}
-                    className="img-fluid"
+                    style={{
+                      width: "728px",
+                      height: "90px",
+                      objectFit: "cover",
+                    }}
                   />
                 </a>
               )}
