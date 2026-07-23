@@ -86,7 +86,7 @@ const LogoArea = ({ className, dark }) => {
                     alt={banner.title}
                     style={{
                       width: "728px",
-                      height: "250px",
+                      height: "180px",
                       objectFit: "cover",
                     }}
                   />
