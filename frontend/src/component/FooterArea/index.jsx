@@ -49,7 +49,11 @@ const FooterArea = ({ className }) => {
                     <img
                       src={`https://api.hindustantvlive.com/uploads/images/${siteSetting.footerLogo}`}
                       alt={siteSetting.siteName}
-                      className="img-fluid"
+                      style={{
+                        width: "220px",
+                        height: "150px",
+                        objectFit: "contain",
+                      }}
                     />
                   )}
                 </Link>
