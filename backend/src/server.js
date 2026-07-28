@@ -17,6 +17,7 @@ import "./cron/publishScheduledNews.js";
 import siteSettingRoutes from "./routes/siteSettingRoutes.js";
 import uploadRoutes from "./routes/uploadRoutes.js";
 import shortsRoutes from "./routes/shortsRoutes.js";
+import notificationRoutes from "./routes/notificationRoutes.js";
 const app = express();
 
 const __filename = fileURLToPath(import.meta.url);
@@ -87,6 +88,7 @@ app.use("/api/advertisements", advertisementRoutes);
 app.use("/api/upload", uploadRoutes);
 app.use("/api/site-settings", siteSettingRoutes);
 app.use("/api/shorts", shortsRoutes);
+app.use("/api/notification", notificationRoutes);
 
 const PORT = process.env.PORT || 5001;
 const MONGO_URI = process.env.MONGO_URI;
