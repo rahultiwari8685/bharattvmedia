@@ -49,6 +49,7 @@ const fileFilter = (req, file, cb) => {
     "image/png",
     "image/webp",
     "image/avif",
+    "image/gif",
 
     // Videos
     "video/mp4",
