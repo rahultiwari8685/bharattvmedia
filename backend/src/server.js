@@ -52,7 +52,6 @@ app.use("/api", limiter);
 const allowedOrigins = [
   "https://hindustantvlive.com",
   "https://admin.hindustantvlive.com",
-  "http://localhost:5173",
 ];
 
 app.use((req, res, next) => {
