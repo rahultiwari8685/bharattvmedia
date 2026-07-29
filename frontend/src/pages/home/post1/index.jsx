@@ -239,7 +239,51 @@ function Post1() {
               <div className="single_post_heading">
                 <h1>{news.title}</h1>
                 <div className="space-10" />
-                <p>{news.subtitle}</p>
+                {/* <p>{news.subtitle}</p> */}
+              </div>
+
+              <div className="row">
+                <div className="col-lg-6 align-self-center">
+                  <div className="author">
+                    <div className="author_img">
+                      <div className="author_img_wrap">
+                        <img
+                          src={
+                            news.author?.profileImage
+                              ? `${API}/uploads/profile/${news.author.profileImage}`
+                              : author2
+                          }
+                          alt={news.author?.name || "Author"}
+                        />
+                      </div>
+                    </div>
+
+                    <Link to="#">{news.author?.name || "Admin"}</Link>
+
+                    <ul>
+                      <li>
+                        <Link to="#">
+                          {new Date(news.createdAt).toLocaleDateString(
+                            "en-IN",
+                            {
+                              day: "numeric",
+                              month: "long",
+                              year: "numeric",
+                            },
+                          )}
+                        </Link>
+                      </li>
+
+                      <li>
+                        Updated{" "}
+                        {new Date(news.updatedAt).toLocaleTimeString("en-IN", {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        })}
+                      </li>
+                    </ul>
+                  </div>
+                </div>
               </div>
               <div className="space-40" />
               <img

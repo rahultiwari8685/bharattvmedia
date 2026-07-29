@@ -204,7 +204,7 @@ export const getAllNewsByCategory = async (req, res) => {
 export const getNewsBySlug = async (req, res) => {
   try {
     const news = await News.findOne({ slug: req.params.slug })
-      .populate("author", "name email")
+      .populate("author", "name email profileImage")
       .populate("categories", "name slug");
 
     if (!news) {
