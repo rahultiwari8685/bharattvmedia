@@ -14,7 +14,7 @@ const Category = React.lazy(() => import('./views/pages/category/Category'))
 const Advertisement = React.lazy(() => import('./views/pages/advertisement/Advertisement'))
 const SiteSetting = React.lazy(() => import('./views/pages/siteSetting/SiteSetting'))
 const Shorts = React.lazy(() => import('./views/pages/shorts/Shorts'))
-const Subscription = React.lazy(() => import('./views/pages/subscription/Subscription'))
+const Subscriptions = React.lazy(() => import('./views/pages/subscription/Subscriptions'))
 const Plans = React.lazy(() => import('./views/pages/plans/Plans'))
 
 const routes = [
@@ -29,7 +29,7 @@ const routes = [
   { path: '/ScheduleNews', name: 'Scheduled News', element: ScheduleNews },
   { path: '/siteSetting', name: 'Site Setting', element: SiteSetting },
   { path: '/plans', name: 'Plans', element: Plans },
-  { path: '/subscription', name: 'Subscription', element: Subscription },
+  { path: '/subscription', name: 'Subscription', element: Subscriptions },
   { path: '/ChangePassword', name: 'Change Password', element: ChangePassword },
   { path: '/Users', name: 'Users', element: Users },
   { path: '/Category', name: 'Category', element: Category },
