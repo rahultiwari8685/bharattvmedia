@@ -212,8 +212,8 @@ function Post1() {
                     </ul> */}
                   </div>
                 </div>
-                <div className="col-lg-8 align-self-center">
-                  <div className="d-flex gap-2 flex-wrap">
+                <div className="col-lg-8 ">
+                  <div className="d-flex gap-2 flex-right">
                     <FacebookShareButton
                       url={shareUrl}
                       quote={shareTitle}
