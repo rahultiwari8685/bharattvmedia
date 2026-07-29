@@ -250,7 +250,7 @@ function Post1() {
                         <img
                           src={
                             news.author?.profileImage
-                              ? `${API}/uploads/profile/${news.author.profileImage}`
+                              ? `${API}/uploads/images/${news.author.profileImage}`
                               : author2
                           }
                           alt={news.author?.name || "Author"}
