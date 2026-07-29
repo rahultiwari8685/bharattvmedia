@@ -145,78 +145,6 @@ function Post1() {
                     {/* <h4>{news.categories?.[0]?.name}</h4> */}
                     <div className="share-section mt-1">
                       {/* <h5>Share this article</h5> */}
-
-                      <div className="d-flex gap-2 flex-wrap">
-                        <FacebookShareButton
-                          url={shareUrl}
-                          quote={shareTitle}
-                          onClick={increaseShare}
-                          hashtag="#hindustantvlive"
-                        >
-                          <FacebookIcon size={42} round />
-                        </FacebookShareButton>
-
-                        <TwitterShareButton
-                          url={shareUrl}
-                          title={shareTitle}
-                          onClick={increaseShare}
-                        >
-                          <TwitterIcon size={42} round />
-                        </TwitterShareButton>
-
-                        <WhatsappShareButton
-                          url={shareUrl}
-                          title={shareTitle}
-                          onClick={increaseShare}
-                        >
-                          <WhatsappIcon size={42} round />
-                        </WhatsappShareButton>
-
-                        <TelegramShareButton
-                          url={shareUrl}
-                          title={shareTitle}
-                          onClick={increaseShare}
-                        >
-                          <TelegramIcon size={42} round />
-                        </TelegramShareButton>
-
-                        <LinkedinShareButton
-                          url={shareUrl}
-                          title={shareTitle}
-                          onClick={increaseShare}
-                          summary={news.subtitle}
-                        >
-                          <LinkedinIcon size={42} round />
-                        </LinkedinShareButton>
-
-                        <RedditShareButton
-                          url={shareUrl}
-                          title={shareTitle}
-                          onClick={increaseShare}
-                        >
-                          <RedditIcon size={42} round />
-                        </RedditShareButton>
-
-                        <EmailShareButton
-                          url={shareUrl}
-                          subject={shareTitle}
-                          body={shareTitle}
-                          onClick={increaseShare}
-                        >
-                          <EmailIcon size={42} round />
-                        </EmailShareButton>
-
-                        {/* <button
-                          className="btn btn-dark btn-sm"
-                          style={{ display: "inline-block", zIndex: 9999 }}
-                          onClick={() => {
-                            navigator.clipboard.writeText(shareUrl);
-                            alert("Link copied!");
-                          }}
-                        >
-                          Copy
-                        </button> */}
-                      </div>
                     </div>
                   </div>
                 </div>
@@ -282,6 +210,79 @@ function Post1() {
                         })}
                       </li>
                     </ul>
+                  </div>
+                </div>
+                <div className="col-lg-6 align-self-center">
+                  <div className="d-flex gap-2 flex-wrap">
+                    <FacebookShareButton
+                      url={shareUrl}
+                      quote={shareTitle}
+                      onClick={increaseShare}
+                      hashtag="#hindustantvlive"
+                    >
+                      <FacebookIcon size={42} round />
+                    </FacebookShareButton>
+
+                    <TwitterShareButton
+                      url={shareUrl}
+                      title={shareTitle}
+                      onClick={increaseShare}
+                    >
+                      <TwitterIcon size={42} round />
+                    </TwitterShareButton>
+
+                    <WhatsappShareButton
+                      url={shareUrl}
+                      title={shareTitle}
+                      onClick={increaseShare}
+                    >
+                      <WhatsappIcon size={42} round />
+                    </WhatsappShareButton>
+
+                    <TelegramShareButton
+                      url={shareUrl}
+                      title={shareTitle}
+                      onClick={increaseShare}
+                    >
+                      <TelegramIcon size={42} round />
+                    </TelegramShareButton>
+
+                    <LinkedinShareButton
+                      url={shareUrl}
+                      title={shareTitle}
+                      onClick={increaseShare}
+                      summary={news.subtitle}
+                    >
+                      <LinkedinIcon size={42} round />
+                    </LinkedinShareButton>
+
+                    <RedditShareButton
+                      url={shareUrl}
+                      title={shareTitle}
+                      onClick={increaseShare}
+                    >
+                      <RedditIcon size={42} round />
+                    </RedditShareButton>
+
+                    <EmailShareButton
+                      url={shareUrl}
+                      subject={shareTitle}
+                      body={shareTitle}
+                      onClick={increaseShare}
+                    >
+                      <EmailIcon size={42} round />
+                    </EmailShareButton>
+
+                    {/* <button
+                          className="btn btn-dark btn-sm"
+                          style={{ display: "inline-block", zIndex: 9999 }}
+                          onClick={() => {
+                            navigator.clipboard.writeText(shareUrl);
+                            alert("Link copied!");
+                          }}
+                        >
+                          Copy
+                        </button> */}
                   </div>
                 </div>
               </div>
