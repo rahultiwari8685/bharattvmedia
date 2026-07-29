@@ -99,6 +99,18 @@ export const adminNav = [
     to: '/siteSetting',
     icon: <CIcon icon={cilBullhorn} customClassName="nav-icon" />,
   },
+  {
+    component: CNavItem,
+    name: 'Subscription',
+    to: '/subscription',
+    icon: <CIcon icon={cilBullhorn} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
+    name: 'Plan',
+    to: '/plans',
+    icon: <CIcon icon={cilBullhorn} customClassName="nav-icon" />,
+  },
 ]
 export const editorNav = [
   {
