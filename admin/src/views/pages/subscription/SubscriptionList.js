@@ -11,7 +11,6 @@ import {
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import { cilPencil, cilBan } from '@coreui/icons'
-import axios from 'axios'
 import setting from '../../../setting.json'
 
 const SubscriptionList = ({ onEdit }) => {
