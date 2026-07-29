@@ -18,14 +18,39 @@ const PlanList = ({ onEdit }) => {
   const [plans, setPlans] = useState([])
 
   const loadPlans = async () => {
-    const res = await axios.get(`${setting.api}/api/plans/getAllPlans`)
-    setPlans(res.data.data || [])
-    console.log(res.data.data)
+    try {
+      const response = await fetch(`${setting.api}/api/plans/getAllPlans`)
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch plans')
+      }
+
+      const data = await response.json()
+
+      setPlans(data.data || [])
+      console.log(data.data)
+    } catch (error) {
+      console.error('Error loading plans:', error)
+    }
   }
 
   const toggleStatus = async (id) => {
-    await axios.patch(`${setting.api}/api/plans/${id}/status`)
-    loadPlans()
+    try {
+      const response = await fetch(`${setting.api}/api/plans/${id}/status`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to update status')
+      }
+
+      await loadPlans()
+    } catch (error) {
+      console.error('Error updating status:', error)
+    }
   }
 
   useEffect(() => {
