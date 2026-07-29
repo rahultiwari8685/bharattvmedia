@@ -8,6 +8,7 @@ import LayoutTheme1 from "./component/Layout/LayoutTheme1";
 import Trending from "./pages/home/trending";
 import Sports from "./pages/home/sports";
 import About from "./pages/home/about";
+import Subscriber from "./pages/home/subscriber";
 import Archive from "./pages/home/archive";
 import Contact from "./pages/home/contact";
 import Error from "./pages/home/404";
@@ -98,21 +99,14 @@ const router = createBrowserRouter([
         path: "/category/:categoryId",
         element: <Category />,
       },
-      // {
-      //   path: "/business",
-      //   element: <Business />,
-      // },
-      // {
-      //   path: "/entertainment",
-      //   element: <Entertainment />,
-      // },
-      // {
-      //   path: "/features",
-      //   element: <Feature />,
-      // },
+
       {
         path: "/trending",
         element: <Trending />,
+      },
+      {
+        path: "/subscriber",
+        element: <Subscriber />,
       },
       {
         path: "/sports",
