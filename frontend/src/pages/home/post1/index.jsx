@@ -163,7 +163,7 @@ function Post1() {
                   </div>
                 </div> */}
               </div>
-              <div className="space-3" />
+
               <div className="single_post_heading">
                 <h1>{news.title}</h1>
                 <div className="space-10" />
@@ -188,7 +188,7 @@ function Post1() {
 
                     <Link to="#">{news.author?.name || "Admin"}</Link>
 
-                    <ul>
+                    {/* <ul>
                       <li>
                         <Link to="#">
                           {new Date(news.createdAt).toLocaleDateString(
@@ -209,11 +209,11 @@ function Post1() {
                           minute: "2-digit",
                         })}
                       </li>
-                    </ul>
+                    </ul> */}
                   </div>
                 </div>
                 <div className="col-lg-8 align-self-center">
-                  <div className="d-flex gap-5 flex-wrap">
+                  <div className="d-flex gap-2 flex-wrap">
                     <FacebookShareButton
                       url={shareUrl}
                       quote={shareTitle}
