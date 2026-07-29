@@ -15,51 +15,22 @@ import {
 
 const router = express.Router();
 
-// ===============================
-// Create Advertisement
-// ===============================
 router.post("/create", upload.single("image"), createAdvertisement);
 
-// ===============================
-// Get All Advertisements
-// ===============================
 router.get("/", getAllAdvertisements);
 
-// ===============================
-// Get Advertisement by Position
-// Example:
-// /api/advertisements/position/homepage_top
-// ===============================
 router.get("/position/:position", getAdvertisementsByPosition);
 
-// ===============================
-// Increase View
-// ===============================
 router.post("/view/:id", increaseView);
 
-// ===============================
-// Increase Click
-// ===============================
 router.post("/click/:id", increaseClick);
 
-// ===============================
-// Get Single Advertisement
-// ===============================
 router.get("/:id", getAdvertisement);
 
-// ===============================
-// Update Advertisement
-// ===============================
 router.put("/update/:id", upload.single("image"), updateAdvertisement);
 
-// ===============================
-// Change Status
-// ===============================
 router.patch("/status/:id", changeStatus);
 
-// ===============================
-// Delete Advertisement
-// ===============================
 router.delete("/delete/:id", deleteAdvertisement);
 
 export default router;
