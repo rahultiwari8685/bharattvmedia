@@ -163,7 +163,7 @@ function Post1() {
                   </div>
                 </div> */}
               </div>
-              <div className="space-10" />
+              <div className="space-3" />
               <div className="single_post_heading">
                 <h1>{news.title}</h1>
                 <div className="space-10" />
@@ -171,7 +171,7 @@ function Post1() {
               </div>
 
               <div className="row">
-                <div className="col-lg-6 align-self-center">
+                <div className="col-lg-4 align-self-center">
                   <div className="author">
                     <div className="author_img">
                       <div className="author_img_wrap">
@@ -212,8 +212,8 @@ function Post1() {
                     </ul>
                   </div>
                 </div>
-                <div className="col-lg-6 align-self-center">
-                  <div className="d-flex gap-2 flex-wrap">
+                <div className="col-lg-8 align-self-center">
+                  <div className="d-flex gap-5 flex-wrap">
                     <FacebookShareButton
                       url={shareUrl}
                       quote={shareTitle}
