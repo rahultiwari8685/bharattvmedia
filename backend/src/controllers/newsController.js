@@ -92,13 +92,30 @@ export const createNews = async (req, res) => {
       thumbnail: req.file?.filename || "",
     });
 
-    const tokens = await NotificationToken.find().select("token");
+    // Send Push Notification only when Published
 
-    await sendNotification(
-      tokens.map((item) => item.token),
-      createdNews,
-    );
-    
+    if (Number(createdNews.type) === 1) {
+      console.log("=================================");
+      console.log("Sending Push Notification...");
+      console.log("News:", createdNews.title);
+
+      const tokens = await NotificationToken.find();
+
+      console.log("Total Tokens:", tokens.length);
+
+      if (tokens.length > 0) {
+        await sendNotification(
+          tokens.map((item) => item.token),
+          createdNews,
+        );
+
+        console.log("✅ Push Notification Sent");
+      } else {
+        console.log("❌ No Device Tokens Found");
+      }
+
+      console.log("=================================");
+    }
 
     // populate author after create
     const news = await News.findById(createdNews._id)
