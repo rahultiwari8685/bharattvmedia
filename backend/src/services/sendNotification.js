@@ -1,37 +1,35 @@
-import admin from "../config/firebase.js";
-import NotificationToken from "../models/NotificationToken.js";
+import { Expo } from "expo-server-sdk";
 
-export async function sendNotificationToAll(news) {
-  try {
-    const users = await NotificationToken.find();
+const expo = new Expo();
 
-    if (!users.length) {
-      console.log("No device tokens found.");
-      return;
+export async function sendNotification(tokens, news) {
+  const messages = [];
+
+  for (const token of tokens) {
+    if (!Expo.isExpoPushToken(token)) {
+      console.log("Invalid Expo Token:", token);
+      continue;
     }
 
-    for (const user of users) {
-      try {
-        await admin.messaging().send({
-          token: user.token,
+    messages.push({
+      to: token,
+      sound: "default",
+      title: "Top Headlines",
+      body: news.title,
+      data: {
+        slug: news.slug,
+        newsId: news._id.toString(),
+      },
+    });
+  }
 
-          notification: {
-            title: news.title,
-            body: news.subtitle || "",
-          },
+  const chunks = expo.chunkPushNotifications(messages);
 
-          data: {
-            slug: news.slug,
-            newsId: news._id.toString(),
-          },
-        });
-
-        console.log("Notification Sent:", user.token);
-      } catch (err) {
-        console.log("Notification Error:", err.message);
-      }
+  for (const chunk of chunks) {
+    try {
+      await expo.sendPushNotificationsAsync(chunk);
+    } catch (err) {
+      console.log(err);
     }
-  } catch (err) {
-    console.log(err);
   }
 }
