@@ -2,7 +2,7 @@ import NotificationToken from "../models/NotificationToken.js";
 
 export const saveToken = async (req, res) => {
   try {
-    const { token } = req.body;
+    const { token, platform } = req.body;
 
     if (!token) {
       return res.status(400).json({
@@ -11,23 +11,27 @@ export const saveToken = async (req, res) => {
       });
     }
 
-    const exists = await NotificationToken.findOne({ token });
+    const exists = await NotificationToken.findOne({
+      token,
+    });
 
     if (!exists) {
       await NotificationToken.create({
         token,
+        platform,
       });
     }
 
-    res.json({
+    return res.json({
       success: true,
-      message: "Token Saved",
+      message: "Token Saved Successfully",
     });
   } catch (err) {
     console.log(err);
 
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
+      message: err.message,
     });
   }
 };

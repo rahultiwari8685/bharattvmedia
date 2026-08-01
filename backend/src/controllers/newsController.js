@@ -1,7 +1,10 @@
 import axios from "axios";
 import mongoose from "mongoose";
 import News from "../models/News.js";
-import { sendNotificationToAll } from "../services/sendNotification.js";
+
+import { sendNotification } from "../services/sendNotification.js";
+import NotificationToken from "../models/NotificationToken.js";
+
 export const createNews = async (req, res) => {
   try {
     const {
@@ -89,7 +92,13 @@ export const createNews = async (req, res) => {
       thumbnail: req.file?.filename || "",
     });
 
-    await sendNotificationToAll(news);
+    const tokens = await NotificationToken.find().select("token");
+
+    await sendNotification(
+      tokens.map((item) => item.token),
+      createdNews,
+    );
+    
 
     // populate author after create
     const news = await News.findById(createdNews._id)

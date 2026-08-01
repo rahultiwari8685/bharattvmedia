@@ -1,15 +1,22 @@
 import mongoose from "mongoose";
 
-const NotificationSchema = new mongoose.Schema({
-  token: {
-    type: String,
-    unique: true,
-  },
+const NotificationTokenSchema = new mongoose.Schema(
+  {
+    token: {
+      type: String,
+      unique: true,
+      required: true,
+    },
 
-  createdAt: {
-    type: Date,
-    default: Date.now,
+    platform: {
+      type: String,
+      enum: ["android", "ios"],
+      default: "android",
+    },
   },
-});
+  {
+    timestamps: true,
+  },
+);
 
-export default mongoose.model("NotificationToken", NotificationSchema);
+export default mongoose.model("NotificationToken", NotificationTokenSchema);
