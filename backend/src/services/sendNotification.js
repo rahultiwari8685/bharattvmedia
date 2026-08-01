@@ -14,8 +14,13 @@ export async function sendNotification(tokens, news) {
     messages.push({
       to: token,
       sound: "default",
+
       title: "Top Headlines",
+
       body: news.title,
+
+      image: `https://api.hindustantvlive.com/uploads/images/${news.thumbnail}`,
+
       data: {
         slug: news.slug,
         newsId: news._id.toString(),
