@@ -1,8 +1,13 @@
 import express from "express";
-import { saveToken } from "../controllers/notificationController.js";
+import {
+  saveToken,
+  testNotification,
+} from "../controllers/notificationController.js";
 
 const router = express.Router();
 
 router.post("/save-token", saveToken);
+
+router.get("/test", testNotification);
 
 export default router;
