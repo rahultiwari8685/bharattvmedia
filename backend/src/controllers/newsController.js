@@ -357,6 +357,33 @@ export const updateNews = async (req, res) => {
       new: true,
     });
 
+    // =============================
+    // Send Push Notification
+    // =============================
+
+    if (Number(updated.type) === 1) {
+      console.log("================================");
+      console.log("Sending Notification...");
+      console.log("News:", updated.title);
+
+      const tokens = await NotificationToken.find().select("token");
+
+      console.log("Total Tokens:", tokens.length);
+
+      if (tokens.length > 0) {
+        await sendNotification(
+          tokens.map((item) => item.token),
+          updated,
+        );
+
+        console.log("✅ Notification Sent Successfully");
+      } else {
+        console.log("❌ No Device Tokens Found");
+      }
+
+      console.log("================================");
+    }
+
     return res.status(200).json({
       status: true,
       message: "News updated successfully",
