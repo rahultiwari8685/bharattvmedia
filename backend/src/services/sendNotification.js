@@ -7,7 +7,7 @@ export async function sendNotification(tokens, news) {
 
   for (const token of tokens) {
     if (!Expo.isExpoPushToken(token)) {
-      console.log("Invalid Expo Token:", token);
+      console.log("❌ Invalid Expo Token:", token);
       continue;
     }
 
@@ -23,12 +23,22 @@ export async function sendNotification(tokens, news) {
     });
   }
 
+  console.log("==================================");
+  console.log("Messages To Send:");
+  console.log(JSON.stringify(messages, null, 2));
+  console.log("==================================");
+
   const chunks = expo.chunkPushNotifications(messages);
 
   for (const chunk of chunks) {
     try {
-      await expo.sendPushNotificationsAsync(chunk);
+      const response = await expo.sendPushNotificationsAsync(chunk);
+
+      console.log("========== Expo Response ==========");
+      console.log(JSON.stringify(response, null, 2));
+      console.log("===================================");
     } catch (err) {
+      console.log("Expo Send Error:");
       console.log(err);
     }
   }
