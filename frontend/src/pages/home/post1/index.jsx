@@ -54,6 +54,9 @@ function Post1() {
 
         if (data.status) {
           setNews(data.data);
+
+          // Increase View
+          increaseView(data.data._id);
         }
       } catch (err) {
         console.log(err);
@@ -121,6 +124,16 @@ function Post1() {
   const increaseShare = async () => {
     try {
       await fetch(`${API}/api/news/share/${news._id}`, {
+        method: "POST",
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const increaseView = async (id) => {
+    try {
+      await fetch(`${API}/api/news/view/${id}`, {
         method: "POST",
       });
     } catch (err) {
