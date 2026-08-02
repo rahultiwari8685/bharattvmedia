@@ -1,63 +1,83 @@
-import { Expo } from "expo-server-sdk";
-
-const expo = new Expo();
-
+import admin from "../config/firebase.js";
+import NotificationToken from "../models/NotificationToken.js";
 export async function sendNotification(tokens, news) {
-  const messages = [];
-
   for (const token of tokens) {
-    if (!Expo.isExpoPushToken(token)) {
-      console.log("❌ Invalid Expo Token:", token);
-      continue;
-    }
-
-    console.log("📱 Sending To:", token);
-
-    messages.push({
-      to: token,
-      sound: "default",
-
-      title: "Top Headlines",
-
-      body: news.title,
-
-      image: `https://api.hindustantvlive.com/uploads/images/${news.thumbnail}`,
-
-      mutableContent: true,
-
-      data: {
-        slug: news.slug,
-        newsId: news._id.toString(),
-      },
-    });
-  }
-
-  console.log("==================================");
-  console.log("Messages To Send:");
-  console.log(JSON.stringify(messages, null, 2));
-  console.log("==================================");
-
-  const chunks = expo.chunkPushNotifications(messages);
-
-  for (const chunk of chunks) {
     try {
-      console.log("Sending Chunk:");
-      console.log(JSON.stringify(chunk, null, 2));
+      console.log("================================");
+      console.log("Sending to:", token);
 
-      const response = await expo.sendPushNotificationsAsync(chunk);
+      const message = {
+        token,
 
-      console.log("========== Expo Response ==========");
-      console.log(JSON.stringify(response, null, 2));
-      console.log("===================================");
+        notification: {
+          title: "Top Headlines",
+          body: news.title,
 
-      // Print every ticket separately
-      response.forEach((ticket, index) => {
-        console.log(`Ticket ${index + 1}:`);
-        console.log(ticket);
-      });
+          // imageUrl: `https://api.hindustantvlive.com/uploads/images/${news.thumbnail}`,
+        },
+
+        android: {
+          priority: "high",
+
+          notification: {
+            channelId: "breaking-news",
+
+            imageUrl: `https://api.hindustantvlive.com/uploads/images/${news.thumbnail}`,
+
+            sound: "default",
+
+            priority: "high",
+
+            visibility: "public",
+
+            defaultSound: true,
+
+            defaultVibrateTimings: true,
+
+            notificationCount: 1,
+          },
+        },
+
+        apns: {
+          payload: {
+            aps: {
+              mutableContent: true,
+            },
+          },
+        },
+
+        data: {
+          slug: news.slug,
+          newsId: news._id.toString(),
+
+          image: `https://api.hindustantvlive.com/uploads/images/${news.thumbnail}`,
+
+          title: "Top Headlines",
+
+          body: news.title,
+        },
+      };
+
+      const response = await admin.messaging().send(message);
+
+      console.log("✅ Message ID:", response);
+
+      console.log("✅ Sent:", response);
     } catch (err) {
-      console.log("❌ Expo Send Error:");
-      console.log(err);
+      console.log("❌ Send Error");
+      console.log(err.message);
+
+      // Invalid token delete
+      if (
+        err.code === "messaging/registration-token-not-registered" ||
+        err.code === "messaging/invalid-registration-token"
+      ) {
+        console.log("Deleting Invalid Token:", token);
+
+        await NotificationToken.deleteOne({
+          token,
+        });
+      }
     }
   }
 }
