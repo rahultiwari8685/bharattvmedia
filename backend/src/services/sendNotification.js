@@ -11,10 +11,14 @@ export async function sendNotification(tokens, news) {
       continue;
     }
 
+    console.log("📱 Sending To:", token);
+
     messages.push({
       to: token,
       sound: "default",
+
       title: "Top Headlines",
+
       body: news.title,
 
       image: `https://api.hindustantvlive.com/uploads/images/${news.thumbnail}`,
@@ -37,13 +41,22 @@ export async function sendNotification(tokens, news) {
 
   for (const chunk of chunks) {
     try {
+      console.log("Sending Chunk:");
+      console.log(JSON.stringify(chunk, null, 2));
+
       const response = await expo.sendPushNotificationsAsync(chunk);
 
       console.log("========== Expo Response ==========");
       console.log(JSON.stringify(response, null, 2));
       console.log("===================================");
+
+      // Print every ticket separately
+      response.forEach((ticket, index) => {
+        console.log(`Ticket ${index + 1}:`);
+        console.log(ticket);
+      });
     } catch (err) {
-      console.log("Expo Send Error:");
+      console.log("❌ Expo Send Error:");
       console.log(err);
     }
   }
