@@ -15,7 +15,7 @@ const FeatureNews = ({ className }) => {
   const getPopularNews = async () => {
     try {
       const res = await fetch(
-        "https://api.hindustantvlive.com/api/news/popular?limit=10",
+        "https://api.hindustantvlive.com/api/news/getAllNews?limit=10",
       );
 
       const data = await res.json();

@@ -14,7 +14,7 @@ const SportsNews = ({ dark }) => {
   const getSportsNews = async () => {
     try {
       const res = await fetch(
-        "https://api.hindustantvlive.com/api/news/category/6a2ac8970492bc79b68ee903?limit=10",
+        "https://api.hindustantvlive.com/api/news/category/6a634a979f2f6acb1a8b9aa1?limit=10",
       );
 
       const data = await res.json();
@@ -45,7 +45,7 @@ const SportsNews = ({ dark }) => {
           <div className="row">
             <div className="col-12">
               <div className="heading">
-                <h2 className="widget-title">Sports News</h2>
+                <h2 className="widget-title">World News</h2>
               </div>
             </div>
           </div>
