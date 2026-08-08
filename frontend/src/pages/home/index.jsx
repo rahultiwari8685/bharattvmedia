@@ -104,7 +104,7 @@ function Home() {
     <>
       <PostCarousel className="fifth_bg" />
       {/* <PostGallery className="fifth_bg" /> */}
-      <FeatureNews />
+
       <div className="container">
         <div className="row">
           <div className="col-lg-8">
@@ -135,6 +135,7 @@ function Home() {
       </div>
       {/* <MixCarousel className="half_bg1" /> */}
       <VideoPost className="pt30 half_bg60" />
+      <FeatureNews />
       <div className="entertrainments">
         <div className="container">
           <div className="row">
