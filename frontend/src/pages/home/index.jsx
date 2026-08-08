@@ -127,6 +127,8 @@ function Home() {
                 </div>
               </div>
               {/*CAROUSEL END*/}
+
+              <BusinessNews businessNews={businessNews} />
               <SportsNews />
               <div className="banner_area mt50 mb60 xs-mt60">
                 {banners.homepage_middle && (
@@ -143,7 +145,6 @@ function Home() {
                   </a>
                 )}
               </div>
-              <BusinessNews businessNews={businessNews} />
             </div>
             <div className="col-lg-4">
               <div className="row">
