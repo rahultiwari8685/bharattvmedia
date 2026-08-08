@@ -38,9 +38,9 @@ const WidgetTrendingNewsTwo = () => {
             <Link to="/">
               <img src={item.photo} alt="thumb" />
             </Link>
-            <span className="tranding border_tranding">
+            {/* <span className="tranding border_tranding">
               <FontAwesome name="bolt" />
-            </span>
+            </span> */}
           </div>
           <div className="single_post_text">
             <h4>

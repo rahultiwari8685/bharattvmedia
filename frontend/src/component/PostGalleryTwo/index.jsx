@@ -114,9 +114,9 @@ const PostGalleryTwo = () => {
                     <img src={col26} alt="col26" />
                   </Link>
                 </div>
-                <span className="tranding border_tranding">
+                {/* <span className="tranding border_tranding">
                   <FontAwesome name="bolt" />
-                </span>
+                </span> */}
               </div>
               <div className="single_post_text white_bg padding20">
                 <h4>

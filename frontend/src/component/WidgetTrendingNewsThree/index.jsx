@@ -33,9 +33,9 @@ const WidgetTrendingNewsThree = () => {
           <div className="img_wrap">
             <img src={video32} alt="video32" />
           </div>
-          <span className="tranding border_tranding">
+          {/* <span className="tranding border_tranding">
             <FontAwesome name="bolt" />
-          </span>
+          </span> */}
         </div>
         <div className="single_post_text">
           <Link to="/post1">

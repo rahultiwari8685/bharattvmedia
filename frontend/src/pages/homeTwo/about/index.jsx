@@ -104,9 +104,9 @@ function HomeTwoAbout() {
                                 <div className="img_wrap">
                                   <img src={item.photo} alt="thumb" />
                                 </div>
-                                <span className="tranding border_tranding">
+                                {/* <span className="tranding border_tranding">
                                   <FontAwesome name="bolt" />
-                                </span>
+                                </span> */}
                               </div>
                               <div className="single_post_text padding20 white_bg">
                                 <Link to="/post1">{item.title}</Link>
@@ -134,9 +134,9 @@ function HomeTwoAbout() {
                                 <div className="img_wrap">
                                   <img src={item.photo} alt="thumb" />
                                 </div>
-                                <span className="tranding border_tranding">
+                                {/* <span className="tranding border_tranding">
                                   <FontAwesome name="bolt" />
-                                </span>
+                                </span> */}
                               </div>
                               <div className="single_post_text padding20 white_bg">
                                 <Link to="/post1">{item.title}</Link>

@@ -54,9 +54,9 @@ const TrendingNewsThree = () => {
                   <img src={trend31} alt="trend31" />
                 </Link>
               </div>
-              <span className="tranding border_tranding">
+              {/* <span className="tranding border_tranding">
                 <FontAwesome name="bolt" />
-              </span>
+              </span> */}
             </div>
             <div className="single_post_text">
               <div className="row">
