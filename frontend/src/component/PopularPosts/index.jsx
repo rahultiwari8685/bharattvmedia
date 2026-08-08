@@ -55,7 +55,7 @@ const PopularPosts = () => {
             >
               <div className="post_img">
                 <div className="img_wrap">
-                  <Link to={`/news/${item.slug}`}>
+                  <Link to={`/${item.categories?.[0]?.slug}/${item.slug}`}>
                     <img
                       src={`https://api.hindustantvlive.com/uploads/images/${item.thumbnail}`}
                       alt={item.title}
@@ -73,7 +73,9 @@ const PopularPosts = () => {
 
               <div className="single_post_text">
                 <h4>
-                  <Link to={`/news/${item.slug}`}>{item.title}</Link>
+                  <Link to={`/${item.categories?.[0]?.slug}/${item.slug}`}>
+                    {item.title}
+                  </Link>
                 </h4>
 
                 <div className="meta4">

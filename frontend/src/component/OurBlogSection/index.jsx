@@ -57,7 +57,7 @@ const OurBlogSection = ({ dark }) => {
             <div className="col-md-6 col-lg-4">
               <div className="single_post post_type3 mb30">
                 <div className="post_img">
-                  <Link to={`/news/${item.slug}`}>
+                  <Link to={`/${item.categories?.[0]?.slug}/${item.slug}`}>
                     <img
                       src={
                         item.thumbnail
@@ -74,15 +74,17 @@ const OurBlogSection = ({ dark }) => {
                 </div>
                 <div className="single_post_text">
                   <div className="meta3">
-                    <Link to={`/news/${item.slug}`}>
+                    <Link to={`/${item.categories?.[0]?.slug}/${item.slug}`}>
                       {item.categories?.[0]?.name}
                     </Link>
-                    <Link to={`/news/${item.slug}`}>
+                    <Link to={`/${item.categories?.[0]?.slug}/${item.slug}`}>
                       {new Date(item.createdAt).toLocaleDateString()}
                     </Link>
                   </div>
                   <h4>
-                    <Link to={`/news/${item.slug}`}>{item.title}</Link>
+                    <Link to={`/${item.categories?.[0]?.slug}/${item.slug}`}>
+                      {item.title}
+                    </Link>
                   </h4>
                   <div className="space-10" />
                   <p className="post-p">{item.subtitle}</p>

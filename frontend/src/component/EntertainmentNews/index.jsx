@@ -10,7 +10,7 @@ const EntertainmentNews = ({ entertainments }) => {
           <div className="single_post post_type3 mb30">
             <div className="post_img">
               <div className="img_wrap">
-                <Link to={`/news/${item.slug}`}>
+                <Link to={`/${item.categories?.[0]?.slug}/${item.slug}`}>
                   <img
                     src={`https://api.hindustantvlive.com/uploads/images/${item.thumbnail}`}
                     alt={item.title}
@@ -38,7 +38,9 @@ const EntertainmentNews = ({ entertainments }) => {
               </div>
 
               <h4>
-                <Link to={`/news/${item.slug}`}>{item.title}</Link>
+                <Link to={`/${item.categories?.[0]?.slug}/${item.slug}`}>
+                  {item.title}
+                </Link>
               </h4>
 
               <div className="space-10" />

@@ -87,7 +87,9 @@ const TrendingNews = ({ dark }) => {
             </div>
 
             <h4>
-              <Link to={`/news/${item.slug}`}>{item.title}</Link>
+              <Link to={`/${item.categories?.[0]?.slug}/${item.slug}`}>
+                {item.title}
+              </Link>
             </h4>
           </div>
         </div>

@@ -82,7 +82,9 @@ const PostCarousel = ({ className }) => {
                     >
                       <div className="post_img">
                         <div className="img_wrap">
-                          <Link to={`/news/${item.slug}`}>
+                          <Link
+                            to={`/${item.categories?.[0]?.slug}/${item.slug}`}
+                          >
                             <img
                               src={`https://api.hindustantvlive.com/uploads/images/${item.thumbnail}`}
                               alt={item.title}
@@ -98,7 +100,9 @@ const PostCarousel = ({ className }) => {
 
                       <div className="single_post_text">
                         <h4>
-                          <Link to={`/news/${item.slug}`}>
+                          <Link
+                            to={`/${item.categories?.[0]?.slug}/${item.slug}`}
+                          >
                             {item.title.slice(0, 40)}...
                           </Link>
                         </h4>

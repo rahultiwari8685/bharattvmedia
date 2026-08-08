@@ -22,7 +22,7 @@ const FeatureNewsAll = ({ features = [] }) => {
         <div key={item._id} className="col-lg-6">
           <div className="single_post post_type6 post_type7 mb30">
             <div className="post_img gradient1">
-              <Link to={`/news/${item.slug}`}>
+              <Link to={`/${item.categories?.[0]?.slug}/${item.slug}`}>
                 <img
                   src={
                     item.thumbnail
@@ -50,7 +50,9 @@ const FeatureNewsAll = ({ features = [] }) => {
               </div>
 
               <h4>
-                <Link to={`/news/${item.slug}`}>{item.title}</Link>
+                <Link to={`/${item.categories?.[0]?.slug}/${item.slug}`}>
+                  {item.title}
+                </Link>
               </h4>
 
               {/* {item.subtitle && (
