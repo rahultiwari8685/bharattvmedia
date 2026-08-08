@@ -41,7 +41,8 @@ import BlogComment from "../../../component/BlogComment";
 function Post1() {
   const API = "https://api.hindustantvlive.com";
 
-  const { slug } = useParams();
+  // const { slug } = useParams();
+  const { categorySlug, slug } = useParams();
   const [news, setNews] = useState(null);
 
   const [banners, setBanners] = useState({});

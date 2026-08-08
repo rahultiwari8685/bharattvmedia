@@ -132,8 +132,13 @@ const router = createBrowserRouter([
       //   path: "/post1",
       //   element: <Post1 />,
       // },
+      // {
+      //   path: "/news/:slug",
+      //   element: <Post1 />,
+      // },
+
       {
-        path: "/news/:slug",
+        path: "/:categorySlug/:slug",
         element: <Post1 />,
       },
       {
