@@ -135,7 +135,7 @@ function Home() {
       </div>
       {/* <MixCarousel className="half_bg1" /> */}
       <VideoPost className="pt30 half_bg60" />
-
+      <FeatureNews />
       <div className="entertrainments">
         <div className="container">
           <div className="row">
@@ -155,8 +155,6 @@ function Home() {
                   </div>
                 </div>
               </div>
-
-              <FeatureNews />
               {/*CAROUSEL END*/}
               <SportsNews />
               <div className="banner_area mt50 mb60 xs-mt60">
