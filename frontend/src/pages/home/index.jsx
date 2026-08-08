@@ -105,34 +105,6 @@ function Home() {
       <PostCarousel className="fifth_bg" />
       {/* <PostGallery className="fifth_bg" /> */}
 
-      <div className="container">
-        <div className="row">
-          <div className="col-lg-8">
-            <TrendingNews />
-          </div>
-          <div className="col-md-12 col-lg-4">
-            <div className="col-lg-12">
-              <div className="banner2 mb30">
-                {banners.sidebar && (
-                  <a
-                    href={banners.sidebar.redirectUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <img
-                      src={`https://api.hindustantvlive.com/uploads/advertisements/${banners.sidebar.image}`}
-                      alt={banners.sidebar.title}
-                      className="img-fluid"
-                    />
-                  </a>
-                )}
-              </div>
-            </div>
-
-            <MostView />
-          </div>
-        </div>
-      </div>
       {/* <MixCarousel className="half_bg1" /> */}
       <VideoPost className="pt30 half_bg60" />
       <FeatureNews />
@@ -143,7 +115,7 @@ function Home() {
               <div className="row">
                 <div className="col-12">
                   <div className="heading">
-                    <h2 className="widget-title">Uttar Pradesh News</h2>
+                    <h2 className="widget-title">Uttar Pradesh</h2>
                   </div>
                 </div>
               </div>
@@ -191,6 +163,34 @@ function Home() {
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+      <div className="container">
+        <div className="row">
+          <div className="col-lg-8">
+            <TrendingNews />
+          </div>
+          <div className="col-md-12 col-lg-4">
+            <div className="col-lg-12">
+              <div className="banner2 mb30">
+                {banners.sidebar && (
+                  <a
+                    href={banners.sidebar.redirectUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <img
+                      src={`https://api.hindustantvlive.com/uploads/advertisements/${banners.sidebar.image}`}
+                      alt={banners.sidebar.title}
+                      className="img-fluid"
+                    />
+                  </a>
+                )}
+              </div>
+            </div>
+
+            <MostView />
           </div>
         </div>
       </div>
