@@ -185,6 +185,48 @@ export const getNews = async (req, res) => {
   }
 };
 
+// export const getAllNewsByCategory = async (req, res) => {
+//   try {
+//     const { categoryId } = req.params;
+//     const { page = 1, limit = 6 } = req.query;
+
+//     if (!mongoose.Types.ObjectId.isValid(categoryId)) {
+//       return res.status(400).json({
+//         status: false,
+//         message: "Invalid category ID",
+//       });
+//     }
+
+//     const skip = (page - 1) * limit;
+
+//     const news = await News.find({
+//       categories: { $in: [categoryId] },
+//     })
+//       // .populate("categories", "name slug")
+//       .populate("categories", "name slug _id")
+//       .sort({ createdAt: -1 })
+//       .skip(skip)
+//       .limit(parseInt(limit));
+
+//     const total = await News.countDocuments({
+//       categories: { $in: [categoryId] },
+//     });
+
+//     return res.status(200).json({
+//       status: true,
+//       totalPages: Math.ceil(total / limit),
+//       total,
+//       data: news,
+//     });
+//   } catch (error) {
+//     console.error("Get News By Category Error:", error);
+//     return res.status(500).json({
+//       status: false,
+//       message: error.message,
+//     });
+//   }
+// };
+
 export const getAllNewsByCategory = async (req, res) => {
   try {
     const { categoryId } = req.params;
@@ -201,8 +243,8 @@ export const getAllNewsByCategory = async (req, res) => {
 
     const news = await News.find({
       categories: { $in: [categoryId] },
+      type: 1, // ✅ Only published news
     })
-      // .populate("categories", "name slug")
       .populate("categories", "name slug _id")
       .sort({ createdAt: -1 })
       .skip(skip)
@@ -210,6 +252,7 @@ export const getAllNewsByCategory = async (req, res) => {
 
     const total = await News.countDocuments({
       categories: { $in: [categoryId] },
+      type: 1, // ✅ Only published news
     });
 
     return res.status(200).json({
@@ -220,6 +263,7 @@ export const getAllNewsByCategory = async (req, res) => {
     });
   } catch (error) {
     console.error("Get News By Category Error:", error);
+
     return res.status(500).json({
       status: false,
       message: error.message,
