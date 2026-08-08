@@ -83,7 +83,7 @@ const PostCarousel = ({ className }) => {
                       <div className="post_img">
                         <div className="img_wrap">
                           <Link
-                            to={`/${item.categories?.[0]?.slug}/${item.slug}`}
+                            to={`/news/${item.categories?.[0]?.slug}/${item.slug}`}
                           >
                             <img
                               src={`https://api.hindustantvlive.com/uploads/images/${item.thumbnail}`}
