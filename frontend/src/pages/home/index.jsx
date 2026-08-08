@@ -36,7 +36,7 @@ function Home() {
   const getEntertainmentNews = async () => {
     try {
       const res = await fetch(
-        "https://api.hindustantvlive.com/api/news/category/6a1ea7af54dc2dce809c32db?limit=4",
+        "https://api.hindustantvlive.com/api/news/category/6a1e8d1c54dc2dce809c304b?limit=4",
       );
 
       const data = await res.json();
@@ -142,7 +142,7 @@ function Home() {
               <div className="row">
                 <div className="col-12">
                   <div className="heading">
-                    <h2 className="widget-title">National News</h2>
+                    <h2 className="widget-title">Uttar Pradesh News</h2>
                   </div>
                 </div>
               </div>
