@@ -155,8 +155,25 @@ function Home() {
                 {/* <div className="col-lg-12">
                   <UpcomingMatches />
                 </div> */}
-                <div className="col-lg-12">
+                {/* <div className="col-lg-12">
                   <NewsLetter />
+                </div> */}
+                <div className="col-lg-12">
+                  <div className="banner2 mb30">
+                    {banners.sidebar && (
+                      <a
+                        href={banners.sidebar.redirectUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <img
+                          src={`https://api.hindustantvlive.com/uploads/advertisements/${banners.sidebar.image}`}
+                          alt={banners.sidebar.title}
+                          className="img-fluid"
+                        />
+                      </a>
+                    )}
+                  </div>
                 </div>
                 <div className="col-lg-12">
                   <CategoriesWidget />
