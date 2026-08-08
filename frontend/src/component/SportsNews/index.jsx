@@ -67,9 +67,9 @@ const SportsNews = ({ dark }) => {
                     />
                   </Link>
 
-                  <span className="tranding">
+                  {/* <span className="tranding">
                     <FontAwesome name="bolt" />
-                  </span>
+                  </span> */}
                 </div>
 
                 <div className="single_post_text">
