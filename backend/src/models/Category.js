@@ -14,6 +14,12 @@ const categorySchema = new mongoose.Schema(
       default: null,
     },
 
+    slug: {
+      type: String,
+      unique: true,
+      index: true,
+    },
+
     showInMenu: {
       type: String,
       default: "0",

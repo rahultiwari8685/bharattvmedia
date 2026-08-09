@@ -275,7 +275,7 @@ export const getNewsBySlug = async (req, res) => {
   try {
     const news = await News.findOne({ slug: req.params.slug })
       .populate("author", "name email profileImage")
-      .populate("categories", "name slug");
+      .populate("categories", "name slug _id");
 
     if (!news) {
       return res.status(404).json({
