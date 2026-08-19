@@ -17,26 +17,51 @@ app.use(express.static(DIST));
 const BOT_REGEX =
   /facebookexternalhit|Facebot|Twitterbot|WhatsApp|TelegramBot|LinkedInBot|Slackbot|Discordbot|Googlebot/i;
 
+// Read React index.html
+const baseHtml = fs.readFileSync(INDEX, "utf8");
+
+// Old slug -> new slug redirects
+const slugRedirects = {
+  "-2": "haryana-ko-mili-badi-jimmedari-cpa-zone-2-ki-karegi-mezbani",
+
+  30: "sapa-ko-bada-jhatka-30-padadhikariyon-ne-thama-subhaspa-ka-daman",
+
+  sc: "lakhimpur-hinsa-case-mein-dheeme-trial-par-sc-sakht-ashish-mishra-mamle-mein-mangi-nayi-report",
+
+  "up--": "up-mein-congress-spa-ka-hoga-safaya-keshav",
+};
+
 app.get("/news/:slug", async (req, res) => {
-  let html = fs.readFileSync(INDEX, "utf8");
-
-  // Browser → return normal React app
-  if (!BOT_REGEX.test(req.headers["user-agent"] || "")) {
-    return res.send(html);
-  }
-
   try {
+    const oldSlug = req.params.slug;
+
+    // --------------------------------
+    // 301 redirect old URLs
+    // --------------------------------
+    if (slugRedirects[oldSlug]) {
+      return res.redirect(301, `/news/${slugRedirects[oldSlug]}`);
+    }
+
+    // --------------------------------
+    // Get news data
+    // --------------------------------
     const { data } = await axios.get(
-      `https://api.hindustantvlive.com/api/news/slug/${req.params.slug}`,
+      `https://api.hindustantvlive.com/api/news/slug/${encodeURIComponent(
+        oldSlug,
+      )}`,
     );
 
-    if (!data.status) {
-      return res.send(html);
+    if (!data.status || !data.data) {
+      return res.send(baseHtml);
     }
 
     const news = data.data;
 
-    const image = `https://api.hindustantvlive.com/uploads/images/${news.thumbnail}`;
+    const image = news.thumbnail
+      ? `https://api.hindustantvlive.com/uploads/images/${news.thumbnail}`
+      : "";
+
+    let html = baseHtml;
 
     const tags = `
 <title>${news.metaTitle || news.title}</title>
@@ -59,8 +84,9 @@ app.get("/news/:slug", async (req, res) => {
 
     return res.send(html);
   } catch (err) {
-    console.log(err.message);
-    return res.send(html);
+    console.error("News SSR Error:", err.message);
+
+    return res.send(baseHtml);
   }
 });
 
