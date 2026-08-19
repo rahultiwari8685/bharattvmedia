@@ -36,39 +36,6 @@ const DraftNews = () => {
 
   console.log('User role from storage:', userRole)
 
-  // const fetchNews = async () => {
-  //   try {
-  //     const token = JSON.parse(secureLocalStorage.getItem('logininfo')).token
-
-  //     const res = await fetch(setting.api + '/api/news/getAllNews', {
-  //       method: 'GET',
-  //       headers: {
-  //         Authorization: 'Bearer ' + token,
-  //       },
-  //     })
-
-  //     const data = await res.json()
-
-  //     const now = new Date().getTime()
-
-  //     const threeMonths = 10 * 24 * 60 * 60 * 1000
-
-  //     const filteredNews = (data.data || [])
-  //       .filter((item) => {
-  //         const newsTime = new Date(item.createdAt).getTime()
-
-  //         return Number(item.type) === 2 && now - newsTime <= threeMonths
-  //       })
-  //       .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-
-  //     console.log('Filtered News:', filteredNews.length)
-
-  //     setNewsList(filteredNews)
-  //   } catch (error) {
-  //     console.error('Error fetching news:', error)
-  //   }
-  // }
-
   const fetchNews = async () => {
     try {
       const loginInfo = JSON.parse(secureLocalStorage.getItem('logininfo'))
@@ -194,28 +161,6 @@ const DraftNews = () => {
       </CCardHeader>
 
       <CCardBody>
-        <CForm className="mb-4">
-          <CRow className="g-3">
-            {/* <CCol md={3}>
-              <CFormLabel htmlFor="fromDate">From Date</CFormLabel>
-              <CFormInput type="date" id="fromDate" />
-            </CCol>
-            <CCol md={3}>
-              <CFormLabel htmlFor="toDate">To Date</CFormLabel>
-              <CFormInput type="date" id="toDate" />
-            </CCol> */}
-            {/* <CCol md={12}>
-              <CFormInput
-                type="text"
-                id="searchText"
-                placeholder="Search by Title"
-                value={searchText} // bind state
-                onChange={(e) => setSearchText(e.target.value)}
-              />
-            </CCol> */}
-          </CRow>
-        </CForm>
-
         <CTable align="middle" hover responsive bordered>
           <CTableHead color="light">
             <CTableRow>
