@@ -148,6 +148,68 @@ export const getAllCategories = async (req, res) => {
 //   }
 // };
 
+// export const updateCategory = async (req, res) => {
+//   try {
+//     const {
+//       id,
+//       name,
+//       parentCategory,
+//       showInMenu,
+//       position,
+//       meta_title,
+//       meta_desc,
+//     } = req.body;
+
+//     if (!id) {
+//       return res.status(400).json({
+//         success: false,
+//         message: "Category ID required",
+//       });
+//     }
+
+//     const updateData = {
+//       parentCategory: parentCategory || null,
+//       showInMenu: showInMenu === "1",
+//       position: Number(position) || 0,
+//       meta_title,
+//       meta_desc,
+//     };
+
+//     if (name) {
+//       updateData.name = name;
+
+//       updateData.slug = slugify(name, {
+//         lower: true,
+//         strict: true,
+//         trim: true,
+//       });
+//     }
+
+//     const updated = await Category.findByIdAndUpdate(id, updateData, {
+//       new: true,
+//       runValidators: true,
+//     });
+
+//     if (!updated) {
+//       return res.status(404).json({
+//         success: false,
+//         message: "Category not found",
+//       });
+//     }
+
+//     res.status(200).json({
+//       success: true,
+//       message: "Category updated successfully",
+//       data: updated,
+//     });
+//   } catch (error) {
+//     res.status(500).json({
+//       success: false,
+//       error: error.message,
+//     });
+//   }
+// };
+
 export const updateCategory = async (req, res) => {
   try {
     const {
@@ -168,27 +230,43 @@ export const updateCategory = async (req, res) => {
     }
 
     const updateData = {
-      parentCategory: parentCategory || null,
-      showInMenu: showInMenu === "1",
+      parentCategory:
+        !parentCategory || parentCategory === "0" ? null : parentCategory,
+
+      showInMenu:
+        showInMenu === "1" ||
+        showInMenu === 1 ||
+        showInMenu === true ||
+        showInMenu === "true"
+          ? "1"
+          : "0",
+
       position: Number(position) || 0,
-      meta_title,
-      meta_desc,
+
+      meta_title: meta_title || "",
+      meta_desc: meta_desc || "",
     };
 
-    if (name) {
-      updateData.name = name;
+    if (name && name.trim()) {
+      updateData.name = name.trim();
 
-      updateData.slug = slugify(name, {
+      updateData.slug = slugify(name.trim(), {
         lower: true,
         strict: true,
         trim: true,
       });
     }
 
-    const updated = await Category.findByIdAndUpdate(id, updateData, {
-      new: true,
-      runValidators: true,
-    });
+    console.log("UPDATE DATA:", updateData);
+
+    const updated = await Category.findByIdAndUpdate(
+      id,
+      { $set: updateData },
+      {
+        new: true,
+        runValidators: true,
+      },
+    );
 
     if (!updated) {
       return res.status(404).json({
@@ -197,13 +275,17 @@ export const updateCategory = async (req, res) => {
       });
     }
 
-    res.status(200).json({
+    console.log("UPDATED CATEGORY:", updated);
+
+    return res.status(200).json({
       success: true,
       message: "Category updated successfully",
       data: updated,
     });
   } catch (error) {
-    res.status(500).json({
+    console.error("Update Category Error:", error);
+
+    return res.status(500).json({
       success: false,
       error: error.message,
     });
