@@ -8,7 +8,10 @@ export const generateSitemap = async (req, res) => {
     // Only published news
     const news = await News.find({
       type: 1,
-      slug: { $exists: true, $ne: "" },
+      slug: {
+        $exists: true,
+        $nin: ["", "-2", "30", "sc", "up--"],
+      },
     })
       .select("slug updatedAt")
       .sort({ updatedAt: -1 })
