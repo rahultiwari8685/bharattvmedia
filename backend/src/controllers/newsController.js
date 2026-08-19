@@ -185,47 +185,56 @@ export const getNews = async (req, res) => {
   }
 };
 
-// export const getAllNewsByCategory = async (req, res) => {
-//   try {
-//     const { categoryId } = req.params;
-//     const { page = 1, limit = 6 } = req.query;
+export const getAllDraftNews = async (req, res) => {
+  try {
+    const { page = 1, limit = 10, author } = req.query;
 
-//     if (!mongoose.Types.ObjectId.isValid(categoryId)) {
-//       return res.status(400).json({
-//         status: false,
-//         message: "Invalid category ID",
-//       });
-//     }
+    const query = {
+      type: 2, // Draft News
+    };
 
-//     const skip = (page - 1) * limit;
+    // Optional: filter drafts by author
+    if (author) {
+      if (!mongoose.Types.ObjectId.isValid(author)) {
+        return res.status(400).json({
+          status: false,
+          message: "Invalid author ID",
+        });
+      }
 
-//     const news = await News.find({
-//       categories: { $in: [categoryId] },
-//     })
-//       // .populate("categories", "name slug")
-//       .populate("categories", "name slug _id")
-//       .sort({ createdAt: -1 })
-//       .skip(skip)
-//       .limit(parseInt(limit));
+      query.author = author;
+    }
 
-//     const total = await News.countDocuments({
-//       categories: { $in: [categoryId] },
-//     });
+    const pageNumber = parseInt(page);
+    const limitNumber = parseInt(limit);
+    const skip = (pageNumber - 1) * limitNumber;
 
-//     return res.status(200).json({
-//       status: true,
-//       totalPages: Math.ceil(total / limit),
-//       total,
-//       data: news,
-//     });
-//   } catch (error) {
-//     console.error("Get News By Category Error:", error);
-//     return res.status(500).json({
-//       status: false,
-//       message: error.message,
-//     });
-//   }
-// };
+    const news = await News.find(query)
+      .populate("author", "name email profileImage")
+      .populate("categories", "name slug")
+      .sort({ updatedAt: -1 })
+      .skip(skip)
+      .limit(limitNumber);
+
+    const total = await News.countDocuments(query);
+
+    return res.status(200).json({
+      status: true,
+      total,
+      page: pageNumber,
+      limit: limitNumber,
+      totalPages: Math.ceil(total / limitNumber),
+      data: news,
+    });
+  } catch (error) {
+    console.error("Get All Draft News Error:", error);
+
+    return res.status(500).json({
+      status: false,
+      message: error.message,
+    });
+  }
+};
 
 export const getAllNewsByCategory = async (req, res) => {
   try {

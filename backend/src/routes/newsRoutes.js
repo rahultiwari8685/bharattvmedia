@@ -21,6 +21,7 @@ import {
   shareNews,
   newsMeta,
   getLiveStatus,
+  getAllDraftNews,
 } from "../controllers/newsController.js";
 
 const router = express.Router();
@@ -30,6 +31,7 @@ router.post("/saveNews", upload.single("thumbnail"), createNews);
 router.post("/updateNews", upload.single("thumbnail"), updateNews);
 
 router.get("/getAllNews", getNews);
+router.get("/getAllDraftNews", getAllDraftNews);
 // router.get("/news/category/:categoryId", getAllNewsByCategory);
 router.get("/category/:categoryId", getAllNewsByCategory);
 // router.get("/:slug", getNewsBySlug);

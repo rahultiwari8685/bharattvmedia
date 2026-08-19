@@ -271,7 +271,7 @@ const PublishedNews = () => {
 
                   <CTableDataCell>
                     <a
-                      href={`https://hindustantvlive.com/news/${news.slug}`}
+                      href={`https://hindustantvlive.com/${news.categories?.[0]?.slug}/${news.slug}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       style={{

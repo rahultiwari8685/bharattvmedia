@@ -55,7 +55,13 @@ const TopBar = ({ className, dark }) => {
                   {trendingNews.map((news) => (
                     <div className="trancarousel_item" key={news._id}>
                       <p>
-                        <Link to={`/news/${news.slug}`}>{news.title}</Link>
+                        {/* <Link to={`/news/${news.slug}`}>{news.title}</Link> */}
+
+                        <Link
+                          to={`/${news.categories?.[0]?.slug}/${news.slug}`}
+                        >
+                          {news.title}
+                        </Link>
                       </p>
                     </div>
                   ))}

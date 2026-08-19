@@ -53,9 +53,9 @@ const MostShareWidget = ({ title, dark }) => {
                   <div className="meta2">
                     <Link to="#">{item.categories?.[0]?.name}</Link>
 
-                    <Link to="#">
+                    {/* <Link to="#">
                       {new Date(item.createdAt).toLocaleDateString()}
-                    </Link>
+                    </Link> */}
                   </div>
 
                   <h4>

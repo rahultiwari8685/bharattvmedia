@@ -36,11 +36,46 @@ const DraftNews = () => {
 
   console.log('User role from storage:', userRole)
 
+  // const fetchNews = async () => {
+  //   try {
+  //     const token = JSON.parse(secureLocalStorage.getItem('logininfo')).token
+
+  //     const res = await fetch(setting.api + '/api/news/getAllNews', {
+  //       method: 'GET',
+  //       headers: {
+  //         Authorization: 'Bearer ' + token,
+  //       },
+  //     })
+
+  //     const data = await res.json()
+
+  //     const now = new Date().getTime()
+
+  //     const threeMonths = 10 * 24 * 60 * 60 * 1000
+
+  //     const filteredNews = (data.data || [])
+  //       .filter((item) => {
+  //         const newsTime = new Date(item.createdAt).getTime()
+
+  //         return Number(item.type) === 2 && now - newsTime <= threeMonths
+  //       })
+  //       .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+
+  //     console.log('Filtered News:', filteredNews.length)
+
+  //     setNewsList(filteredNews)
+  //   } catch (error) {
+  //     console.error('Error fetching news:', error)
+  //   }
+  // }
+
   const fetchNews = async () => {
     try {
-      const token = JSON.parse(secureLocalStorage.getItem('logininfo')).token
+      const loginInfo = JSON.parse(secureLocalStorage.getItem('logininfo'))
 
-      const res = await fetch(setting.api + '/api/news/getAllNews', {
+      const token = loginInfo?.token
+
+      const res = await fetch(setting.api + '/api/news/getAllDraftNews?page=1&limit=100', {
         method: 'GET',
         headers: {
           Authorization: 'Bearer ' + token,
@@ -49,23 +84,19 @@ const DraftNews = () => {
 
       const data = await res.json()
 
-      const now = new Date().getTime()
+      if (!res.ok) {
+        throw new Error(data.message || 'Failed to fetch draft news')
+      }
 
-      const threeMonths = 10 * 24 * 60 * 60 * 1000
+      const draftNews = (data.data || []).sort(
+        (a, b) => new Date(b.updatedAt) - new Date(a.updatedAt),
+      )
 
-      const filteredNews = (data.data || [])
-        .filter((item) => {
-          const newsTime = new Date(item.createdAt).getTime()
+      console.log('Draft News:', draftNews.length)
 
-          return Number(item.type) === 2 && now - newsTime <= threeMonths
-        })
-        .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-
-      console.log('Filtered News:', filteredNews.length)
-
-      setNewsList(filteredNews)
+      setNewsList(draftNews)
     } catch (error) {
-      console.error('Error fetching news:', error)
+      console.error('Error fetching draft news:', error)
     }
   }
 
