@@ -280,9 +280,56 @@ export const getAllNewsByCategory = async (req, res) => {
   }
 };
 
+// export const getNewsBySlug = async (req, res) => {
+//   try {
+//     const news = await News.findOne({ slug: req.params.slug })
+//       .populate("author", "name email profileImage")
+//       .populate("categories", "name slug _id");
+
+//     if (!news) {
+//       return res.status(404).json({
+//         status: false,
+//         message: "News not found",
+//       });
+//     }
+
+//     return res.status(200).json({
+//       status: true,
+//       data: news,
+//     });
+//   } catch (error) {
+//     return res.status(500).json({
+//       status: false,
+//       message: error.message,
+//     });
+//   }
+// };
+
 export const getNewsBySlug = async (req, res) => {
   try {
-    const news = await News.findOne({ slug: req.params.slug })
+    const oldSlug = req.params.slug;
+
+    // Permanent redirects for changed old slugs
+    const slugRedirects = {
+      "-2": "haryana-ko-mili-badi-jimmedari-cpa-zone-2-ki-karegi-mezbani",
+
+      30: "sapa-ko-bada-jhatka-30-padadhikariyon-ne-thama-subhaspa-ka-daman",
+
+      sc: "lakhimpur-hinsa-case-mein-dheeme-trial-par-sc-sakht-ashish-mishra-mamle-mein-mangi-nayi-report",
+
+      "up--": "up-mein-congress-spa-ka-hoga-safaya-keshav",
+    };
+
+    // If old slug exists, redirect to new slug
+    if (slugRedirects[oldSlug]) {
+      const newSlug = slugRedirects[oldSlug];
+
+      return res.redirect(301, `/news/${newSlug}`);
+    }
+
+    const news = await News.findOne({
+      slug: oldSlug,
+    })
       .populate("author", "name email profileImage")
       .populate("categories", "name slug _id");
 
@@ -298,6 +345,8 @@ export const getNewsBySlug = async (req, res) => {
       data: news,
     });
   } catch (error) {
+    console.error("Get News By Slug Error:", error);
+
     return res.status(500).json({
       status: false,
       message: error.message,
