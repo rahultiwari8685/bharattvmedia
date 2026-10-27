@@ -1,47 +1,35 @@
+
 <!doctype html>
 <html lang="en">
-  <!-- <head>
+  <head>
     <meta charset="UTF-8" />
-    <link
-      rel="icon"
-      type="image/svg+xml"
-      href="./src/assets/img/HTV_Logo.png"
-    />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hindustan TV Live</title>
-  </head> -->
 
-   <head>
-    <meta charset="UTF-8" />
     <link
       rel="icon"
       type="image/png"
       href="./src/assets/img/HTV_Logo.png"
     />
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <title>Hindustan TV Live</title>
 
     <!-- Google Analytics 4 -->
-    <script
-      async
-      src="https://www.googletagmanager.com/gtag/js?id=G-87F424WES5"
-    ></script>
-
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-87F424WES5"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
 
-      function gtag() {
-        window.dataLayer.push(arguments);
-      }
-
-      window.gtag = gtag;
-      window.gtag("js", new Date());
-      window.gtag("config", "G-87F424WES5");
+      gtag('config', 'G-87F424WES5');
     </script>
   </head>
+
   <body>
     <div id="root"></div>
+
     <script type="module" src="/src/main.jsx"></script>
+
     <script src="http://localhost:8097"></script>
   </body>
 </html>
