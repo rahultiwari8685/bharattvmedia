@@ -383,4 +383,4 @@ setNewsList(filteredNews);
   )
 }
 
-export default DraftNews
+export default ScheduleNews
