@@ -67,8 +67,23 @@ const UpdateNews = () => {
       youtubeUrl: '',
       videoFile: null,
       thumbnail: null,
+      scheduledAt: '',
     },
   })
+
+  const formatDateTimeLocal = (date) => {
+    if (!date) return ''
+
+    const parsedDate = new Date(date)
+
+    if (Number.isNaN(parsedDate.getTime())) return ''
+
+    const offset = parsedDate.getTimezoneOffset() * 60000
+
+    return new Date(parsedDate.getTime() - offset)
+      .toISOString()
+      .slice(0, 16)
+  }
 
   const getYouTubeId = (url) => {
     try {
@@ -154,15 +169,19 @@ const UpdateNews = () => {
         slug: selected.slug || '',
         subtitle: selected.subtitle || '',
 
-        type: selected.type ? String(selected.type) : '',
+        type: selected.type !== undefined ? String(selected.type) : '',
         videoType: selected.videoType ? String(selected.videoType) : '',
 
         youtubeUrl: selected.youtubeUrl || '',
 
-        categories: Array.isArray(selected.categories) ? selected.categories.map((c) => c._id) : [],
+        categories: Array.isArray(selected.categories)
+          ? selected.categories.map((c) => c._id)
+          : [],
 
         videoFile: null,
         thumbnail: null,
+
+        scheduledAt: formatDateTimeLocal(selected.scheduledAt),
       })
 
       if (selected.content) {
@@ -193,6 +212,13 @@ const UpdateNews = () => {
 
   const updateNews = async (data) => {
     const formData = new FormData()
+
+    if (data.type === '3' && !data.scheduledAt) {
+      toast.error('Please select schedule date & time')
+      return
+    }
+
+
     formData.append('id', id)
 
     formData.append('title', data.title)
@@ -200,6 +226,13 @@ const UpdateNews = () => {
     formData.append('video_type', data.videoType)
     formData.append('type', data.type)
     formData.append('slug', data.slug)
+
+    formData.append(
+      'scheduledAt',
+      data.type === '3' && data.scheduledAt
+        ? new Date(data.scheduledAt).toISOString()
+        : ''
+    )
 
     formData.append('categories', JSON.stringify(data.categories))
 
@@ -226,7 +259,13 @@ const UpdateNews = () => {
       console.log('News API response:', result)
 
       if (result.status) {
-        toast.success('News Updated Successfully!')
+        toast.success(
+          data.type === '3'
+            ? 'Scheduled News Updated Successfully!'
+            : data.type === '2'
+              ? 'Draft Updated Successfully!'
+              : 'News Published Successfully!'
+        )
         reset({
           title: '',
           slug: '',
@@ -238,7 +277,13 @@ const UpdateNews = () => {
           thumbnail: null,
         })
         setEditingNews(null)
-        navigate('/PublishedNews')
+        navigate(
+          data.type === '3'
+            ? '/ScheduleNews'
+            : data.type === '2'
+              ? '/DraftNews'
+              : '/PublishedNews'
+        )
       } else {
         // alert(result.message || 'Failed to save news')
         toast.error(result.message || 'Failed to update news')
@@ -313,9 +358,9 @@ const UpdateNews = () => {
                     <CDropdownToggle color="secondary">
                       {formDataValues.categories.length > 0
                         ? categoriesList
-                            .filter((cat) => formDataValues.categories.includes(cat._id))
-                            .map((cat) => cat.name)
-                            .join(', ')
+                          .filter((cat) => formDataValues.categories.includes(cat._id))
+                          .map((cat) => cat.name)
+                          .join(', ')
                         : 'Select Categories'}
                     </CDropdownToggle>
                     <CDropdownMenu>
@@ -348,8 +393,17 @@ const UpdateNews = () => {
                     <option value="">Select Type</option>
                     <option value="1">Published</option>
                     <option value="2">Draft</option>
+                    <option value="3">Scheduled</option>
                   </CFormSelect>
                   {errors.type && <small className="text-danger">{errors.type.message}</small>}
+                </CCol>
+
+                <CCol md={6}>
+                  <CFormInput
+                    type="datetime-local"
+                    label="Schedule Publish Date & Time"
+                    {...register('scheduledAt')}
+                  />
                 </CCol>
 
                 <CCol md={6}>
