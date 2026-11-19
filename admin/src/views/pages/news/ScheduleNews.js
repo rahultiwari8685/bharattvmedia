@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react'
+
+import React, { useEffect, useState, useCallback } from 'react'
 import {
   CCard,
   CCardBody,
@@ -6,7 +7,6 @@ import {
   CCol,
   CRow,
   CFormInput,
-  CFormLabel,
   CForm,
   CTable,
   CTableBody,
@@ -18,21 +18,23 @@ import {
   CPagination,
   CPaginationItem,
 } from '@coreui/react'
-import { cilTrash, cilPencil } from '@coreui/icons'
+
+import { cilTrash, cilPencil, cilReload } from '@coreui/icons'
 import CIcon from '@coreui/icons-react'
 import setting from '../../../setting.json'
 import secureLocalStorage from 'react-secure-storage'
 import { useNavigate } from 'react-router-dom'
-
 import toast from 'react-hot-toast'
 
 const ScheduleNews = () => {
-  const [newsList, setNewsList] = useState([])
   const navigate = useNavigate()
-  const [searchText, setSearchText] = useState('')
-  const [userList, setUserList] = useState([])
-  const [currentPage, setCurrentPage] = useState(1)
 
+  const [newsList, setNewsList] = useState([])
+  const [userList, setUserList] = useState([])
+  const [categoryList, setCategoryList] = useState([])
+
+  const [searchText, setSearchText] = useState('')
+  const [currentPage, setCurrentPage] = useState(1)
   const [loading, setLoading] = useState(false)
 
   const [fromDate, setFromDate] = useState('')
@@ -40,192 +42,286 @@ const ScheduleNews = () => {
   const [selectedCategory, setSelectedCategory] = useState('')
   const [selectedAuthor, setSelectedAuthor] = useState('')
 
-  const [categoryList, setCategoryList] = useState([])
   const itemsPerPage = 30
 
-  const userRole = JSON.parse(secureLocalStorage.getItem('logininfo')).role
+  const getLoginInfo = () => {
+    const storedLogin = secureLocalStorage.getItem('logininfo')
 
-  console.log('User role from storage:', userRole)
+    if (!storedLogin) return null
 
-  const fetchNews = async () => {
+    return typeof storedLogin === 'string'
+      ? JSON.parse(storedLogin)
+      : storedLogin
+  }
+
+  // =========================================
+  // FETCH SCHEDULED NEWS
+  // =========================================
+  const fetchNews = useCallback(async () => {
     try {
       setLoading(true)
-      const token = JSON.parse(secureLocalStorage.getItem('logininfo')).token
 
-      const res = await fetch(setting.api + '/api/news/getAllNews', {
+      const loginInfo = getLoginInfo()
+
+      if (!loginInfo?.token) {
+        toast.error('Please login again')
+        navigate('/login')
+        return
+      }
+
+      const res = await fetch(`${setting.api}/api/news/getAllNews`, {
         method: 'GET',
         headers: {
-          Authorization: 'Bearer ' + token,
+          Authorization: `Bearer ${loginInfo.token}`,
         },
       })
 
       const data = await res.json()
 
-     const filteredNews = (data.data || [])
-  .filter((item) => Number(item.type) === 3)
-  .sort(
-    (a, b) =>
-      new Date(b.scheduledAt || b.createdAt) -
-      new Date(a.scheduledAt || a.createdAt)
-  );
+      if (!res.ok || data.status === false) {
+        throw new Error(data.message || 'Unable to fetch scheduled news')
+      }
 
-console.log("All scheduled news:", filteredNews);
+      const scheduledNews = (data.data || [])
+        .filter((item) => Number(item.type) === 3)
+        .sort((a, b) => {
+          const dateA = new Date(a.scheduledAt || a.createdAt).getTime()
+          const dateB = new Date(b.scheduledAt || b.createdAt).getTime()
 
-setNewsList(filteredNews);
+          return dateA - dateB
+        })
 
-      console.log('Filtered News:', filteredNews.length)
+      console.log('Scheduled news:', scheduledNews)
 
-      setNewsList(filteredNews)
+      setNewsList(scheduledNews)
     } catch (error) {
-      console.error('Error fetching news:', error)
+      console.error('Fetch scheduled news error:', error)
+      toast.error(error.message || 'Failed to fetch scheduled news')
     } finally {
       setLoading(false)
     }
-  }
+  }, [navigate])
 
+  // =========================================
+  // FETCH CATEGORIES
+  // =========================================
   const fetchCategories = async () => {
     try {
-      const res = await fetch(setting.api + '/api/categories/getAllCategory')
+      const res = await fetch(
+        `${setting.api}/api/categories/getAllCategory`
+      )
 
       const data = await res.json()
 
-      if (data.success) {
-        setCategoryList(data.data)
+      if (data.status !== false) {
+        setCategoryList(data.data || [])
       }
     } catch (error) {
-      console.error(error)
+      console.error('Category fetch error:', error)
+    }
+  }
+
+  // =========================================
+  // FETCH USERS
+  // =========================================
+  const fetchUsers = async () => {
+    try {
+      const loginInfo = getLoginInfo()
+
+      const res = await fetch(`${setting.api}/api/users/getAllUser`, {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${loginInfo?.token}`,
+        },
+      })
+
+      const data = await res.json()
+
+      if (data.status === false) {
+        navigate('/login')
+        return
+      }
+
+      setUserList(data.data || [])
+    } catch (error) {
+      console.error('Users fetch error:', error)
     }
   }
 
   useEffect(() => {
-    fetchCategories()
-  }, [])
-
-  useEffect(() => {
     fetchNews()
-  }, [])
+    fetchCategories()
+    fetchUsers()
+  }, [fetchNews])
 
-  const allUserList = async () => {
-    await fetch(setting.api + '/api/users/getAllUser', {
-      method: 'GET',
-      mode: 'cors',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + JSON.parse(secureLocalStorage.getItem('logininfo')).token,
-      },
-    })
-      .then((response) => response.json())
-      .then((u) => {
-        if (u.status == false) {
-          // secureLocalStorage.clear();
-          navigate('/login')
-        } else {
-          setUserList(u.data)
-        }
-      })
-  }
-
-  useEffect(() => {
-    allUserList()
-  }, [])
-
-  const getUserName = (id) => {
-    console.log(id)
-    const user = userList.find((c) => String(c.id) === String(id))
-    return user ? user.name : 'N/A'
-  }
-
+  // =========================================
+  // EDIT NEWS
+  // =========================================
   const handleEdit = (news) => {
     navigate(`/UpdateNews/${news._id}`)
   }
 
-  function handleDelete(id) {
-    var ans = confirm('Are you sure For Delete?')
-    console.log(ans)
-
-    if (ans == true) {
-      deleteNews(id)
-    }
-  }
-
+  // =========================================
+  // DELETE NEWS
+  // =========================================
   const deleteNews = async (id) => {
+    if (!window.confirm('Are you sure you want to delete this scheduled news?')) {
+      return
+    }
+
     try {
-      const response = await fetch(`${setting.api}/api/news/deleteNews/${id}`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      const loginInfo = getLoginInfo()
+
+      const response = await fetch(
+        `${setting.api}/api/news/deleteNews/${id}`,
+        {
+          method: 'DELETE',
+          headers: {
+            Authorization: `Bearer ${loginInfo?.token}`,
+          },
+        }
+      )
 
       const data = await response.json()
-      fetchNews()
 
-      if (data.status === true) {
-        toast.success('Draft deleted successfully')
-
-        setNewsList((prev) => prev.filter((item) => item._id !== id))
-        fetchNews()
+      if (!response.ok || data.status !== true) {
+        throw new Error(data.message || 'Delete failed')
       }
-      toast.error(data.message || 'Delete failed')
+
+      toast.success('Scheduled news deleted successfully')
+
+      setNewsList((prev) => prev.filter((item) => item._id !== id))
     } catch (error) {
-      toast.error('Something went wrong')
+      console.error('Delete news error:', error)
+      toast.error(error.message || 'Something went wrong')
     }
   }
 
+  // =========================================
+  // FILTER NEWS
+  // =========================================
   const filteredNews = newsList.filter((news) => {
-    const titleMatch = news.title?.toLowerCase().includes(searchText.toLowerCase())
+    const titleMatch = (news.title || '')
+      .toLowerCase()
+      .includes(searchText.toLowerCase())
 
-    const authorMatch = !selectedAuthor || news.author?._id === selectedAuthor
+    const authorId =
+      typeof news.author === 'object'
+        ? news.author?._id
+        : news.author
+
+    const authorMatch =
+      !selectedAuthor || String(authorId) === String(selectedAuthor)
 
     const categoryMatch =
-      !selectedCategory || news.categories?.some((cat) => cat._id === selectedCategory)
+      !selectedCategory ||
+      news.categories?.some(
+        (cat) => String(cat._id || cat) === String(selectedCategory)
+      )
 
-    const newsDate = new Date(news.createdAt)
+    // Filter using scheduledAt, not createdAt
+    const newsDate = news.scheduledAt
+      ? new Date(news.scheduledAt)
+      : new Date(news.createdAt)
 
-    const fromMatch = !fromDate || newsDate >= new Date(fromDate)
+    const fromMatch =
+      !fromDate || newsDate >= new Date(`${fromDate}T00:00:00`)
 
-    const toMatch = !toDate || newsDate <= new Date(new Date(toDate).setHours(23, 59, 59))
+    const toMatch =
+      !toDate || newsDate <= new Date(`${toDate}T23:59:59.999`)
 
-    return titleMatch && authorMatch && categoryMatch && fromMatch && toMatch
+    return (
+      titleMatch &&
+      authorMatch &&
+      categoryMatch &&
+      fromMatch &&
+      toMatch
+    )
   })
 
+  // =========================================
+  // PAGINATION
+  // =========================================
   const totalPages = Math.ceil(filteredNews.length / itemsPerPage)
 
   const paginatedItems = filteredNews.slice(
     (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage,
+    currentPage * itemsPerPage
   )
 
   useEffect(() => {
     setCurrentPage(1)
   }, [searchText, selectedAuthor, selectedCategory, fromDate, toDate])
+
+  // =========================================
+  // FORMAT DATE
+  // =========================================
+  const formatDate = (date) => {
+    if (!date) return 'Schedule date not set'
+
+    const parsedDate = new Date(date)
+
+    if (Number.isNaN(parsedDate.getTime())) {
+      return 'Invalid date'
+    }
+
+    return parsedDate.toLocaleString('en-IN', {
+      timeZone: 'Asia/Kolkata',
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: true,
+    })
+  }
+
   return (
     <CCard className="shadow-sm border-0 rounded-4">
-      <CCardHeader className="bg-dark text-white fw-bold px-4 py-3 shadow-sm">
-        <div className="d-flex justify-content-between align-items-center">
+      <CCardHeader className="bg-dark text-white fw-bold px-4 py-3">
+        <div className="d-flex justify-content-between align-items-center flex-wrap gap-2">
           <h5 className="mb-0">
-            <i className="bi bi-file-earmark-text-fill me-2 text-warning"></i>
+            <i className="bi bi-calendar-check-fill me-2 text-warning"></i>
             Schedule News ({filteredNews.length})
           </h5>
+
+          <CButton
+            color="light"
+            size="sm"
+            onClick={fetchNews}
+            disabled={loading}
+          >
+            <CIcon icon={cilReload} className="me-1" />
+            Refresh
+          </CButton>
         </div>
       </CCardHeader>
 
       <CCardBody>
+        {/* FILTERS */}
         <CForm className="mb-4">
           <CRow className="g-3">
             <CCol md={3}>
               <CFormInput
                 type="date"
+                label="From Date"
                 value={fromDate}
                 onChange={(e) => setFromDate(e.target.value)}
               />
             </CCol>
 
             <CCol md={3}>
-              <CFormInput type="date" value={toDate} onChange={(e) => setToDate(e.target.value)} />
+              <CFormInput
+                type="date"
+                label="To Date"
+                value={toDate}
+                onChange={(e) => setToDate(e.target.value)}
+              />
             </CCol>
 
             <CCol md={3}>
+              <label className="form-label">Category</label>
+
               <select
                 className="form-select"
                 value={selectedCategory}
@@ -242,6 +338,8 @@ setNewsList(filteredNews);
             </CCol>
 
             <CCol md={3}>
+              <label className="form-label">Author</label>
+
               <select
                 className="form-select"
                 value={selectedAuthor}
@@ -259,7 +357,8 @@ setNewsList(filteredNews);
 
             <CCol md={12}>
               <CFormInput
-                placeholder="Search by Title"
+                label="Search News"
+                placeholder="Search by title..."
                 value={searchText}
                 onChange={(e) => setSearchText(e.target.value)}
               />
@@ -267,115 +366,145 @@ setNewsList(filteredNews);
           </CRow>
         </CForm>
 
+        {/* TABLE */}
         {loading ? (
           <div className="text-center py-5">
             <div className="spinner-border text-primary" role="status" />
+            <p className="mt-2">Loading scheduled news...</p>
           </div>
         ) : (
           <>
             <CTable align="middle" hover responsive bordered>
               <CTableHead color="light">
                 <CTableRow>
-                  <CTableHeaderCell scope="col">#</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Title</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Category</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Author</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Published At</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Action</CTableHeaderCell>
+                  <CTableHeaderCell>#</CTableHeaderCell>
+                  <CTableHeaderCell>Title</CTableHeaderCell>
+                  <CTableHeaderCell>Category</CTableHeaderCell>
+                  <CTableHeaderCell>Author</CTableHeaderCell>
+                  <CTableHeaderCell>Scheduled At</CTableHeaderCell>
+                  <CTableHeaderCell>Action</CTableHeaderCell>
                 </CTableRow>
               </CTableHead>
 
               <CTableBody>
-                {paginatedItems.map((news, index) => {
-                  const actualIndex = (currentPage - 1) * itemsPerPage + index
-                  return (
-                    <CTableRow key={news._id}>
-                      <CTableDataCell>{actualIndex + 1}</CTableDataCell>
-                      <CTableDataCell>{news.title}</CTableDataCell>
+                {paginatedItems.length > 0 ? (
+                  paginatedItems.map((news, index) => {
+                    const actualIndex =
+                      (currentPage - 1) * itemsPerPage + index
 
-                      <CTableDataCell>
-                        {news.categories && news.categories.length > 0
-                          ? news.categories.map((cat) => cat.name).join(', ')
-                          : '-'}
-                      </CTableDataCell>
+                    return (
+                      <CTableRow key={news._id}>
+                        <CTableDataCell>
+                          {actualIndex + 1}
+                        </CTableDataCell>
 
-                      <CTableDataCell> {news.author?.name || 'N/A'}</CTableDataCell>
+                        <CTableDataCell>
+                          {news.title}
+                        </CTableDataCell>
 
-                      <CTableDataCell>
-                        {new Date(news.createdAt).toLocaleString('en-IN', {
-                          timeZone: 'Asia/Kolkata',
-                          day: '2-digit',
-                          month: 'short',
-                          year: 'numeric',
-                          hour: '2-digit',
-                          minute: '2-digit',
-                          hour12: true,
-                        })}
-                      </CTableDataCell>
+                        <CTableDataCell>
+                          {news.categories?.length > 0
+                            ? news.categories
+                                .map((cat) => cat.name || 'Unknown')
+                                .join(', ')
+                            : '-'}
+                        </CTableDataCell>
 
-                      <CTableDataCell>
-                        <CButton
-                          size="sm"
-                          color="primary"
-                          className="rounded-pill px-3 shadow-sm fw-semibold"
-                          onClick={() => handleEdit(news)}
-                        >
-                          <CIcon icon={cilPencil} /> Edit
-                        </CButton>{' '}
-                        <CButton
-                          size="sm"
-                          color="danger"
-                          className="rounded-pill px-3 shadow-sm fw-semibold"
-                          onClick={() => handleDelete(news._id)}
-                        >
-                          <CIcon icon={cilTrash} /> Delete
-                        </CButton>
-                      </CTableDataCell>
-                    </CTableRow>
-                  )
-                })}
+                        <CTableDataCell>
+                          {news.author?.name || 'N/A'}
+                        </CTableDataCell>
+
+                        <CTableDataCell>
+                          {formatDate(news.scheduledAt)}
+                        </CTableDataCell>
+
+                        <CTableDataCell>
+                          <div className="d-flex gap-2">
+                            <CButton
+                              size="sm"
+                              color="primary"
+                              onClick={() => handleEdit(news)}
+                            >
+                              <CIcon icon={cilPencil} /> Edit
+                            </CButton>
+
+                            <CButton
+                              size="sm"
+                              color="danger"
+                              onClick={() => deleteNews(news._id)}
+                            >
+                              <CIcon icon={cilTrash} /> Delete
+                            </CButton>
+                          </div>
+                        </CTableDataCell>
+                      </CTableRow>
+                    )
+                  })
+                ) : (
+                  <CTableRow>
+                    <CTableDataCell colSpan={6} className="text-center py-4">
+                      No scheduled news found.
+                    </CTableDataCell>
+                  </CTableRow>
+                )}
               </CTableBody>
             </CTable>
 
-            <div className="d-flex justify-content-center mt-4">
-              <CPagination align="center">
-                <CPaginationItem
-                  disabled={currentPage === 1}
-                  onClick={() => setCurrentPage(currentPage - 1)}
-                >
-                  Previous
-                </CPaginationItem>
+            {/* PAGINATION */}
+            {totalPages > 1 && (
+              <div className="d-flex justify-content-center mt-4">
+                <CPagination align="center">
+                  <CPaginationItem
+                    disabled={currentPage === 1}
+                    onClick={() =>
+                      setCurrentPage((prev) => Math.max(1, prev - 1))
+                    }
+                  >
+                    Previous
+                  </CPaginationItem>
 
-                {Array.from({ length: totalPages }, (_, i) => i + 1)
-                  .filter(
-                    (page) =>
-                      page === 1 ||
-                      page === totalPages ||
-                      (page >= currentPage - 2 && page <= currentPage + 2),
+                  {Array.from(
+                    { length: totalPages },
+                    (_, i) => i + 1
                   )
-                  .map((page, idx, arr) => (
-                    <React.Fragment key={page}>
-                      {idx > 0 && page - arr[idx - 1] > 1 && (
-                        <CPaginationItem disabled>...</CPaginationItem>
-                      )}
+                    .filter(
+                      (page) =>
+                        page === 1 ||
+                        page === totalPages ||
+                        (page >= currentPage - 2 &&
+                          page <= currentPage + 2)
+                    )
+                    .map((page, index, arr) => (
+                      <React.Fragment key={page}>
+                        {index > 0 &&
+                          page - arr[index - 1] > 1 && (
+                            <CPaginationItem disabled>
+                              ...
+                            </CPaginationItem>
+                          )}
 
-                      <CPaginationItem
-                        active={currentPage === page}
-                        onClick={() => setCurrentPage(page)}
-                      >
-                        {page}
-                      </CPaginationItem>
-                    </React.Fragment>
-                  ))}
+                        <CPaginationItem
+                          active={currentPage === page}
+                          onClick={() => setCurrentPage(page)}
+                        >
+                          {page}
+                        </CPaginationItem>
+                      </React.Fragment>
+                    ))}
 
-                <CPaginationItem
-                  disabled={currentPage === totalPages}
-                  onClick={() => setCurrentPage(currentPage + 1)}
-                >
-                  Next
-                </CPaginationItem>
-              </CPagination>
-            </div>
+                  <CPaginationItem
+                    disabled={currentPage === totalPages}
+                    onClick={() =>
+                      setCurrentPage((prev) =>
+                        Math.min(totalPages, prev + 1)
+                      )
+                    }
+                  >
+                    Next
+                  </CPaginationItem>
+                </CPagination>
+              </div>
+            )}
           </>
         )}
       </CCardBody>
