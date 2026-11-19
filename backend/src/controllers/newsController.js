@@ -235,6 +235,114 @@ export const getAllDraftNews = async (req, res) => {
   }
 };
 
+// GET ALL SCHEDULED NEWS
+export const getAllScheduledNews = async (req, res) => {
+  try {
+    const { page = 1, limit = 10, author, fromDate, toDate } = req.query;
+
+    const pageNumber = Math.max(1, parseInt(page) || 1);
+    const limitNumber = Math.max(1, parseInt(limit) || 10);
+
+    const query = {
+      type: 3,
+      isScheduled: true,
+    };
+
+    // Filter by author
+    if (author && mongoose.Types.ObjectId.isValid(author)) {
+      query.author = author;
+    }
+
+    // Filter by scheduled date
+    if (fromDate || toDate) {
+      query.scheduledAt = {};
+
+      if (fromDate) {
+        query.scheduledAt.$gte = new Date(fromDate);
+      }
+
+      if (toDate) {
+        const endDate = new Date(toDate);
+        endDate.setHours(23, 59, 59, 999);
+        query.scheduledAt.$lte = endDate;
+      }
+    }
+
+    const skip = (pageNumber - 1) * limitNumber;
+
+    const [news, total] = await Promise.all([
+      News.find(query)
+        .populate("author", "name email profileImage")
+        .populate("categories", "name slug")
+        .sort({ scheduledAt: 1 })
+        .skip(skip)
+        .limit(limitNumber),
+
+      News.countDocuments(query),
+    ]);
+
+    return res.status(200).json({
+      status: true,
+      message: "Scheduled news fetched successfully",
+      total,
+      page: pageNumber,
+      limit: limitNumber,
+      totalPages: Math.ceil(total / limitNumber),
+      data: news,
+    });
+  } catch (error) {
+    console.error("Get Scheduled News Error:", error);
+
+    return res.status(500).json({
+      status: false,
+      message: error.message,
+    });
+  }
+};
+
+
+// GET SCHEDULED NEWS BY ID
+export const getScheduledNewsById = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({
+        status: false,
+        message: "Invalid news ID",
+      });
+    }
+
+    const news = await News.findOne({
+      _id: id,
+      type: 3,
+      isScheduled: true,
+    })
+      .populate("author", "name email profileImage")
+      .populate("categories", "name slug");
+
+    if (!news) {
+      return res.status(404).json({
+        status: false,
+        message: "Scheduled news not found",
+      });
+    }
+
+    return res.status(200).json({
+      status: true,
+      message: "Scheduled news fetched successfully",
+      data: news,
+    });
+  } catch (error) {
+    console.error("Get Scheduled News By ID Error:", error);
+
+    return res.status(500).json({
+      status: false,
+      message: error.message,
+    });
+  }
+};
+
 export const getAllNewsByCategory = async (req, res) => {
   try {
     const { categoryId } = req.params;

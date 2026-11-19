@@ -44,14 +44,20 @@ const ScheduleNews = () => {
 
   const itemsPerPage = 30
 
+  // GET LOGIN INFORMATION
   const getLoginInfo = () => {
-    const storedLogin = secureLocalStorage.getItem('logininfo')
+    try {
+      const storedLogin = secureLocalStorage.getItem('logininfo')
 
-    if (!storedLogin) return null
+      if (!storedLogin) return null
 
-    return typeof storedLogin === 'string'
-      ? JSON.parse(storedLogin)
-      : storedLogin
+      return typeof storedLogin === 'string'
+        ? JSON.parse(storedLogin)
+        : storedLogin
+    } catch (error) {
+      console.error('Login information error:', error)
+      return null
+    }
   }
 
   // =========================================
@@ -69,29 +75,29 @@ const ScheduleNews = () => {
         return
       }
 
-      const res = await fetch(`${setting.api}/api/news/getAllNews`, {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${loginInfo.token}`,
+      // Separate Scheduled News API
+      const res = await fetch(
+        `${setting.api}/api/news/getAllScheduledNews?page=1&limit=1000`,
+        {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${loginInfo.token}`,
+          },
         },
-      })
+      )
 
       const data = await res.json()
 
-      if (!res.ok || data.status === false) {
+      if (!res.ok || data.status !== true) {
         throw new Error(data.message || 'Unable to fetch scheduled news')
       }
 
-      const scheduledNews = (data.data || [])
-        .filter((item) => Number(item.type) === 3)
-        .sort((a, b) => {
-          const dateA = new Date(a.scheduledAt || a.createdAt).getTime()
-          const dateB = new Date(b.scheduledAt || b.createdAt).getTime()
+      const scheduledNews = (data.data || []).sort((a, b) => {
+        const dateA = new Date(a.scheduledAt || 0).getTime()
+        const dateB = new Date(b.scheduledAt || 0).getTime()
 
-          return dateA - dateB
-        })
-
-      console.log('Scheduled news:', scheduledNews)
+        return dateA - dateB
+      })
 
       setNewsList(scheduledNews)
     } catch (error) {
@@ -108,7 +114,7 @@ const ScheduleNews = () => {
   const fetchCategories = async () => {
     try {
       const res = await fetch(
-        `${setting.api}/api/categories/getAllCategory`
+        `${setting.api}/api/categories/getAllCategory`,
       )
 
       const data = await res.json()
@@ -128,17 +134,18 @@ const ScheduleNews = () => {
     try {
       const loginInfo = getLoginInfo()
 
+      if (!loginInfo?.token) return
+
       const res = await fetch(`${setting.api}/api/users/getAllUser`, {
         method: 'GET',
         headers: {
-          Authorization: `Bearer ${loginInfo?.token}`,
+          Authorization: `Bearer ${loginInfo.token}`,
         },
       })
 
       const data = await res.json()
 
-      if (data.status === false) {
-        navigate('/login')
+      if (!res.ok || data.status === false) {
         return
       }
 
@@ -148,6 +155,9 @@ const ScheduleNews = () => {
     }
   }
 
+  // =========================================
+  // INITIAL LOAD
+  // =========================================
   useEffect(() => {
     fetchNews()
     fetchCategories()
@@ -165,21 +175,31 @@ const ScheduleNews = () => {
   // DELETE NEWS
   // =========================================
   const deleteNews = async (id) => {
-    if (!window.confirm('Are you sure you want to delete this scheduled news?')) {
+    if (
+      !window.confirm(
+        'Are you sure you want to delete this scheduled news?',
+      )
+    ) {
       return
     }
 
     try {
       const loginInfo = getLoginInfo()
 
+      if (!loginInfo?.token) {
+        toast.error('Please login again')
+        navigate('/login')
+        return
+      }
+
       const response = await fetch(
         `${setting.api}/api/news/deleteNews/${id}`,
         {
           method: 'DELETE',
           headers: {
-            Authorization: `Bearer ${loginInfo?.token}`,
+            Authorization: `Bearer ${loginInfo.token}`,
           },
-        }
+        },
       )
 
       const data = await response.json()
@@ -216,19 +236,20 @@ const ScheduleNews = () => {
     const categoryMatch =
       !selectedCategory ||
       news.categories?.some(
-        (cat) => String(cat._id || cat) === String(selectedCategory)
+        (cat) => String(cat._id || cat) === String(selectedCategory),
       )
 
-    // Filter using scheduledAt, not createdAt
     const newsDate = news.scheduledAt
       ? new Date(news.scheduledAt)
-      : new Date(news.createdAt)
+      : null
 
     const fromMatch =
-      !fromDate || newsDate >= new Date(`${fromDate}T00:00:00`)
+      !fromDate ||
+      (newsDate && newsDate >= new Date(`${fromDate}T00:00:00`))
 
     const toMatch =
-      !toDate || newsDate <= new Date(`${toDate}T23:59:59.999`)
+      !toDate ||
+      (newsDate && newsDate <= new Date(`${toDate}T23:59:59.999`))
 
     return (
       titleMatch &&
@@ -246,7 +267,7 @@ const ScheduleNews = () => {
 
   const paginatedItems = filteredNews.slice(
     (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
+    currentPage * itemsPerPage,
   )
 
   useEffect(() => {
@@ -276,6 +297,9 @@ const ScheduleNews = () => {
     })
   }
 
+  // =========================================
+  // UI
+  // =========================================
   return (
     <CCard className="shadow-sm border-0 rounded-4">
       <CCardHeader className="bg-dark text-white fw-bold px-4 py-3">
@@ -442,7 +466,10 @@ const ScheduleNews = () => {
                   })
                 ) : (
                   <CTableRow>
-                    <CTableDataCell colSpan={6} className="text-center py-4">
+                    <CTableDataCell
+                      colSpan={6}
+                      className="text-center py-4"
+                    >
                       No scheduled news found.
                     </CTableDataCell>
                   </CTableRow>
@@ -465,14 +492,14 @@ const ScheduleNews = () => {
 
                   {Array.from(
                     { length: totalPages },
-                    (_, i) => i + 1
+                    (_, i) => i + 1,
                   )
                     .filter(
                       (page) =>
                         page === 1 ||
                         page === totalPages ||
                         (page >= currentPage - 2 &&
-                          page <= currentPage + 2)
+                          page <= currentPage + 2),
                     )
                     .map((page, index, arr) => (
                       <React.Fragment key={page}>
@@ -496,7 +523,7 @@ const ScheduleNews = () => {
                     disabled={currentPage === totalPages}
                     onClick={() =>
                       setCurrentPage((prev) =>
-                        Math.min(totalPages, prev + 1)
+                        Math.min(totalPages, prev + 1),
                       )
                     }
                   >

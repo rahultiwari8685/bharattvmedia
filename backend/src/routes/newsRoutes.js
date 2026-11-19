@@ -22,6 +22,8 @@ import {
   newsMeta,
   getLiveStatus,
   getAllDraftNews,
+   getAllScheduledNews,
+  getScheduledNewsById,
 } from "../controllers/newsController.js";
 
 const router = express.Router();
@@ -32,6 +34,11 @@ router.post("/updateNews", upload.single("thumbnail"), updateNews);
 
 router.get("/getAllNews", getNews);
 router.get("/getAllDraftNews", getAllDraftNews);
+
+router.get("/getAllScheduledNews", getAllScheduledNews);
+router.get("/getScheduledNewsById/:id", getScheduledNewsById);
+
+
 // router.get("/news/category/:categoryId", getAllNewsByCategory);
 router.get("/category/:categoryId", getAllNewsByCategory);
 // router.get("/:slug", getNewsBySlug);

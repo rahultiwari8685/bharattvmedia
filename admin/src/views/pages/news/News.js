@@ -257,10 +257,10 @@ const News = () => {
     formData.append('slug', data.slug)
     formData.append('author', author)
 
-   formData.append(
-  'scheduledAt',
-  data.scheduledAt ? new Date(data.scheduledAt).toISOString() : ''
-)
+    formData.append(
+      'scheduledAt',
+      data.scheduledAt ? new Date(data.scheduledAt).toISOString() : ''
+    )
 
     formData.append('categories', JSON.stringify(data.categories))
 
@@ -312,16 +312,17 @@ const News = () => {
           title: '',
           slug: '',
           subtitle: '',
+          description: '',
           categories: [],
           videoType: '2',
           type: '2',
-
           youtubeUrl: '',
           thumbnail: null,
+          scheduledAt: '',
         })
         setContent('')
         setEditingNews(null)
-        navigate('/PublishedNews')
+        navigate('/ScheduleNews')
       } else {
         toast.error(result.message || 'Failed to save news')
       }
@@ -386,9 +387,9 @@ const News = () => {
                     <CDropdownToggle color="secondary">
                       {formDataValues.categories.length > 0
                         ? categoriesList
-                            .filter((cat) => formDataValues.categories.includes(cat._id))
-                            .map((cat) => cat.name)
-                            .join(', ')
+                          .filter((cat) => formDataValues.categories.includes(cat._id))
+                          .map((cat) => cat.name)
+                          .join(', ')
                         : 'Select Categories'}
                     </CDropdownToggle>
                     <CDropdownMenu>
@@ -767,10 +768,10 @@ const News = () => {
                   <CButton
                     color="warning"
                     type="button"
-                    onClick={() => {
-                      setValue('type', '2')
-                      handleSubmit(saveNews)()
-                    }}
+                    disabled={loading}
+                    onClick={handleSubmit((data) =>
+                      saveNews({ ...data, type: '2' })
+                    )}
                   >
                     Save Draft
                   </CButton>
@@ -778,21 +779,21 @@ const News = () => {
                   <CButton
                     color="info"
                     type="button"
-                    onClick={() => {
-                      setValue('type', '3')
-                      handleSubmit(saveNews)()
-                    }}
+                    disabled={loading}
+                    onClick={handleSubmit((data) =>
+                      saveNews({ ...data, type: '3' })
+                    )}
                   >
-                    Schedule
+                    {loading ? 'Scheduling...' : 'Schedule'}
                   </CButton>
 
                   <CButton
                     color="primary"
                     type="button"
-                    onClick={() => {
-                      setValue('type', '1')
-                      handleSubmit(saveNews)()
-                    }}
+                    disabled={loading}
+                    onClick={handleSubmit((data) =>
+                      saveNews({ ...data, type: '1' })
+                    )}
                   >
                     Publish Now
                   </CButton>
