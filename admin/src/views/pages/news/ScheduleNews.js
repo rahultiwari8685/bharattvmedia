@@ -26,7 +26,7 @@ import { useNavigate } from 'react-router-dom'
 
 import toast from 'react-hot-toast'
 
-const DraftNews = () => {
+const ScheduleNews = () => {
   const [newsList, setNewsList] = useState([])
   const navigate = useNavigate()
   const [searchText, setSearchText] = useState('')
@@ -61,17 +61,17 @@ const DraftNews = () => {
 
       const data = await res.json()
 
-      const now = new Date().getTime()
+     const filteredNews = (data.data || [])
+  .filter((item) => Number(item.type) === 3)
+  .sort(
+    (a, b) =>
+      new Date(b.scheduledAt || b.createdAt) -
+      new Date(a.scheduledAt || a.createdAt)
+  );
 
-      const threeMonths = 10 * 24 * 60 * 60 * 1000
+console.log("All scheduled news:", filteredNews);
 
-      const filteredNews = (data.data || [])
-        .filter((item) => {
-          const newsTime = new Date(item.createdAt).getTime()
-
-          return Number(item.type) === 3 && now - newsTime <= threeMonths
-        })
-        .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+setNewsList(filteredNews);
 
       console.log('Filtered News:', filteredNews.length)
 

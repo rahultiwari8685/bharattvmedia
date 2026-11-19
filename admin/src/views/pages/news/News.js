@@ -21,10 +21,8 @@ import {
   CDropdownItem,
 } from '@coreui/react'
 import secureLocalStorage from 'react-secure-storage'
-// import EditorJSComponent from '../../../components/EditorJSComponent'
 import { useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
-// import { CKEditor } from 'ckeditor4-react'
 import { Editor } from '@tinymce/tinymce-react'
 
 const schema = yup.object().shape({
@@ -48,7 +46,6 @@ const schema = yup.object().shape({
 })
 
 const News = () => {
-  // const [slugEdited, setSlugEdited] = useState(false)
   const [editingNews, setEditingNews] = useState(null)
   const [newsList, setNewsList] = useState([])
   const [categoriesList, setCategoryList] = useState([])
@@ -260,7 +257,10 @@ const News = () => {
     formData.append('slug', data.slug)
     formData.append('author', author)
 
-    formData.append('scheduledAt', data.scheduledAt || '')
+   formData.append(
+  'scheduledAt',
+  data.scheduledAt ? new Date(data.scheduledAt).toISOString() : ''
+)
 
     formData.append('categories', JSON.stringify(data.categories))
 

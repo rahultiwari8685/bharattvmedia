@@ -28,18 +28,17 @@ export const createNews = async (req, res) => {
 
     categories = categories.map((id) => new mongoose.Types.ObjectId(id));
 
-    // Convert schedule date
-    let scheduledDate = null;
+  const scheduledDate = scheduledAt
+  ? new Date(scheduledAt)
+  : null;
 
-    if (scheduledAt) {
-      scheduledDate = new Date(new Date(scheduledAt).getTime() - 19800000);
-    }
+if (scheduledAt && isNaN(scheduledDate.getTime())) {
+  return res.status(400).json({
+    status: false,
+    message: 'Invalid schedule date and time',
+  });
+}
 
-    // const existingNews = await News.findOne({
-    //   title: title.trim(),
-    //   author: req.body.author,
-    //   type: 1,
-    // });
 
     const existingNews = await News.findOne({
       title: title.trim(),
@@ -280,30 +279,6 @@ export const getAllNewsByCategory = async (req, res) => {
   }
 };
 
-// export const getNewsBySlug = async (req, res) => {
-//   try {
-//     const news = await News.findOne({ slug: req.params.slug })
-//       .populate("author", "name email profileImage")
-//       .populate("categories", "name slug _id");
-
-//     if (!news) {
-//       return res.status(404).json({
-//         status: false,
-//         message: "News not found",
-//       });
-//     }
-
-//     return res.status(200).json({
-//       status: true,
-//       data: news,
-//     });
-//   } catch (error) {
-//     return res.status(500).json({
-//       status: false,
-//       message: error.message,
-//     });
-//   }
-// };
 
 export const getNewsBySlug = async (req, res) => {
   try {
@@ -428,9 +403,7 @@ export const updateNews = async (req, res) => {
 
       // ✅ update content
       content: content || "",
-      scheduledAt: req.body.scheduledAt
-        ? new Date(new Date(req.body.scheduledAt).getTime() - 19800000)
-        : null,
+  scheduledAt: scheduledAt ? new Date(scheduledAt) : null,
       isScheduled: Number(type) === 3,
 
       // ✅ publish draft
